@@ -1,7 +1,11 @@
+const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+
 Page({
   data: {
     userInfo: {},
-    unreadCount: 0
+    unreadCount: 0,
+    avatarUrl: defaultAvatarUrl,
+    nickName: ''
   },
 
   onLoad() {
@@ -55,8 +59,10 @@ Page({
         this.setData({
           userInfo: {
             nickName: '未登录',
-            avatarUrl: '/assets/images/default-avatar.png'
-          }
+            avatarUrl: defaultAvatarUrl
+          },
+          avatarUrl: defaultAvatarUrl,
+          nickName: ''
         });
         return;
       }
@@ -64,7 +70,11 @@ Page({
     
     // 更新页面显示
     if (userInfo) {
-      this.setData({ userInfo });
+      this.setData({ 
+        userInfo,
+        avatarUrl: userInfo.avatarUrl || defaultAvatarUrl,
+        nickName: userInfo.nickName || ''
+      });
     }
   },
 
@@ -88,13 +98,41 @@ Page({
   },
 
   // 登录
-  onLogin() {
-    // 直接使用预设的用户信息
+  // 头像选择回调
+  onChooseAvatar(e) {
+    const { avatarUrl } = e.detail;
+    this.setData({
+      avatarUrl
+    });
+  },
+
+  // 昵称输入回调
+  getName(e) {
+    console.log('输入的昵称:', e.detail.value);
+    this.setData({
+      nickName: e.detail.value
+    });
+  },
+
+  // 提交用户信息（登录）
+  onSubmitUserInfo(e) {
+    const { nickName, avatarUrl } = this.data;
+    
+    if (!nickName.trim()) {
+      wx.showToast({
+        title: '请输入昵称',
+        icon: 'none'
+      });
+      return;
+    }
+    
+    // 生成用户ID
+    const userId = 'user_' + Date.now();
+    
     const userInfo = {
-      nickName: '叶清风',
-      avatarUrl: '/assets/images/male (5).png',
-      gender: 1,
-      userId: 'user_001'
+      nickName: nickName.trim(),
+      avatarUrl: avatarUrl,
+      userId: userId
     };
     
     // 保存用户信息
@@ -187,8 +225,10 @@ Page({
           this.setData({
             userInfo: {
               nickName: '未登录',
-              avatarUrl: '/assets/images/default-avatar.png'
-            }
+              avatarUrl: defaultAvatarUrl
+            },
+            avatarUrl: defaultAvatarUrl,
+            nickName: ''
           });
           
           wx.showToast({
@@ -200,4 +240,4 @@ Page({
       }
     });
   }
-}); 
+});

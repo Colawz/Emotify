@@ -2,21 +2,29 @@
   <!-- 用户信息卡片 -->
   <view class="user-card">
     <view class="user-info">
-      <t-avatar
-        image="{{userInfo.nickName === '未登录' ? '/assets/images/default-avatar.png' : '/assets/images/male (5).png'}}"
-        size="large"
-      />
+      <!-- 头像选择按钮 -->
+      <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+        <image class="avatar" src="{{avatarUrl}}"></image>
+      </button>
       <view class="user-detail">
-        <text class="nickname">{{userInfo.nickName || '未登录'}}</text>
+        <!-- 昵称输入框 -->
+        <form bindsubmit="onSubmitUserInfo">
+          <input 
+            type="nickname" 
+            class="nickname-input" 
+            placeholder="请输入昵称" 
+            value="{{nickName}}"
+            bindinput="getName"  
+         
+          />
+          <button 
+            class="login-btn"
+            form-type="submit"
+          >授权登录</button>
+        </form>
         <text class="user-id" wx:if="{{userInfo.userId}}">ID: {{userInfo.userId}}</text>
       </view>
     </view>
-    <t-button
-      wx:if="{{!userInfo.nickName || userInfo.nickName === '未登录'}}"
-      theme="primary"
-      size="small"
-      bind:tap="onLogin"
-    >登录</t-button>
   </view>
 
   <!-- 功能列表 -->
@@ -66,4 +74,4 @@
   <view class="version-info">
     <text>版本 1.0.0</text>
   </view>
-</view> 
+</view>
