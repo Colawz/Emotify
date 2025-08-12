@@ -1,13 +1,85 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/logs/logs"
+    "pages/ai-assistant/chat/index",
+    "pages/counseling/index",
+    "pages/profile/index",
+    "pages/profile/chat-history/index",
+    "pages/counseling/treehole/index",
+    "pages/counseling/treehole/publish",
+    "pages/counseling/stickman/index",
+    "pages/counseling/diary/index",
+    "pages/counseling/diary/topics/index",
+    "pages/counseling/diary/write/index",
+    "pages/counseling/user-profile/index",
+    "pages/counseling/conversation/index",
+    "pages/counseling/conversation/chat/index",
+    "pages/counseling/conversation/create/index",
+    "pages/counseling/profile-analysis/index",
+    "pages/profile/messages/index",
+    "pages/profile/messages/chat/index"
   ],
   "window": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Weixin",
-    "navigationBarBackgroundColor": "#ffffff"
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#9c26b0",
+    "navigationBarTitleText": "校园生活助手",
+    "navigationBarTextStyle": "white"
   },
-  "componentFramework": "glass-easel",
-  "lazyCodeLoading": "requiredComponents"
+  "tabBar": {
+    "custom": false,
+    "color": "#999999",
+    "selectedColor": "#9c26b0",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/ai-assistant/chat/index",
+        "text": "AI助手",
+        "iconPath": "assets/images/ai.png",
+        "selectedIconPath": "assets/images/ai-active.png"
+      },
+      {
+        "pagePath": "pages/counseling/index",
+        "text": "心理疗愈",
+        "iconPath": "assets/icons/heart.png",
+        "selectedIconPath": "assets/icons/heart-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "assets/icons/my.png",
+        "selectedIconPath": "assets/icons/my-active.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "t-button": "miniprogram_npm/tdesign-miniprogram/button/button",
+    "t-icon": "miniprogram_npm/tdesign-miniprogram/icon/icon",
+    "t-input": "miniprogram_npm/tdesign-miniprogram/input/input",
+    "t-tag": "miniprogram_npm/tdesign-miniprogram/tag/tag",
+    "t-grid": "miniprogram_npm/tdesign-miniprogram/grid/grid",
+    "t-grid-item": "miniprogram_npm/tdesign-miniprogram/grid-item/grid-item",
+    "t-tabs": "miniprogram_npm/tdesign-miniprogram/tabs/tabs",
+    "t-tab-panel": "miniprogram_npm/tdesign-miniprogram/tab-panel/tab-panel",
+    "t-rate": "miniprogram_npm/tdesign-miniprogram/rate/rate",
+    "t-image": "miniprogram_npm/tdesign-miniprogram/image/image",
+    "t-search": "miniprogram_npm/tdesign-miniprogram/search/search",
+    "t-cell": "miniprogram_npm/tdesign-miniprogram/cell/cell",
+    "t-cell-group": "miniprogram_npm/tdesign-miniprogram/cell-group/cell-group",
+    "t-avatar": "miniprogram_npm/tdesign-miniprogram/avatar/avatar",
+    "t-navbar": "miniprogram_npm/tdesign-miniprogram/navbar/navbar",
+    "t-dropdown-menu": "miniprogram_npm/tdesign-miniprogram/dropdown-menu/dropdown-menu",
+    "t-dropdown-item": "miniprogram_npm/tdesign-miniprogram/dropdown-item/dropdown-item",
+    "t-fab": "miniprogram_npm/tdesign-miniprogram/fab/fab",
+    "t-skeleton": "miniprogram_npm/tdesign-miniprogram/skeleton/skeleton",
+    "t-textarea": "miniprogram_npm/tdesign-miniprogram/textarea/textarea",
+    "t-upload": "miniprogram_npm/tdesign-miniprogram/upload/upload",
+    "t-picker": "miniprogram_npm/tdesign-miniprogram/picker/picker",
+    "t-picker-item": "miniprogram_npm/tdesign-miniprogram/picker-item/picker-item",
+    "t-tab-bar": "miniprogram_npm/tdesign-miniprogram/tab-bar/tab-bar",
+    "t-tab-bar-item": "miniprogram_npm/tdesign-miniprogram/tab-bar-item/tab-bar-item",
+    "t-pull-down-refresh": "miniprogram_npm/tdesign-miniprogram/pull-down-refresh/pull-down-refresh",
+    "t-divider": "miniprogram_npm/tdesign-miniprogram/divider/divider",
+    "t-empty": "miniprogram_npm/tdesign-miniprogram/empty/empty"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
 }

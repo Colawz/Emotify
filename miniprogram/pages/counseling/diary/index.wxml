@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="header">
+    <view class="title">书写你的心情</view>
+    <view class="subtitle">选择一个主题，开始今天的记录与思考吧</view>
+  </view>
+
+  <view class="categories-container">
+    <view 
+      wx:for="{{categories}}" 
+      wx:key="id"
+      class="category-card" 
+      style="background: {{item.color}};"
+      bindtap="onCategoryTap"
+      data-category="{{item}}"
+    >
+      <view class="card-emoji">{{item.emoji}}</view>
+      <view class="card-content">
+        <view class="card-title">{{item.title}}</view>
+        <view class="card-description">{{item.description}}</view>
+      </view>
+    </view>
+  </view>
+</view> 

@@ -1,0 +1,21 @@
+<view class="container">
+  <view class="header" style="background: {{category.color}};">
+    <view class="emoji">{{category.emoji}}</view>
+    <view class="title">{{category.title}}</view>
+    <view class="description">{{category.description}}</view>
+  </view>
+
+  <view class="bubbles-container">
+    <view 
+      class="bubble" 
+      wx:for="{{category.topics}}" 
+      wx:key="id"
+      style="background-color: {{item.bgColor}};"
+      bindtap="onTopicTap"
+      data-topic="{{item}}"
+    >
+      <view class="bubble-title">{{item.title}}</view>
+      <view class="bubble-prompt">{{item.shortPrompt}}</view>
+    </view>
+  </view>
+</view> 

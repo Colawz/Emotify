@@ -1,0 +1,92 @@
+.container {
+  padding-top: 32rpx;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F2F2FF 100%);
+  min-height: 100vh;
+}
+
+/* 用户信息卡片样式 */
+.user-card {
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 48rpx;
+  margin: 0 12rpx 92rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8rpx 16rpx rgba(106, 90, 205, 0.1);
+  box-sizing: border-box;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-detail {
+  margin-left: 32rpx;
+}
+
+.nickname {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333333;
+  display: block;
+}
+
+.user-id {
+  font-size: 28rpx;
+  color: #888888;
+  margin-top: 8rpx;
+  display: block;
+}
+
+.t-button {
+  --td-button-primary-bg-color: #6A5ACD;
+}
+
+/* 功能列表样式 */
+.function-list {
+  margin-top: 40rpx;
+}
+
+.function-list .t-cell {
+  background: #ffffff;
+  border-radius: 46rpx;
+  margin: 0 32rpx 34rpx;
+  padding: 52rpx;
+  box-shadow: 0 4rpx 12rpx rgba(106, 90, 205, 0.05);
+  --td-cell-arrow-color: #888888;
+  --td-cell-border-color: transparent;
+}
+
+/* 版本信息样式 */
+.version-info {
+  text-align: center;
+  padding: 40rpx 0;
+  width: 100%;
+}
+
+.version-info text {
+  font-size: 24rpx;
+  color: #AAAAAA;
+}
+
+/* 自定义单元格样式 */
+:host .t-cell {
+  padding: 32rpx 24rpx;
+}
+
+:host .t-cell__title {
+  font-size: 32rpx;
+  color: #333333;
+}
+
+:host .t-cell__left-icon {
+  margin-right: 24rpx;
+  color: #6A5ACD;
+}
+
+/* 标签样式 */
+:host .t-tag {
+  margin-left: 16rpx;
+} 

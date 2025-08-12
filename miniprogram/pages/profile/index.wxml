@@ -1,0 +1,69 @@
+<view class="container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="user-info">
+      <t-avatar
+        image="{{userInfo.nickName === '未登录' ? '/assets/images/default-avatar.png' : '/assets/images/male (5).png'}}"
+        size="large"
+      />
+      <view class="user-detail">
+        <text class="nickname">{{userInfo.nickName || '未登录'}}</text>
+        <text class="user-id" wx:if="{{userInfo.userId}}">ID: {{userInfo.userId}}</text>
+      </view>
+    </view>
+    <t-button
+      wx:if="{{!userInfo.nickName || userInfo.nickName === '未登录'}}"
+      theme="primary"
+      size="small"
+      bind:tap="onLogin"
+    >登录</t-button>
+  </view>
+
+  <!-- 功能列表 -->
+  <view class="function-list">
+      <!-- 我的发布 -->
+      <t-cell
+        title="我的发布"
+        left-icon="file"
+        hover
+        arrow
+        bind:tap="navigateToMyPosts"
+      />
+
+      <!-- 我的收藏 -->
+      <t-cell
+        title="我的收藏"
+        left-icon="star"
+        hover
+        arrow
+        bind:tap="navigateToMyFavorites"
+      />
+
+      <!-- 我的消息 -->
+      <t-cell
+        title="我的消息"
+        left-icon="chat"
+        hover
+        arrow
+        bind:tap="navigateToMyMessages"
+      >
+        <t-tag slot="note" theme="warning" variant="light" wx:if="{{unreadCount > 0}}">
+          {{unreadCount}}
+        </t-tag>
+      </t-cell>
+
+      <!-- 设置 -->
+      <t-cell
+        title="设置"
+        left-icon="setting"
+        hover
+        arrow
+        bind:tap="navigateToSettings"
+      />
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version-info">
+    <text>版本 1.0.0</text>
+  </view>
+</view> 

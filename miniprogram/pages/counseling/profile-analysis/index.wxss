@@ -1,0 +1,76 @@
+/* pages/counseling/profile-analysis/index.wxss */
+.container {
+  background-color: #f8f8f8;
+  min-height: 100vh;
+}
+
+.content-scroll {
+  height: 100vh;
+}
+
+.chart-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40rpx 0;
+  background-color: #fff;
+  margin: 0rpx 30rpx 0;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.08);
+}
+
+.radar-chart {
+  width: 600rpx;
+  height: 600rpx;
+}
+
+.card {
+  background-color: #fff;
+  margin: 30rpx;
+  padding: 40rpx;
+  border-radius: 24rpx;
+}
+
+.card-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 30rpx;
+  position: relative;
+  padding-left: 20rpx;
+}
+
+.card-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8rpx;
+  height: 80%;
+  background-color: #8A32E8;
+  border-radius: 4rpx;
+}
+
+.card-content {
+  font-size: 28rpx;
+  line-height: 1.7;
+  color: #555;
+}
+
+.dimensions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+.dimension-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 10rpx;
+  color: #333;
+}
+
+.dimension-desc {
+  font-size: 26rpx;
+  line-height: 1.6;
+  color: #666;
+} 

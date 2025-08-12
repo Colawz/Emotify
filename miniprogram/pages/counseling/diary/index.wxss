@@ -1,0 +1,70 @@
+/* miniprogram/pages/counseling/diary/index.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  justify-content: center;
+}
+
+.header {
+  margin-bottom: 60rpx;
+  text-align: center;
+  padding: 60rpx 40rpx;
+}
+
+.title {
+  font-size: 52rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #888;
+  margin-top: 15rpx;
+}
+
+.categories-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 40rpx;
+  gap: 30rpx;
+}
+
+.category-card {
+  color: white;
+  padding: 40rpx;
+  border-radius: 30rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease-in-out;
+}
+
+.category-card:active {
+  transform: translateY(2px);
+  box-shadow: 0 5rpx 15rpx rgba(0, 0, 0, 0.1);
+}
+
+.card-emoji {
+  font-size: 72rpx;
+  margin-right: 40rpx;
+  text-shadow: 0 4rpx 10rpx rgba(0,0,0,0.2);
+}
+
+.card-content {
+  flex: 1;
+}
+
+.card-title {
+  font-size: 40rpx;
+  font-weight: 600;
+  margin-bottom: 10rpx;
+}
+
+.card-description {
+  font-size: 26rpx;
+  line-height: 1.5;
+  opacity: 0.9;
+} 

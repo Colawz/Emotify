@@ -1,0 +1,140 @@
+<view class="container">
+  <!-- 聊天记录区域 -->
+  <scroll-view 
+    class="chat-container" 
+    scroll-y 
+    scroll-into-view="{{scrollToMessage}}"
+    bindscrolltoupper="onScrollToUpper"
+  >
+    <!-- 欢迎消息 -->
+    <view class="message system" id="welcome" wx:if="{{!currentChatId}}">
+      <view class="message-content">
+        <view class="welcome-text">
+          <text>你好！我是你的AI助手，你可以向我描述你遇到的心理与生活上的各种问题，我会积极为你解答哦！</text>
+        </view>
+      
+      </view>
+    </view>
+
+    <!-- 消息列表 -->
+    <scroll-view 
+      scroll-y 
+      class="message-list" 
+      scroll-into-view="{{scrollToMessage}}"
+      bindscrolltoupper="onScrollToUpper"
+    >
+      <block wx:for="{{messages}}" wx:key="id">
+        <view id="msg-{{item.id}}" class="message {{item.type}}">
+          <view class="avatar">
+            <image 
+              src="{{item.avatar}}" 
+              mode="aspectFill"
+            />
+          </view>
+          <view class="content">
+            <rich-text nodes="{{item.content}}"></rich-text>
+            <view wx:if="{{item.recommendations && item.recommendations.length > 0}}" class="recommendations">
+              <view 
+                wx:for="{{item.recommendations}}" 
+                wx:key="id" 
+                wx:for-item="rec"
+                class="recommendation-card"
+                bindtap="onCardTap"
+                data-type="{{rec.type}}"
+                data-id="{{rec.id}}"
+                data-action="{{rec.action}}"
+              >
+                <image src="{{rec.image}}" mode="aspectFill" class="card-image"/>
+                <view class="card-content">
+                  <view class="card-title">{{rec.title}}</view>
+                  <view class="card-description">{{rec.description}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </scroll-view>
+
+    <!-- 加载状态 -->
+    <view class="loading" wx:if="{{isLoading}}">
+      <view class="loading-dots">
+        <view class="dot"></view>
+        <view class="dot"></view>
+        <view class="dot"></view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 输入区域 -->
+  <view class="input-area">
+    <!-- 新建对话按钮 -->
+    <view class="icon-button" bindtap="onNewChat">
+      <t-icon name="add" size="24px" />
+    </view>
+    
+    <view class="input-box">
+      <input 
+        class="input" 
+        value="{{inputValue}}" 
+        bindinput="onInput" 
+        placeholder="输入消息..." 
+        confirm-type="send"
+        bindconfirm="onSend"
+      />
+      <view class="action-buttons">
+        <view class="icon-button" bindtap="onVoiceTap">
+          <t-icon name="mic" size="24px" />
+        </view>
+        <view class="icon-button" bindtap="onImageTap">
+          <t-icon name="image" size="24px" />
+        </view>
+      </view>
+    </view>
+    
+    <!-- 发送按钮 -->
+    <view class="send-button" bindtap="onSend">
+      <t-icon name="send" size="24px" />
+    </view>
+
+    <!-- 历史记录按钮 -->
+    <view class="icon-button" bindtap="onHistoryTap">
+      <t-icon name="time" size="24px" />
+    </view>
+  </view>
+</view>
+
+<!-- 信息发布弹窗 -->
+<t-popup visible="{{showPublishPopup}}" bind:visible-change="onPopupClose" placement="bottom" close-on-overlay-click="{{false}}">
+  <view class="publish-popup">
+    <view class="popup-header">
+      <text class="popup-title">{{publishInfo.title}}</text>
+      <t-icon name="close" size="24px" bindtap="onPopupClose" />
+    </view>
+    
+    <scroll-view scroll-y class="popup-content">
+      <block wx:if="{{publishInfo.type === 'carpool'}}">
+        <t-input label="出发地点" value="{{publishInfo.from}}" bind:change="onFromChange" placeholder="请输入出发地点" />
+        <t-input label="目的地" value="{{publishInfo.to}}" bind:change="onToChange" placeholder="请输入目的地" />
+        <t-input label="出发时间" value="{{publishInfo.time}}" bind:change="onTimeChange" placeholder="请输入出发时间" />
+        <t-input label="座位数" value="{{publishInfo.seats}}" type="number" bind:change="onSeatsChange" placeholder="请输入座位数" />
+        <t-input label="价格" value="{{publishInfo.price}}" type="digit" bind:change="onPriceChange" placeholder="请输入价格" />
+        <t-textarea label="备注" value="{{publishInfo.remark}}" bind:change="onRemarkChange" placeholder="请输入备注信息" />
+      </block>
+      
+      <block wx:elif="{{publishInfo.type === 'sports'}}">
+        <t-input label="运动类型" value="{{publishInfo.sportType}}" bind:change="onSportTypeChange" placeholder="请输入运动类型" />
+        <t-input label="场地" value="{{publishInfo.location}}" bind:change="onLocationChange" placeholder="请输入场地" />
+        <t-input label="时间" value="{{publishInfo.time}}" bind:change="onTimeChange" placeholder="请输入时间" />
+        <t-input label="人数" value="{{publishInfo.players}}" type="number" bind:change="onPlayersChange" placeholder="请输入人数" />
+        <t-input label="水平要求" value="{{publishInfo.level}}" bind:change="onLevelChange" placeholder="请输入水平要求" />
+        <t-textarea label="备注" value="{{publishInfo.remark}}" bind:change="onRemarkChange" placeholder="请输入备注信息" />
+      </block>
+    </scroll-view>
+    
+    <view class="popup-footer">
+      <t-button theme="default" bindtap="onPopupClose">取消</t-button>
+      <t-button theme="primary" bindtap="onPublish">发布</t-button>
+    </view>
+  </view>
+</t-popup> 

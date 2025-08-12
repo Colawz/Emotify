@@ -1,0 +1,42 @@
+<!--miniprogram/pages/counseling/conversation/index.wxml-->
+<view class="page-container">
+  <view class="header">
+    <view class="title">选择你的聊天伙伴</view>
+    <view class="subtitle">选择一个喜欢的形象，开始一段轻松的对话吧！</view>
+  </view>
+
+  <!-- 我的心理画像入口 -->
+  <view class="profile-card" bindtap="onProfileTap">
+    <view class="profile-card-content">
+      <view class="profile-card-title">我的心理画像</view>
+      <view class="profile-card-desc">基于大五人格理论，探索内在的自己</view>
+    </view>
+    <view class="profile-card-icon">
+      <text>🧠</text>
+    </view>
+  </view>
+
+  <view class="counselor-grid">
+    <!-- 循环渲染预设的咨询师列表 -->
+    <view 
+      wx:for="{{counselorList}}" 
+      wx:key="id" 
+      class="counselor-card" 
+      bindtap="onCounselorTap" 
+      data-counselor="{{item}}"
+    >
+      <image class="counselor-avatar" src="{{item.avatar}}" mode="aspectFill" />
+      <view class="counselor-name">{{item.name}}</view>
+      <view class="counselor-desc">{{item.description}}</view>
+    </view>
+
+    <!-- 创建专属咨询师的卡片 -->
+    <view class="counselor-card create-card" bindtap="onCreateTap">
+      <view class="create-icon-wrapper">
+        <text class="create-icon">+</text>
+      </view>
+      <view class="counselor-name">创建我的专属咨询师</view>
+      <view class="counselor-desc">定制一个最懂你的人</view>
+    </view>
+  </view>
+</view> 

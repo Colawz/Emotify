@@ -1,0 +1,27 @@
+<!-- pages/counseling/profile-analysis/index.wxml -->
+<view class="container">
+
+  <scroll-view scroll-y class="content-scroll">
+    <!-- 雷达图区域 -->
+    <view class="chart-wrapper">
+      <image class="radar-chart" src="{{radarChartSvg}}" mode="aspectFit"></image>
+    </view>
+
+    <!-- 综合建议 -->
+    <view class="card suggestion-card">
+      <view class="card-title">综合建议</view>
+      <view class="card-content">{{suggestion}}</view>
+    </view>
+    
+    <!-- 评估指标依据 -->
+    <view class="card dimensions-card">
+      <view class="card-title">评估指标依据</view>
+      <view class="dimensions-list">
+        <view class="dimension-item" wx:for="{{dimensions}}" wx:key="key">
+          <view class="dimension-name">{{item.name}}</view>
+          <view class="dimension-desc">{{item.description}}</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view> 

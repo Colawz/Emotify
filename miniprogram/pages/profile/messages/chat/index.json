@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "t-avatar": "tdesign-miniprogram/avatar/avatar",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-loading": "tdesign-miniprogram/loading/loading"
+  },
+  "navigationBarTitleText": "聊天"
+} 

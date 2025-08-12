@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "t-search": "tdesign-miniprogram/search/search",
+    "t-avatar": "tdesign-miniprogram/avatar/avatar"
+  }
+} 

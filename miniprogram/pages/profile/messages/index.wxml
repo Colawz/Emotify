@@ -1,0 +1,44 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-card">
+    <view class="search-inner">
+      <t-search
+        value="{{searchValue}}"
+        placeholder="搜索"
+        bind:change="onSearchChange"
+        bind:submit="onSearchSubmit"
+      />
+    </view>
+  </view>
+
+  <!-- 消息列表 -->
+  <view class="message-list">
+    <view class="empty-tip" wx:if="{{!messageList.length}}">
+      <text>暂无消息</text>
+    </view>
+    <view 
+      class="message-item" 
+      wx:for="{{messageList}}" 
+      wx:key="id"
+      bindtap="onMessageTap"
+      data-id="{{item.id}}"
+      data-avatar="{{item.avatar}}"
+      data-nickname="{{item.nickname}}"
+      data-gender="{{item.gender}}"
+    >
+      <view class="avatar-wrapper">
+        <t-avatar image="{{item.avatar}}" size="large" />
+        <view class="badge" wx:if="{{item.unreadCount > 0}}">{{item.unreadCount}}</view>
+      </view>
+      <view class="message-content">
+        <view class="message-header">
+          <text class="nickname">{{item.nickname}}</text>
+          <text class="time">{{item.lastTime}}</text>
+        </view>
+        <view class="message-preview">
+          <text class="preview-text">{{item.lastMessage}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view> 

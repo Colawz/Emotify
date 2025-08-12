@@ -1,0 +1,126 @@
+/* miniprogram/pages/counseling/diary/topics/index.wxss */
+.container {
+  background-color: #f8f8f8;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 40rpx 30rpx;
+  color: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.1);
+  margin: 30rpx 30rpx 0;
+  flex-shrink: 0; /* 防止头部卡片在flex布局中被压缩 */
+}
+
+.emoji {
+  font-size: 60rpx;
+  margin-bottom: 10rpx;
+}
+
+.title {
+  font-size: 44rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.description {
+  font-size: 26rpx;
+  opacity: 0.9;
+}
+
+.topics-list {
+  margin: 40rpx 30rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 10rpx 0;
+  overflow: hidden;
+}
+
+.list-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #555;
+  padding: 30rpx 30rpx 20rpx;
+}
+
+.topic-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  font-size: 30rpx;
+  color: #333;
+  border-bottom: 1rpx solid #f2f2f2;
+  transition: background-color 0.2s;
+}
+
+.topic-item:last-child {
+  border-bottom: none;
+}
+
+.topic-item:active {
+  background-color: #f9f9f9;
+}
+
+.arrow {
+  font-size: 36rpx;
+  color: #ccc;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #999;
+}
+
+.bubbles-container {
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  gap: 24rpx;
+  padding: 40rpx 30rpx;
+}
+
+.bubble {
+  width: 280rpx;
+  height: 280rpx;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20rpx;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.bubble:active {
+  transform: scale(0.95) translateY(5rpx);
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.15);
+}
+
+.bubble-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.bubble-prompt {
+  font-size: 24rpx;
+  color: #555;
+  line-height: 1.4;
+}

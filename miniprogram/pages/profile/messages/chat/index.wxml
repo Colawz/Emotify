@@ -1,0 +1,47 @@
+<view class="container">
+  <!-- 聊天记录区域 -->
+  <scroll-view 
+    class="chat-list" 
+    scroll-y 
+    scroll-into-view="{{scrollToMessage}}"
+    bindscrolltoupper="onScrollToUpper"
+  >
+    <view class="loading" wx:if="{{isLoading}}">
+      <t-loading theme="circular" size="40rpx" />
+    </view>
+    <view 
+      class="message-item {{item.isSelf ? 'self' : ''}}" 
+      wx:for="{{messageList}}" 
+      wx:key="id"
+      id="msg-{{item.id}}"
+    >
+      <view class="avatar-wrapper">
+        <t-avatar image="{{item.avatar}}" size="small" />
+      </view>
+      <view class="message-content">
+        <view class="message-bubble">
+          <text>{{item.content}}</text>
+        </view>
+        <text class="message-time">{{item.time}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 输入区域 -->
+  <view class="input-area">
+    <view class="input-box">
+      <input 
+        class="message-input" 
+        value="{{inputValue}}"
+        placeholder="请输入消息" 
+        bindinput="onInput"
+        bindconfirm="onSend"
+        confirm-type="send"
+        adjust-position="{{false}}"
+      />
+      <view class="send-btn" bindtap="onSend">
+        <t-icon name="send" size="48rpx" color="#0052d9" />
+      </view>
+    </view>
+  </view>
+</view> 

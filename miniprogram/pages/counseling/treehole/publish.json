@@ -1,0 +1,15 @@
+{
+  "navigationBarTitleText": "发布树洞",
+  "usingComponents": {
+    "t-avatar": "tdesign-miniprogram/avatar/avatar",
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-input": "tdesign-miniprogram/input/input",
+    "t-tag": "tdesign-miniprogram/tag/tag",
+    "t-textarea": "tdesign-miniprogram/textarea/textarea",
+    "t-upload": "tdesign-miniprogram/upload/upload",
+    "t-checkbox": "tdesign-miniprogram/checkbox/checkbox",
+    "t-checkbox-group": "tdesign-miniprogram/checkbox-group/checkbox-group",
+    "t-navbar": "tdesign-miniprogram/navbar/navbar"
+  }
+}

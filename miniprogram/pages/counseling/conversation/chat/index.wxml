@@ -1,0 +1,56 @@
+<!--miniprogram/pages/counseling/conversation/chat/index.wxml-->
+<view class="chat-page-container">
+  <!-- 1. 顶部角色展示区 -->
+  <view class="header">
+    <view class="back-btn" bindtap="onNavigateBack">
+      <t-icon name="chevron-left" size="28px" color="#fff"/>
+    </view>
+    <image class="header-bg" src="/images/chat-header-bg.png" mode="widthFix"></image>
+    <view class="counselor-info">
+      <image class="counselor-avatar" src="{{counselor.avatar}}" mode="aspectFill"></image>
+      <view class="counselor-name">{{counselor.name}}</view>
+    </view>
+  </view>
+
+  <!-- 2. 聊天消息区域 -->
+  <scroll-view class="messages-container" scroll-y scroll-into-view="{{scrollToView}}">
+    <block wx:for="{{messages}}" wx:key="id">
+      <view id="{{item.id}}" class="message-row {{item.type === 'user' ? 'user' : 'counselor'}}">
+        <!-- AI角色头像 -->
+        <image 
+          wx:if="{{item.type === 'counselor'}}" 
+          class="avatar" 
+          src="{{counselor.avatar}}" 
+          mode="aspectFill"
+        />
+        <!-- 消息气泡 -->
+        <view class="message-bubble">
+          <text selectable="true">{{item.content}}</text>
+        </view>
+        <!-- 用户头像 (如果需要的话，这里可以放) -->
+        <!-- <image wx:if="{{item.type === 'user'}}" class="avatar" src="{{userInfo.avatarUrl}}" /> -->
+      </view>
+    </block>
+    <!-- 加载中动画 -->
+    <view class="loading-indicator" wx:if="{{isLoading}}">
+      <view class="dot"></view>
+      <view class="dot"></view>
+      <view class="dot"></view>
+    </view>
+  </scroll-view>
+
+  <!-- 3. 底部输入和操作区 -->
+  <view class="input-area">
+    <view class="action-btn" bindtap="onRestartTap">重聊</view>
+    <view class="action-btn" bindtap="onSummarizeTap">总结</view>
+    <input 
+      class="input-field" 
+      value="{{inputValue}}"
+      placeholder="说点什么吧..."
+      bindinput="onInput"
+      confirm-type="send"
+      bindconfirm="onSend"
+    />
+    <button class="send-btn" bindtap="onSend" disabled="{{!inputValue.trim()}}">发送</button>
+  </view>
+</view> 

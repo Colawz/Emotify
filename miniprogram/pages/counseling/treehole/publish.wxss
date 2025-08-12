@@ -1,0 +1,126 @@
+/* pages/counseling/treehole/publish.wxss */
+.publish-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding-top: 120rpx; /* 为顶部导航栏预留空间 */
+  padding-bottom: 140rpx; /* 为底部操作栏预留空间 */
+}
+
+/* 导航栏样式 */
+.custom-navbar {
+  background-color: #fff;
+  border-bottom: 1rpx solid rgba(0, 0, 0, 0.05);
+}
+
+/* 主体内容区 */
+.content-wrapper {
+  flex: 1;
+  padding: 32rpx;
+}
+
+/* 输入区域 */
+.input-area {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 上传区域 */
+.upload-area {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 标签区域 */
+.tag-area {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.area-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 24rpx;
+}
+
+.tag-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* 匿名设置区域 */
+.anonymous-area {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.anonymous-switch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.anonymous-text {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.anonymous-toggle {
+  width: 80rpx;
+  height: 40rpx;
+  background-color: #e0e0e0;
+  border-radius: 20rpx;
+  position: relative;
+  transition: background-color 0.3s;
+}
+
+.anonymous-toggle.active {
+  background-color: #10b981;
+}
+
+.toggle-dot {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  background-color: #fff;
+  position: absolute;
+  top: 4rpx;
+  left: 4rpx;
+  transition: transform 0.3s;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+}
+
+.anonymous-toggle.active .toggle-dot {
+  transform: translateX(40rpx);
+}
+
+.anonymous-tip {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 底部操作栏 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24rpx 32rpx;
+  background-color: #fff;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
+  z-index: 100;
+}

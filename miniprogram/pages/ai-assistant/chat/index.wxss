@@ -1,0 +1,415 @@
+/* 页面容器 */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f5f5f5;
+  box-sizing: border-box;
+  padding-top: 0; /* 消除可能的顶部填充 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased; /* 文字抗锯齿优化 */
+  -moz-osx-font-smoothing: grayscale; /* 文字抗锯齿优化 */
+}
+
+/* 导航栏 */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  background-color: #fff;
+  border-top: 1rpx solid #eee;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.nav-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.nav-button {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 32rpx;
+  background-color: #f5f5f5;
+}
+
+.nav-button text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 聊天记录区域 */
+.chat-container {
+  flex: 1; /* 占据剩余空间 */
+  overflow-y: auto; /* 允许垂直滚动 */
+  padding-bottom: 130rpx; /* 为底部固定区域留出空间，避免输入框遮挡 */
+  padding-top: 0; /* 确保没有顶部填充 */
+  -webkit-overflow-scrolling: touch; /* 增强iOS滚动体验 */
+}
+
+.message-list {
+  padding: 24rpx 16rpx 16rpx 16rpx; /* 添加顶部内边距，让内容向下移动 */
+}
+
+/* 消息样式 */
+.message {
+  display: flex;
+  margin-bottom: 24rpx;
+  align-items: flex-start;
+}
+
+.message.system {
+  justify-content: center;
+  padding: 16rpx 24rpx; /* 增加内边距 */
+  margin-top: 24rpx; /* 顶部外边距 */
+}
+
+.message.system .message-content {
+  padding: 24rpx;
+  max-width: 90%;
+  background: #fff; /* 白色背景 */
+  border-radius: 20rpx; /* 圆角效果 */
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+  text-align: center;
+}
+
+.message.system .message-content text {
+  font-size: 32rpx; /* 调整欢迎文字大小 */
+  font-weight: 600; /* 增加字重 */
+  color: #222; /* 深色文本提高对比度 */
+  display: block;
+  margin-bottom: 24rpx;
+  letter-spacing: 0.5rpx; /* 字母间距稍微增加 */
+  text-rendering: optimizeLegibility; /* 文本渲染优化 */
+}
+
+.message.user {
+  flex-direction: row-reverse; /* 用户消息头像在右侧 */
+}
+
+.message.assistant {
+  flex-direction: row; /* AI消息头像在左侧 */
+}
+
+/* 头像 */
+.avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 16rpx; /* 调整头像与消息内容的间距 */
+  flex-shrink: 0; /* 防止头像被压缩 */
+}
+
+.avatar image {
+  width: 100%;
+  height: 100%;
+}
+
+/* 消息内容 */
+.content {
+  max-width: 75%; /* 限制消息内容的宽度 */
+  padding: 16rpx 20rpx;
+  border-radius: 16rpx;
+  background-color: #fff;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  word-break: break-word; /* 长文本自动换行 */
+}
+
+.message.assistant .content {
+  background-color: #fff;
+  color: #333;
+}
+
+.message.user .content {
+  background-color: #9c26b0;
+  color: #fff;
+}
+
+/* 富文本样式 */
+.content rich-text {
+  display: block;
+  line-height: 1.5;
+  font-size: 28rpx;
+}
+
+.content strong {
+  font-weight: bold;
+}
+
+/* 推荐卡片 */
+.recommendations {
+  margin-top: 16rpx;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16rpx;
+}
+
+.recommendation-card {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.recommendation-card:active {
+  transform: scale(0.98);
+  background: #f5f5f5;
+}
+
+.card-image {
+  width: 80rpx;
+  height: 80rpx;
+  margin-bottom: 12rpx;
+}
+
+.card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.card-description {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* 输入区域 */
+.input-area {
+  padding: 16rpx;
+  background-color: #fff;
+  border-top: 1rpx solid #eee;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.input-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 36rpx;
+  padding: 0 16rpx;
+  min-height: 72rpx;
+}
+
+.input {
+  flex: 1;
+  height: 72rpx;
+  font-size: 28rpx;
+  padding: 0 8rpx;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+/* 图标按钮样式 */
+.icon-button {
+  padding: 8rpx;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.send-button {
+  width: 72rpx;
+  height: 72rpx;
+  background-color: #9c26b0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* 快捷操作 */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+  margin-top: 24rpx;
+  padding: 0 16rpx;
+}
+
+.action-item {
+  background: #ffffff; /* 纯白色背景，更适合各种图标 */
+  padding: 24rpx;
+  border-radius: 18rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08); /* 轻微阴影 */
+  border: 1rpx solid rgba(0, 0, 0, 0.05); /* 细微边框 */
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.action-item:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 5rpx rgba(0, 0, 0, 0.1);
+}
+
+.action-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 60%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.action-icon {
+  width: 72rpx;
+  height: 72rpx;
+  margin-bottom: 12rpx;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #ffffff; /* 改为纯白色背景 */
+  padding: 12rpx; /* 内边距，让图标有呼吸空间 */
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05); /* 添加轻微阴影增加层次感 */
+}
+
+.action-item text {
+  font-size: 28rpx;
+  color: #222;
+  font-weight: 600;
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1rpx 1rpx rgba(255,255,255,0.7);
+  letter-spacing: 0.5rpx;
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  padding: 16rpx;
+  color: #999;
+}
+
+/* 加载动画 */
+.loading-dots {
+  display: flex;
+  gap: 8rpx;
+  justify-content: center;
+}
+
+.dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background-color: #9c26b0;
+  animation: bounce 1.4s infinite ease-in-out;
+}
+
+.dot:nth-child(1) { animation-delay: -0.32s; }
+.dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+/* 发布弹窗样式 */
+.publish-popup {
+  background: #fff;
+  border-radius: 24rpx 24rpx 0 0;
+  padding: 32rpx;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1000;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.popup-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.popup-content {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 32rpx;
+  padding: 0 16rpx;
+}
+
+.popup-content .t-input,
+.popup-content .t-textarea {
+  margin-bottom: 24rpx;
+  background: #f5f5f5;
+  border-radius: 8rpx;
+}
+
+.popup-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 24rpx;
+  padding-top: 24rpx;
+  border-top: 1rpx solid #eee;
+  background: #fff;
+}
+
+.popup-footer .t-button {
+  min-width: 160rpx;
+}
+
+/* 确保弹窗在最上层 */
+.t-popup {
+  z-index: 1000;
+} 

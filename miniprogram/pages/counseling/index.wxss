@@ -1,0 +1,388 @@
+/* 顶部导航栏 */
+.header {
+  background: #fff;
+  padding: 32rpx;
+  box-shadow: 0 2rpx 8rpx rgba(175, 44, 149, 0.05);
+  margin-bottom: 50rpx;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 52rpx;
+  font-weight: bold;
+  color: #343a40;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #6c757d;
+  margin-top: 10rpx;
+}
+
+.emergency-btn {
+  background: #9c26b0;
+  color: #fff;
+  font-size: 28rpx;
+  padding: 16rpx 32rpx;
+  border-radius: 32rpx;
+}
+
+/* 主要内容区 */
+.container {
+  padding: 40rpx;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* 特色卡片区域 */
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+.feature-card {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 40rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease-in-out;
+}
+
+.feature-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.08);
+}
+
+.card-icon {
+  font-size: 64rpx;
+  margin-right: 30rpx;
+}
+
+.card-content {
+  flex: 1;
+}
+
+.card-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #343a40;
+  margin-bottom: 8rpx;
+}
+
+.card-description {
+  font-size: 26rpx;
+  color: #6c757d;
+}
+
+.card-arrow {
+  font-size: 40rpx;
+  color: #adb5bd;
+}
+
+.ai-card {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+.treehole-card {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.game-card {
+  background: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%);
+}
+
+.feature-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24rpx;
+}
+
+.feature-card-header {
+  flex: 1;
+}
+
+.feature-card-title {
+  font-size: 36rpx;
+  font-weight: 600;
+}
+
+.feature-card-subtitle {
+  font-size: 26rpx;
+  opacity: 0.8;
+  margin-top: 8rpx;
+}
+
+.feature-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-card-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.feature-card-actions t-button {
+  flex: 1;
+}
+
+.section {
+  margin-bottom: 48rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.section-more {
+  font-size: 26rpx;
+  color: #9c26b0;
+}
+
+/* 心理测试 */
+.test-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32rpx;
+}
+
+.test-card {
+  background: #fff;
+  border-radius: 32rpx;
+  padding: 32rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.test-icon {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24rpx;
+}
+
+.bg-purple {
+  background: rgba(156, 38, 176, 0.1);
+}
+
+.bg-blue {
+  background: rgba(33, 150, 243, 0.1);
+}
+
+.bg-green {
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.bg-orange {
+  background: rgba(255, 152, 0, 0.1);
+}
+
+.test-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+.test-desc {
+  font-size: 24rpx;
+  color: #666;
+  margin-top: 8rpx;
+  display: block;
+}
+
+/* 咨询师卡片 */
+.counselor-card {
+  background: #fff;
+  border-radius: 32rpx;
+  padding: 32rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.counselor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.counselor-avatar-name {
+  display: flex;
+  align-items: center;
+}
+
+.counselor-name-title {
+  margin-left: 16rpx;
+}
+
+.counselor-name {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+.counselor-title {
+  font-size: 24rpx;
+  color: #666;
+  margin-top: 8rpx;
+  display: block;
+}
+
+.counselor-tags {
+  margin: 16rpx 0;
+}
+
+.counselor-desc {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* 预约记录 */
+.appointment-list t-cell {
+  margin-bottom: 16rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.appointment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  margin-top: 8rpx;
+}
+
+.appointment-time,
+.appointment-location {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.appointment-time t-icon,
+.appointment-location t-icon {
+  margin-right: 8rpx;
+}
+
+.appointment-status {
+  color: #9c26b0;
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+/* 资源列表 */
+.resource-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.resource-item {
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+  display: flex;
+}
+
+.resource-item t-image {
+  width: 240rpx;
+  height: 180rpx;
+}
+
+.resource-info {
+  flex: 1;
+  padding: 16rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.resource-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.resource-desc {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.resource-author {
+  font-size: 22rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+}
+
+.resource-tags {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+}
+
+/* 搜索栏样式 */
+.search-wrapper {
+  margin-bottom: 24rpx;
+}
+
+/* 紧急求助 */
+.emergency-banner {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 24rpx;
+}
+
+/* 底部导航栏 */
+.tab-bar-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+/* 底部导航栏样式 */
+.t-tab-bar {
+  position: fixed !important; /* 使用 !important 确保覆盖组件内部样式 */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* 确保在最上层 */
+  background-color: #fff; /* 根据需要设置背景色 */
+  box-shadow: 0 -2rpx 10rpx rgba(0,0,0,0.1); /* 可选：添加顶部阴影 */
+  border-top: 1px solid rgba(0,0,0,0.05); /* 添加顶部边框 */
+  height: 110rpx; /* 设置导航栏高度 */
+  padding-bottom: env(safe-area-inset-bottom); /* 适配底部安全区域 */
+} 

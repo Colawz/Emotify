@@ -1,0 +1,27 @@
+<!--miniprogram/pages/counseling/conversation/create/index.wxml-->
+<view class="container">
+  <view class="title">创建你的专属伙伴</view>
+  
+  <view class="form-item">
+    <view class="form-label">伙伴头像</view>
+    <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+      <image wx:if="{{avatarUrl}}" class="avatar" src="{{avatarUrl}}"></image>
+      <view wx:else class="avatar-placeholder">
+        <text class="placeholder-icon">+</text>
+      </view>
+    </button>
+    <view class="form-tip">点击上方选择头像</view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label">伙伴昵称</view>
+    <input class="input" placeholder="给你的伙伴起个名字吧" value="{{name}}" bindinput="onNameInput" />
+  </view>
+
+  <view class="form-item">
+    <view class="form-label">伙伴描述 (可选)</view>
+    <textarea class="textarea" placeholder="简单描述一下它的性格或设定，这会帮助它更好地与你交流。" value="{{description}}" bindinput="onDescriptionInput" />
+  </view>
+
+  <button class="submit-btn" bindtap="onStartChat">创建并开始聊天</button>
+</view> 

@@ -1,0 +1,24 @@
+<!--pages/counseling/index.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="title">心理疗愈空间</view>
+    <view class="subtitle">愿你在这里找到内心的平静与力量</view>
+  </view>
+
+  <view class="cards-container">
+    <view 
+      class="feature-card" 
+      wx:for="{{featureCards}}" 
+      wx:key="id"
+      data-url="{{item.url}}"
+      bindtap="onCardTap"
+      >
+      <view class="card-icon">{{item.emoji}}</view>
+      <view class="card-content">
+        <view class="card-title">{{item.title}}</view>
+        <view class="card-description">{{item.description}}</view>
+      </view>
+      <view class="card-arrow">→</view>
+    </view>
+  </view>
+</view>

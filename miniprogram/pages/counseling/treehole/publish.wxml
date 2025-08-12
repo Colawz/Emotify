@@ -1,0 +1,77 @@
+<!-- pages/counseling/treehole/publish.wxml -->
+<view class="publish-container">
+  <!-- 顶部导航栏 -->
+  <t-navbar class="custom-navbar" title="发布树洞" fixed="{{true}}" titleMaxLength="{{8}}">
+    <t-icon slot="left" name="chevron-left" size="48rpx" bind:click="onBackTap" />
+  </t-navbar>
+
+  <!-- 主体内容 -->
+  <view class="content-wrapper">
+    <!-- 内容输入区 -->
+    <view class="input-area">
+      <t-textarea 
+        value="{{content}}" 
+        placeholder="分享你的心情、困惑或求助..."
+        maxlength="500"
+        autosize="{{ { minRows: 4, maxRows: 8 } }}"
+        indicator
+        disableDefaultPadding="{{true}}"
+        bind:change="onContentChange"
+      />
+    </view>
+
+    <!-- 图片上传 -->
+    <view class="upload-area">
+      <t-upload
+        mediaType="{{['image']}}"
+        max="{{9}}"
+        files="{{fileList}}"
+        bind:success="handleSuccess"
+        bind:fail="handleFail"
+        bind:remove="handleRemove"
+      />
+    </view>
+
+    <!-- 标签选择 -->
+    <view class="tag-area">
+      <view class="area-title">选择标签</view>
+      <t-checkbox-group value="{{selectedTags}}" bind:change="onTagsChange">
+        <view class="tag-grid">
+          <t-checkbox
+            wx:for="{{tagOptions}}"
+            wx:key="value"
+            label="{{item.label}}"
+            value="{{item.value}}"
+            icon="rectangle"
+            max="{{3}}"
+            custom-style="margin-right:24rpx;margin-bottom:16rpx;"
+          />
+        </view>
+      </t-checkbox-group>
+    </view>
+
+    <!-- 匿名设置 -->
+    <view class="anonymous-area">
+      <view class="area-title">匿名设置</view>
+      <view class="anonymous-switch" bind:tap="toggleAnonymous">
+        <view class="anonymous-text">匿名发布</view>
+        <view class="anonymous-toggle {{isAnonymous ? 'active' : ''}}">
+          <view class="toggle-dot"></view>
+        </view>
+      </view>
+      <view class="anonymous-tip">开启后，你的个人信息将不会展示给其他用户</view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <t-button 
+      theme="primary" 
+      block 
+      shape="round" 
+      bind:tap="submitPost"
+      loading="{{isSubmitting}}"
+      disabled="{{!content || selectedTags.length === 0}}"
+    >发布</t-button>
+  </view>
+</view>

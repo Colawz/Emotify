@@ -1,0 +1,20 @@
+<!--miniprogram/pages/counseling/diary/write/index.wxml-->
+<view class="container">
+  <view class="prompt-card" wx:if="{{topic}}">
+    <view class="prompt-title">{{topic.title}}</view>
+    <view class="prompt-text">{{topic.prompt}}</view>
+  </view>
+
+  <textarea 
+    class="input-area"
+    value="{{inputValue}}"
+    placeholder="在这里写下你的想法..."
+    bindinput="onInput"
+    maxlength="-1"
+    auto-focus
+  ></textarea>
+
+  <button class="save-btn" bindtap="onSave" disabled="{{!inputValue.trim()}}">
+    保存日记
+  </button>
+</view> 

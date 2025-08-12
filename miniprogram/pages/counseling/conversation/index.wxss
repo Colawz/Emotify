@@ -1,0 +1,141 @@
+/* miniprogram/pages/counseling/conversation/index.wxss */
+.page-container {
+  background-color: #f4f7f9;
+  min-height: 100vh;
+  padding: 40rpx;
+  box-sizing: border-box;
+}
+
+.header {
+  margin-bottom: 40rpx;
+  text-align: center;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #888;
+}
+
+.counselor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30rpx;
+}
+
+.counselor-card {
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  text-align: center;
+  box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400rpx;
+}
+
+.counselor-card:active {
+  transform: scale(0.97);
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.08);
+}
+
+.counselor-avatar {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  margin-bottom: 20rpx;
+  background-color: #eee;
+}
+
+.counselor-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.counselor-desc {
+  font-size: 24rpx;
+  color: #999;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.create-card {
+  background-color: #fafafa;
+  border: 2rpx dashed #d9d9d9;
+}
+
+.create-icon-wrapper {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  margin-bottom: 20rpx;
+  background-color: #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-icon {
+  font-size: 80rpx;
+  color: #aaa;
+  font-weight: 300;
+}
+
+.profile-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #8A32E8, #a865e9);
+  color: #fff;
+  padding: 30rpx 40rpx;
+  margin: 0 30rpx 40rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 20rpx rgba(138, 50, 232, 0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.profile-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 10rpx rgba(138, 50, 232, 0.3);
+}
+
+.profile-card-content {
+  flex: 1;
+}
+
+.profile-card-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.profile-card-desc {
+  font-size: 26rpx;
+  opacity: 0.9;
+}
+
+.profile-card-icon {
+  font-size: 60rpx;
+  margin-left: 30rpx;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+} 

@@ -1,0 +1,163 @@
+/* miniprogram/pages/counseling/user-profile/index.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 60rpx 40rpx 40rpx;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #888;
+  margin-top: 10rpx;
+}
+
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.diaries-list {
+  padding: 0 30rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+.diary-card {
+  background-color: #fff;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.diary-card:active {
+  transform: translateY(2px);
+  box-shadow: 0 4rpx 10rpx rgba(0,0,0,0.05);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.card-topic {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.card-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.card-content {
+  font-size: 28rpx;
+  color: #555;
+  line-height: 1.6;
+  
+  /* 多行文本溢出显示省略号 */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-footer {
+  margin-top: 24rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f2f2f2;
+  text-align: right;
+  font-size: 24rpx;
+  color: #aaa;
+}
+
+/* 空状态和加载状态 */
+.loading-container, .empty-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  color: #aaa;
+}
+
+.empty-emoji {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #888;
+  margin-bottom: 10rpx;
+}
+
+.empty-tip {
+  font-size: 26rpx;
+}
+
+/* 统计图表卡片 */
+.stats-card {
+  background-color: #fff;
+  margin: 30rpx 30rpx 30rpx;
+  padding: 30rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.05);
+}
+
+.stats-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 40rpx;
+}
+
+.chart-container {
+  display: flex;
+  justify-content: space-around;
+  height: 280rpx;
+}
+
+.chart-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100rpx;
+}
+
+.bar-value {
+  font-size: 24rpx;
+  color: #888;
+  margin-bottom: 8rpx;
+}
+
+.bar-fill {
+  width: 40rpx;
+  border-radius: 20rpx;
+  transition: height 0.8s ease-out; /* 高度变化的动画 */
+}
+
+.bar-label {
+  font-size: 24rpx;
+  color: #555;
+  margin-top: 16rpx;
+} 

@@ -1,0 +1,52 @@
+<view class="container">
+  <!-- 顶部操作栏 -->
+  <view class="header">
+    <view class="title">历史对话</view>
+    <view class="clear-all" bindtap="onClearAll">
+      <t-icon name="delete" size="24px" />
+      <text>清空</text>
+    </view>
+  </view>
+
+  <!-- 对话列表 -->
+  <scroll-view scroll-y class="chat-list">
+    <block wx:if="{{!loading && chats.length > 0}}">
+      <view 
+        class="chat-item" 
+        wx:for="{{chats}}" 
+        wx:key="id"
+        bindtap="onChatTap"
+        data-id="{{item.id}}"
+      >
+        <view class="chat-info">
+          <view class="chat-title">{{item.title}}</view>
+          <view class="chat-time">{{item.lastUpdate | formatTime}}</view>
+        </view>
+        <view class="chat-actions">
+          <view 
+            class="delete-btn" 
+            catchtap="onDeleteChat" 
+            data-id="{{item.id}}"
+          >
+            <t-icon name="close" size="24px" />
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{!loading && chats.length === 0}}">
+      <t-icon name="chat" size="64px" />
+      <text>暂无历史对话</text>
+    </view>
+
+    <!-- 加载状态 -->
+    <view class="loading" wx:if="{{loading}}">
+      <view class="loading-dots">
+        <view class="dot"></view>
+        <view class="dot"></view>
+        <view class="dot"></view>
+      </view>
+    </view>
+  </scroll-view>
+</view> 

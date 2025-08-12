@@ -1,0 +1,58 @@
+<view class="container">
+  <!-- 资源封面 -->
+  <view class="cover-section">
+    <t-image src="{{resource.image}}" mode="aspectFill" shape="round" />
+    <view class="cover-info">
+      <text class="title">{{resource.title}}</text>
+      <view class="meta">
+        <view class="meta-item">
+          <t-icon name="user" size="32rpx" />
+          <text>{{resource.author}}</text>
+        </view>
+        <view class="meta-item">
+          <t-icon name="time" size="32rpx" />
+          <text>{{resource.publishTime}}</text>
+        </view>
+      </view>
+      <view class="tags">
+        <t-tag wx:for="{{resource.tags}}" wx:key="*this" variant="light" theme="primary" size="small">{{item}}</t-tag>
+      </view>
+    </view>
+  </view>
+
+  <!-- 资源内容 -->
+  <view class="content-section">
+    <view class="section-title">内容简介</view>
+    <text class="description">{{resource.description}}</text>
+    
+    <view class="section-title">详细内容</view>
+    <rich-text nodes="{{resource.content}}"></rich-text>
+  </view>
+
+  <!-- 相关推荐 -->
+  <view class="recommend-section">
+    <view class="section-title">相关推荐</view>
+    <view class="recommend-list">
+      <view class="recommend-item" wx:for="{{recommendList}}" wx:key="id" bindtap="onRecommendTap" data-id="{{item.id}}">
+        <t-image src="{{item.image}}" mode="aspectFill" shape="round" />
+        <view class="recommend-info">
+          <text class="recommend-title">{{item.title}}</text>
+          <text class="recommend-desc">{{item.description}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="action-bar">
+    <view class="action-item" bindtap="onShare">
+      <t-icon name="share" size="48rpx" />
+      <text>分享</text>
+    </view>
+    <view class="action-item" bindtap="onCollect">
+      <t-icon name="{{isCollected ? 'star-filled' : 'star'}}" size="48rpx" color="{{isCollected ? '#ffd700' : '#999'}}" />
+      <text>收藏</text>
+    </view>
+    <button class="primary-btn" bindtap="onStartReading">开始阅读</button>
+  </view>
+</view> 
