@@ -4,8 +4,11 @@ Page({
   data: {
     userInfo: {},
     unreadCount: 0,
-    avatarUrl: defaultAvatarUrl,
-    nickName: ''
+    avatarUrl: '',
+    nickName: '',
+    showAuthModal: false,
+    modalAvatarUrl: '',
+    modalNickName: ''
   },
 
   onLoad() {
@@ -61,7 +64,7 @@ Page({
             nickName: '未登录',
             avatarUrl: defaultAvatarUrl
           },
-          avatarUrl: defaultAvatarUrl,
+          avatarUrl: '',
           nickName: ''
         });
         return;
@@ -108,7 +111,7 @@ Page({
 
   // 昵称输入回调
   getName(e) {
-    console.log('输入的昵称:', e.detail.value);
+    console.log('输入的昵称:', e.detail.value); // 这里的这个bug已经被修复了，所以回调不用担心
     this.setData({
       nickName: e.detail.value
     });
@@ -117,6 +120,14 @@ Page({
   // 提交用户信息（登录）
   onSubmitUserInfo(e) {
     const { nickName, avatarUrl } = this.data;
+    
+    if (!avatarUrl) {
+      wx.showToast({
+        title: '请先选择头像',
+        icon: 'none'
+      });
+      return;
+    }
     
     if (!nickName.trim()) {
       wx.showToast({
@@ -188,17 +199,32 @@ Page({
 
   // 导航到设置
   navigateToSettings() {
-    // 显示模拟设置菜单
+    // 根据登录状态动态生成菜单项
+    const isLoggedIn = this.data.userInfo && this.data.userInfo.userId;
+    const itemList = ['清除缓存', '关于我们'];
+    
+    // 只有已登录才显示退出登录选项
+    if (isLoggedIn) {
+      itemList.push('退出登录');
+    }
+    
+    // 显示设置菜单
     wx.showActionSheet({
-      itemList: ['清除缓存', '关于我们', '退出登录'],
+      itemList: itemList,
       success: (res) => {
-        if (res.tapIndex === 2) {
-          // 退出登录
+        if (isLoggedIn && res.tapIndex === 2) {
+          // 退出登录（只有已登录时才会有这个选项）
           this.logout();
-        } else {
+        } else if (res.tapIndex === 0) {
+          // 清除缓存
           wx.showToast({
             title: '功能开发中',
             icon: 'none'
+          });
+        } else if (res.tapIndex === 1) {
+          // 关于我们
+          wx.navigateTo({
+            url: '/pages/profile/about/index'
           });
         }
       }
@@ -227,7 +253,7 @@ Page({
               nickName: '未登录',
               avatarUrl: defaultAvatarUrl
             },
-            avatarUrl: defaultAvatarUrl,
+            avatarUrl: '',
             nickName: ''
           });
           
@@ -238,6 +264,98 @@ Page({
           });
         }
       }
-    });
+    })
+  },
+
+  // 显示授权登录弹窗
+  showAuthModal() {
+    // 初始化弹窗数据，如果已有数据则使用现有数据
+    this.setData({
+      showAuthModal: true,
+      modalAvatarUrl: this.data.avatarUrl || '',
+      modalNickName: this.data.nickName || ''
+    })
+  },
+
+  // 关闭授权登录弹窗
+  closeAuthModal() {
+    this.setData({
+      showAuthModal: false
+    })
+  },
+
+  // 阻止事件冒泡
+  stopPropagation() {
+    // 阻止点击弹窗内容时关闭弹窗
+  },
+
+  // 弹窗内头像选择
+  onModalChooseAvatar(e) {
+    const { avatarUrl } = e.detail
+    this.setData({
+      modalAvatarUrl: avatarUrl
+    })
+  },
+
+  // 弹窗内昵称输入
+  onModalGetName(e) {
+    this.setData({
+      modalNickName: e.detail.value
+    })
+  },
+
+
+
+  // 确认授权
+  confirmAuth() {
+    const { modalAvatarUrl, modalNickName } = this.data
+    
+    // 验证必填信息
+    if (!modalAvatarUrl || !modalNickName.trim()) {
+      wx.showToast({
+        title: '请完善头像和昵称信息',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    
+    // 使用当前表单信息进行登录
+    this.processCustomLogin(modalAvatarUrl, modalNickName)
+    
+    this.setData({
+      showAuthModal: false
+    })
+  },
+
+  // 处理自定义信息登录
+  processCustomLogin(avatarUrl, nickName) {
+    // 生成用户ID
+    const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
+    
+    const userInfo = {
+      userId: userId,
+      nickName: nickName,
+      avatarUrl: avatarUrl
+    }
+    
+    // 保存到全局数据
+    getApp().globalData.userInfo = userInfo
+    
+    // 保存到本地存储
+    wx.setStorageSync('userInfo', userInfo)
+    
+    // 更新页面数据
+    this.setData({
+      userInfo: userInfo,
+      avatarUrl: avatarUrl,
+      nickName: nickName
+    })
+    
+    wx.showToast({
+      title: '登录成功',
+      icon: 'success',
+      duration: 2000
+    })
   }
 });

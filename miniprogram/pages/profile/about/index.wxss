@@ -1,0 +1,170 @@
+/* 关于我们页面样式 */
+.about-container {
+  padding: 40rpx 30rpx;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* 页面头部 */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 0;
+  background: linear-gradient(135deg, #9c26b0 0%, #e91e63 100%);
+  border-radius: 20rpx;
+  margin-bottom: 40rpx;
+  color: white;
+}
+
+.logo {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-bottom: 20rpx;
+}
+
+.app-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.version {
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+/* 内容区块 */
+.section {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  padding-bottom: 10rpx;
+  border-bottom: 2rpx solid #9c26b0;
+  display: inline-block;
+}
+
+.section-content {
+  line-height: 1.6;
+}
+
+.description {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.8;
+}
+
+/* 功能列表 */
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #f8f9fa;
+  border-radius: 12rpx;
+  border-left: 4rpx solid #9c26b0;
+}
+
+.feature-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+  width: 60rpx;
+  text-align: center;
+}
+
+.feature-info {
+  flex: 1;
+}
+
+.feature-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.feature-desc {
+  font-size: 24rpx;
+  color: #666;
+  display: block;
+}
+
+/* 团队信息 */
+.team-info {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.8;
+}
+
+/* 联系方式 */
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  padding: 15rpx 0;
+}
+
+.contact-label {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: bold;
+  width: 120rpx;
+}
+
+.contact-value {
+  font-size: 28rpx;
+  color: #9c26b0;
+  flex: 1;
+}
+
+/* 页脚版权 */
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 0;
+  margin-top: 40rpx;
+}
+
+.copyright {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1.5;
+}
+
+/* 响应式适配 */
+@media (max-width: 750rpx) {
+  .about-container {
+    padding: 30rpx 20rpx;
+  }
+  
+  .header {
+    padding: 40rpx 0;
+  }
+  
+  .section {
+    padding: 20rpx;
+  }
+}

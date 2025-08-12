@@ -47,6 +47,19 @@
   border: 4rpx solid #f0f0f0;
 }
 
+/* 授权登录区域样式 */
+.auth-login-section {
+  text-align: center;
+}
+
+.login-hint {
+  display: block;
+  font-size: 24rpx;
+  color: #999999;
+  margin-top: 16rpx;
+  line-height: 1.4;
+}
+
 /* 昵称输入框样式 */
 .nickname-input {
   font-size: 40rpx;
@@ -64,6 +77,21 @@
 .nickname-input::placeholder {
   color: #999999;
   font-weight: normal;
+}
+
+/* 昵称显示样式 */
+.nickname-display {
+  margin-bottom: 16rpx;
+}
+
+.nickname-text {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333333;
+  padding: 8rpx 0;
+  border-bottom: 2rpx solid #e0e0e0;
+  display: block;
+  width: 100%;
 }
 
 /* 登录按钮样式 */
@@ -137,4 +165,240 @@
 /* 标签样式 */
 :host .t-tag {
   margin-left: 16rpx;
+}
+
+/* 授权登录弹窗样式 */
+.pop_root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.pop_content {
+  width: 100%;
+  max-height: 70vh;
+  background: #ffffff;
+  border-radius: 32rpx 32rpx 0 0;
+  overflow: hidden;
+  animation: slideUpFromBottom 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 -8rpx 32rpx rgba(0, 0, 0, 0.15);
+  margin-bottom: 0;
+}
+
+/* 弹窗头部 */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40rpx 40rpx 32rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  background: linear-gradient(135deg, #6A5ACD 0%, #9370DB 100%);
+  position: relative;
+}
+
+.modal-header::before {
+  content: '';
+  position: absolute;
+  top: 16rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80rpx;
+  height: 8rpx;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4rpx;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.close-btn {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40rpx;
+  color: #ffffff;
+  opacity: 0.8;
+}
+
+/* 弹窗内容 */
+.modal-body {
+  padding: 32rpx 40rpx 48rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* 用户信息编辑区域 */
+.user-edit-section {
+  margin-bottom: 40rpx;
+}
+
+.avatar-section, .nickname-section {
+  margin-bottom: 32rpx;
+}
+
+.section-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 16rpx;
+}
+
+.avatar-options {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-avatar-wrapper {
+  width: 120rpx;
+  height: 120rpx;
+  border: 2rpx dashed #6A5ACD;
+  border-radius: 50%;
+  background: #f8f9ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+.avatar-placeholder {
+  font-size: 24rpx;
+  color: #6A5ACD;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.modal-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 4rpx solid #6A5ACD;
+  padding: 0;
+  background: none;
+  overflow: hidden;
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.modal-nickname-input {
+  width: 100%;
+  height: 80rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 16rpx;
+  padding: 0 24rpx;
+  font-size: 32rpx;
+  color: #333333;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.modal-nickname-input:focus {
+  border-color: #6A5ACD;
+}
+
+/* 微信授权选项 */
+
+
+.auth-tips {
+  text-align: left;
+  background: #f8f9ff;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  border-left: 6rpx solid #6A5ACD;
+}
+
+.tip-item {
+  display: block;
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.6;
+  margin-bottom: 8rpx;
+}
+
+.tip-item:last-child {
+  margin-bottom: 0;
+}
+
+/* 弹窗按钮 */
+.modal-footer {
+  display: flex;
+  padding: 32rpx 40rpx 40rpx;
+  gap: 24rpx;
+  border-top: 1rpx solid #f0f0f0;
+  background: #ffffff;
+  border-radius: 0 0 32rpx 32rpx;
+}
+
+.cancel-btn {
+  flex: 1;
+  height: 88rpx;
+  background: #f5f5f5;
+  color: #666666;
+  border: none;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn:active {
+  background: #e8e8e8;
+  transform: translateY(1rpx);
+}
+
+.confirm-btn {
+  flex: 1;
+  height: 88rpx;
+  background: linear-gradient(135deg, #6A5ACD 0%, #9370DB 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  box-shadow: 0 8rpx 24rpx rgba(106, 90, 205, 0.3);
+  transition: all 0.3s ease;
+}
+
+.confirm-btn:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 4rpx 12rpx rgba(106, 90, 205, 0.4);
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpFromBottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

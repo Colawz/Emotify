@@ -1,0 +1,77 @@
+<view class="about-container">
+  <!-- 页面头部 -->
+  <view class="header">
+    <image class="logo" src="/assets/images/logo.png" mode="aspectFit"></image>
+    <text class="app-name">校园生活助手</text>
+    <text class="version">版本 1.0.0</text>
+  </view>
+
+  <!-- 应用介绍 -->
+  <view class="section">
+    <view class="section-title">应用介绍</view>
+    <view class="section-content">
+      <text class="description">
+        校园生活助手是一款专为大学生打造的综合性校园服务应用，集成了AI智能助手、心理疗愈、社交互动等多项功能，致力于为同学们提供更便捷、更温暖的校园生活体验。
+      </text>
+    </view>
+  </view>
+
+  <!-- 主要功能 -->
+  <view class="section">
+    <view class="section-title">主要功能</view>
+    <view class="feature-list">
+      <view class="feature-item">
+        <view class="feature-icon">🤖</view>
+        <view class="feature-info">
+          <text class="feature-name">AI智能助手</text>
+          <text class="feature-desc">24小时在线，解答学习生活问题</text>
+        </view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">💚</view>
+        <view class="feature-info">
+          <text class="feature-name">心理疗愈</text>
+          <text class="feature-desc">专业心理咨询，守护心理健康</text>
+        </view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">👥</view>
+        <view class="feature-info">
+          <text class="feature-name">社交互动</text>
+          <text class="feature-desc">结识志同道合的朋友</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 开发团队 -->
+  <view class="section">
+    <view class="section-title">开发团队</view>
+    <view class="section-content">
+      <text class="team-info">
+        本应用由热爱技术的大学生团队开发，我们致力于用技术改善校园生活，让每一位同学都能享受到更好的校园体验。
+      </text>
+    </view>
+  </view>
+
+  <!-- 联系我们 -->
+  <view class="section">
+    <view class="section-title">联系我们</view>
+    <view class="contact-list">
+      <view class="contact-item">
+        <text class="contact-label">邮箱：</text>
+        <text class="contact-value">support@campus-helper.com</text>
+      </view>
+      <view class="contact-item">
+        <text class="contact-label">QQ群：</text>
+        <text class="contact-value">123456789</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 版权信息 -->
+  <view class="footer">
+    <text class="copyright">© 2024 校园生活助手团队</text>
+    <text class="copyright">All Rights Reserved</text>
+  </view>
+</view>

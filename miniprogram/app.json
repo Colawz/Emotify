@@ -16,7 +16,8 @@
     "pages/counseling/conversation/create/index",
     "pages/counseling/profile-analysis/index",
     "pages/profile/messages/index",
-    "pages/profile/messages/chat/index"
+    "pages/profile/messages/chat/index",
+    "pages/profile/about/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
