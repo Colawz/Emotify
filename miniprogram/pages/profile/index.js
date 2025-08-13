@@ -200,7 +200,7 @@ Page({
   // 导航到设置
   navigateToSettings() {
     // 根据登录状态动态生成菜单项
-    const isLoggedIn = this.data.userInfo && this.data.userInfo.userId;
+    const isLoggedIn = this.data.userInfo && this.data.userInfo.openid;
     const itemList = ['清除缓存', '关于我们'];
     
     // 只有已登录才显示退出登录选项
@@ -350,16 +350,95 @@ Page({
       console.log('云开发已初始化或初始化失败', error)
     }
 
-    // 生成用户ID
-    const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
-    
     // 显示加载提示
+    wx.showLoading({
+      title: '登录中...'
+    })
+    
+    // 调用云函数获取用户openid和检查是否已存在
+    wx.cloud.callFunction({
+      name: 'getUserInfo',
+      success: (res) => {
+        console.log('获取用户信息成功:', res.result)
+        console.log('res.result详细信息:', JSON.stringify(res.result, null, 2))
+        
+        if (res.result.error) {
+          console.error('云函数返回错误:', res.result.error)
+          wx.hideLoading()
+          wx.showToast({
+            title: '登录失败: ' + res.result.error,
+            icon: 'none',
+            duration: 3000
+          })
+          return
+        }
+        
+        const { openid, existingUser, isNewUser } = res.result
+        console.log('解构后的openid:', openid)
+        console.log('解构后的isNewUser:', isNewUser)
+        console.log('解构后的existingUser:', existingUser)
+        
+        if (!isNewUser && existingUser) {
+          // 用户已存在，直接登录
+          this.loginExistingUser(existingUser)
+        } else {
+          // 新用户，需要上传头像和保存信息
+          this.registerNewUser(openid, avatarUrl, nickName)
+        }
+      },
+      fail: (error) => {
+        console.error('调用云函数失败:', error)
+        wx.hideLoading()
+        wx.showToast({
+          title: '登录失败，请重试',
+          icon: 'none',
+          duration: 3000
+        })
+      }
+    })
+  },
+  
+  // 登录已存在的用户
+  loginExistingUser(userInfo) {
+    // 保存到本地存储和全局数据
+    wx.setStorageSync('userInfo', userInfo)
+    getApp().globalData.userInfo = userInfo
+    
+    // 更新页面数据
+    this.setData({
+      userInfo: userInfo,
+      avatarUrl: userInfo.avatarUrl || defaultAvatarUrl,
+      nickName: userInfo.nickName || ''
+    })
+    
+    wx.hideLoading()
+    wx.showToast({
+      title: '登录成功',
+      icon: 'success',
+      duration: 2000
+    })
+  },
+  
+  // 注册新用户
+  registerNewUser(openid, avatarUrl, nickName) {
+    console.log('registerNewUser参数:', { openid, avatarUrl, nickName })
+    
+    if (!nickName) {
+      console.error('registerNewUser: 昵称为空，无法继续')
+      wx.showToast({
+        title: '请输入昵称',
+        icon: 'none'
+      })
+      return
+    }
+    
     wx.showLoading({
       title: '上传头像中...'
     })
     
-    // 先上传头像到云存储
-    const cloudPath = `avatars/${userId}.png`
+    // 先上传头像到云存储，使用昵称作为文件名
+    const cloudPath = `avatars/${nickName}.png`
+    console.log('生成的头像路径:', cloudPath)
     
     wx.cloud.uploadFile({
       cloudPath: cloudPath,
@@ -367,9 +446,9 @@ Page({
       success: uploadRes => {
         console.log('头像上传成功', uploadRes)
         
-        // 创建用户信息对象（使用云存储的fileID）
+        // 创建用户信息对象（包含openid和使用云存储的fileID）
         const userInfo = {
-          userId: userId,
+          openid: openid,
           nickName: nickName,
           avatarUrl: uploadRes.fileID // 使用云存储的fileID
         }
@@ -387,7 +466,7 @@ Page({
         
         wx.hideLoading()
         wx.showToast({
-          title: '登录成功',
+          title: '注册成功',
           icon: 'success',
           duration: 2000
         })
@@ -396,12 +475,14 @@ Page({
         setTimeout(() => {
           try {
             const db = wx.cloud.database()
+            // 直接使用add方法，让数据库自动生成_id
             db.collection('User').add({
               data: userInfo
-            }).then(dbRes => {
-              console.log('用户信息保存到数据库成功', dbRes)
-            }).catch(dbErr => {
-              console.warn('保存用户信息到数据库失败', dbErr)
+            }).then(addRes => {
+              console.log('用户信息保存到数据库成功', addRes)
+              console.log('生成的_id:', addRes._id)
+            }).catch(addErr => {
+              console.warn('保存用户信息到数据库失败', addErr)
             })
           } catch (error) {
             console.warn('云数据库操作失败', error)
@@ -414,7 +495,7 @@ Page({
         
         // 头像上传失败时，使用本地头像路径作为备选方案
         const userInfo = {
-          userId: userId,
+          openid: openid,
           nickName: nickName,
           avatarUrl: avatarUrl // 使用本地头像路径作为备选
         }
@@ -431,7 +512,7 @@ Page({
         })
         
         wx.showToast({
-          title: '登录成功（头像上传失败）',
+          title: '注册成功（头像上传失败）',
           icon: 'success',
           duration: 2000
         })
@@ -440,12 +521,14 @@ Page({
         setTimeout(() => {
           try {
             const db = wx.cloud.database()
+            // 直接使用add方法，让数据库自动生成_id
             db.collection('User').add({
               data: userInfo
-            }).then(dbRes => {
-              console.log('用户信息保存到数据库成功', dbRes)
-            }).catch(dbErr => {
-              console.warn('保存用户信息到数据库失败', dbErr)
+            }).then(addRes => {
+              console.log('用户信息保存到数据库成功', addRes)
+              console.log('生成的_id:', addRes._id)
+            }).catch(addErr => {
+              console.warn('保存用户信息到数据库失败', addErr)
             })
           } catch (error) {
             console.warn('云数据库操作失败', error)

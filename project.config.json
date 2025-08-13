@@ -55,5 +55,6 @@
     "include": []
   },
   "appid": "wxd9c166a236e224ea",
-  "projectArchitecture": "multiPlatform"
+  "projectArchitecture": "multiPlatform",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
 }

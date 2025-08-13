@@ -21,11 +21,30 @@
   display: flex;
   align-items: center;
   width: 100%;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.user-info.logged-in {
+  flex-direction: column;
+  text-align: center;
+}
+
+.user-info.not-logged-in {
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
 .user-detail {
   margin-left: 32rpx;
   flex: 1;
+}
+
+.user-detail.logged-in {
+  margin-left: 0;
+  margin-top: 24rpx;
+  text-align: center;
+  width: 100%;
 }
 
 /* 头像选择按钮样式 */

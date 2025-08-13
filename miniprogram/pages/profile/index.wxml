@@ -1,7 +1,7 @@
 <view class="container">
   <!-- 用户信息卡片 -->
   <view class="user-card">
-    <view class="user-info">
+    <view class="user-info {{userInfo.openid ? 'logged-in' : 'not-logged-in'}}">
       <!-- 头像选择按钮 -->
       <button wx:if="{{!avatarUrl}}" class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
         选择头像
@@ -9,9 +9,9 @@
       <!-- 已选择的头像显示 -->
       <image wx:else class="avatar" src="{{avatarUrl}}"></image>
       
-      <view class="user-detail">
+      <view class="user-detail {{userInfo.openid ? 'logged-in' : ''}}">
         <!-- 授权登录按钮 -->
-        <view wx:if="{{!userInfo.userId}}" class="auth-login-section">
+        <view wx:if="{{!userInfo.openid}}" class="auth-login-section">
           <button 
             class="login-btn"
             bindtap="showAuthModal"
@@ -22,7 +22,7 @@
         <view wx:else class="nickname-display">
           <text class="nickname-text">{{userInfo.nickName}}</text>
         </view>
-        <text class="user-id" wx:if="{{userInfo.userId}}">ID: {{userInfo.userId}}</text>
+        <text class="user-id" wx:if="{{userInfo.openid}}">ID: {{userInfo.openid}}</text>
       </view>
     </view>
   </view>
