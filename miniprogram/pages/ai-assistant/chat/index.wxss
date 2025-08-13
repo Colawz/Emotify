@@ -180,6 +180,16 @@
   margin-bottom: 12rpx;
 }
 
+.card-icon {
+  font-size: 48rpx;
+  margin-bottom: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80rpx;
+  height: 80rpx;
+}
+
 .card-content {
   flex: 1;
   display: flex;
@@ -412,4 +422,4 @@
 /* 确保弹窗在最上层 */
 .t-popup {
   z-index: 1000;
-} 
+}

@@ -163,35 +163,9 @@ Page({
     }
   },
 
-  // 添加 onShow 方法处理返回到聊天页面的情况
   onShow() {
-    console.log('聊天页面 onShow 被触发');
-    
-    // 从全局数据中获取选中的对话ID
-    const app = getApp();
-    console.log('全局数据:', app.globalData);
-    
-    if (app.globalData && app.globalData.selectedChatId) {
-      const chatId = app.globalData.selectedChatId;
-      console.log('从全局数据获取到选中的 chatId:', chatId);
-      
-      // 强制重新加载对话
-      this.setData({
-        messages: [], // 先清空当前消息
-        currentChatId: '' // 重置当前对话ID
-      }, () => {
-        // 延迟一点加载，确保清空操作已完成
-        setTimeout(() => {
-          console.log('正在加载历史对话:', chatId);
-          this.loadChat(chatId);
-        }, 100);
-      });
-      
-      // 清除全局数据，防止再次进入页面时自动加载
-      app.globalData.selectedChatId = null;
-    } else {
-      console.log('没有从全局数据获取到 chatId');
-    }
+    // 页面显示时的处理逻辑
+    console.log('AI助手聊天页面显示');
   },
 
   // 获取用户信息
@@ -219,7 +193,7 @@ Page({
   },
 
   // 加载历史对话
-  loadChat(chatId) {
+  async loadChat(chatId) {
     if (!chatId) {
       console.error('加载对话失败: chatId 为空');
       wx.showToast({
@@ -237,10 +211,27 @@ Page({
     });
     
     try {
-      const chats = wx.getStorageSync('chats') || {};
-      console.log('当前所有对话:', Object.keys(chats));
+      const db = wx.cloud.database()
+      const userInfo = wx.getStorageSync('userInfo') || {}
+      const openid = userInfo.openid || ''
       
-      const chat = chats[chatId];
+      // 优先从云数据库加载
+      const cloudResult = await db.collection('History').where({
+        id: chatId,
+        openid: openid
+      }).get()
+      
+      let chat = null
+      
+      if (cloudResult.data && cloudResult.data.length > 0) {
+        console.log('从云数据库加载对话成功');
+        chat = cloudResult.data[0]
+      } else {
+        console.log('云数据库中未找到对话，尝试从本地加载');
+        // 从本地存储加载
+        const chats = wx.getStorageSync('chats') || {};
+        chat = chats[chatId];
+      }
       
       if (chat && chat.messages && chat.messages.length > 0) {
         console.log('找到对话, 标题:', chat.title, '消息数:', chat.messages.length);
@@ -291,43 +282,208 @@ Page({
       wx.hideLoading();
       
       console.error('加载对话失败:', error);
-      wx.showToast({
-        title: '加载对话失败',
-        icon: 'error'
-      });
-      this.initMessages();
+      
+      // 如果云数据库加载失败，尝试从本地加载
+      try {
+        const chats = wx.getStorageSync('chats') || {};
+        const chat = chats[chatId];
+        
+        if (chat && chat.messages && chat.messages.length > 0) {
+          const messagesWithAvatar = chat.messages.map(msg => ({
+            ...msg,
+            avatar: msg.type === 'user' ? '/images/user-avatar.png' : '/images/ai-avatar.png'
+          }));
+          
+          this.setData({
+            messages: messagesWithAvatar,
+            currentChatId: chatId
+          });
+          
+          wx.showToast({
+            title: '历史对话已加载',
+            icon: 'success',
+            duration: 1500
+          });
+        } else {
+          wx.showToast({
+            title: '加载对话失败',
+            icon: 'error'
+          });
+          this.initMessages();
+        }
+      } catch (localError) {
+        wx.showToast({
+          title: '加载对话失败',
+          icon: 'error'
+        });
+        this.initMessages();
+      }
     }
   },
 
   // 保存对话
-  saveChat() {
+  async saveChat() {
+    console.log('开始保存对话...');
+    
     try {
-      const { currentChatId, messages } = this.data
-      const chats = wx.getStorageSync('chats') || {}
+      // 确保云环境已初始化
+      if (!wx.cloud) {
+        console.error('云开发未启用');
+        throw new Error('云开发未启用');
+      }
+      
+      // 检查并初始化云环境
+      try {
+        await wx.cloud.init({
+          env: 'cloud1-1gjz5ckoe28a6c4a',
+          traceUser: true
+        });
+        console.log('云环境初始化检查完成');
+      } catch (initError) {
+        console.log('云环境可能已初始化:', initError.message);
+      }
+      
+      const { currentChatId, messages, userInfo } = this.data
+      console.log('当前对话数据:', {
+        currentChatId,
+        messagesCount: messages.length,
+        userInfo: userInfo
+      });
+      
+      const db = wx.cloud.database()
+      const storedUserInfo = wx.getStorageSync('userInfo') || {}
+      const openid = userInfo?.openid || storedUserInfo.openid || ''
+      
+      console.log('获取到的openid:', openid);
+      
+      if (!openid) {
+        console.warn('警告: openid为空，可能影响数据保存');
+      }
       
       // 如果没有对话ID，创建新的
       const chatId = currentChatId || `chat_${Date.now()}`
+      console.log('使用的chatId:', chatId);
       
-      chats[chatId] = {
+      const chatTitle = await this.generateChatTitle(messages);
+      console.log('生成的对话标题:', chatTitle);
+      
+      const chatData = {
         id: chatId,
         messages: messages,
         lastUpdate: Date.now(),
-        title: this.generateChatTitle(messages)
+        title: chatTitle,
+        openid: openid
       }
       
+      console.log('准备保存的对话数据:', {
+        id: chatData.id,
+        messagesCount: chatData.messages.length,
+        title: chatData.title,
+        openid: chatData.openid,
+        lastUpdate: new Date(chatData.lastUpdate).toLocaleString()
+      });
+      
+      // 保存到云数据库
+      if (currentChatId) {
+        console.log('更新现有对话到云数据库...');
+        const updateResult = await db.collection('History').where({
+          id: chatId,
+          openid: chatData.openid
+        }).update({
+          data: {
+            messages: messages,
+            lastUpdate: Date.now(),
+            title: chatData.title
+          }
+        })
+        console.log('云数据库更新结果:', updateResult);
+      } else {
+        console.log('创建新对话到云数据库...');
+        const addResult = await db.collection('History').add({
+          data: chatData
+        })
+        console.log('云数据库添加结果:', addResult);
+      }
+      
+      // 同时保存到本地存储（兼容性）
+      console.log('保存到本地存储...');
+      const chats = wx.getStorageSync('chats') || {}
+      chats[chatId] = chatData
       wx.setStorageSync('chats', chats)
+      console.log('本地存储保存成功');
+      
       this.setData({ currentChatId: chatId })
+      console.log('对话保存完成，chatId:', chatId);
+      
     } catch (error) {
-      console.error('保存对话失败:', error)
+      console.error('保存对话到云数据库失败:', error);
+      console.error('错误详情:', {
+        message: error.message,
+        errCode: error.errCode,
+        errMsg: error.errMsg
+      });
+      
+      // 如果云数据库保存失败，至少保存到本地
+      try {
+        console.log('尝试仅保存到本地存储...');
+        const { currentChatId, messages } = this.data
+        const chats = wx.getStorageSync('chats') || {}
+        const chatId = currentChatId || `chat_${Date.now()}`
+        
+        chats[chatId] = {
+          id: chatId,
+          messages: messages,
+          lastUpdate: Date.now(),
+          title: await this.generateChatTitle(messages)
+        }
+        
+        wx.setStorageSync('chats', chats)
+        this.setData({ currentChatId: chatId })
+        console.log('本地存储保存成功（备用方案）');
+        
+      } catch (localError) {
+        console.error('本地保存也失败:', localError)
+      }
     }
   },
 
   // 生成对话标题
-  generateChatTitle(messages) {
-    // 使用第一条用户消息作为标题
+  async generateChatTitle(messages) {
+    try {
+      // 如果消息少于2条，使用简单规则
+      if (messages.length < 2) {
+        const firstUserMessage = messages.find(msg => msg.type === 'user')
+        if (firstUserMessage) {
+          return firstUserMessage.content.slice(0, 20) + (firstUserMessage.content.length > 20 ? '...' : '')
+        }
+        return '新对话'
+      }
+      
+      // 使用AI生成标题
+      const conversationSummary = messages.slice(0, 4).map(msg => 
+        `${msg.type === 'user' ? '用户' : 'AI'}: ${msg.content.slice(0, 100)}`
+      ).join('\n')
+      
+      const titlePrompt = `请为以下对话生成一个简洁的标题（不超过15个字）：\n\n${conversationSummary}\n\n要求：\n1. 标题要概括对话的主要内容\n2. 不超过15个字\n3. 不要包含标点符号\n4. 直接返回标题，不要其他内容`
+      
+      const result = await apiService.chat([{
+        role: 'user',
+        content: titlePrompt
+      }])
+      
+      if (result && result.choices && result.choices[0] && result.choices[0].message) {
+        const aiTitle = result.choices[0].message.content.trim()
+        // 确保标题不超过15个字
+        return aiTitle.slice(0, 15)
+      }
+    } catch (error) {
+      console.error('AI生成标题失败:', error)
+    }
+    
+    // 如果AI生成失败，使用默认规则
     const firstUserMessage = messages.find(msg => msg.type === 'user')
     if (firstUserMessage) {
-      return firstUserMessage.content.slice(0, 20) + (firstUserMessage.content.length > 20 ? '...' : '')
+      return firstUserMessage.content.slice(0, 15) + (firstUserMessage.content.length > 15 ? '...' : '')
     }
     return '新对话'
   },
@@ -348,8 +504,27 @@ Page({
 
   // 查看历史记录
   onHistoryTap() {
+    console.log('=== 历史记录按钮被点击 ===');
+    
+    // 直接跳转到历史记录页面，无需检查登录状态
+    wx.showLoading({
+      title: '正在跳转...',
+    });
+    
     wx.navigateTo({
-      url: '/pages/chat-history/index'
+      url: '/pages/profile/chat-history/index',
+      success: () => {
+        console.log('成功跳转到历史记录页面');
+        wx.hideLoading();
+      },
+      fail: (error) => {
+        console.error('跳转历史记录页面失败:', error);
+        wx.hideLoading();
+        wx.showToast({
+          title: '跳转失败',
+          icon: 'error'
+        });
+      }
     })
   },
 
@@ -585,28 +760,40 @@ Page({
 
   // 点击推荐卡片
   onCardTap(e) {
-    const { type, action } = e.currentTarget.dataset
+    const { type, action, intent } = e.currentTarget.dataset
+    console.log('推荐卡片点击:', { type, action, intent });
 
     if (action === 'publish') {
       // 如果是发布操作，显示发布弹窗并填充草稿信息
-      const intent = type
+      const targetIntent = intent || type
       // 这里的input参数可以考虑如何获取更相关的，暂时用空字符串
-      const draftInfo = this.generateDraftInfo(intent, '')
+      const draftInfo = this.generateDraftInfo ? this.generateDraftInfo(targetIntent, '') : null
       if (draftInfo) {
         wx.nextTick(() => {
           this.setData({
             showPublishPopup: true,
             publishInfo: {
-              type: intent,
-              title: this.data.intentPages[intent].title,
+              type: targetIntent,
+              title: this.data.intentPages[targetIntent]?.title || '发布信息',
               ...draftInfo.content
             }
           })
         })
+      } else {
+        // 如果没有草稿信息生成方法，直接跳转到对应页面
+        this.navigateToPage(targetIntent)
       }
-    } else {
+    } else if (action === 'view') {
       // 如果是查看操作，跳转到对应页面
-      this.navigateToPage(type)
+      const targetIntent = intent || type
+      this.navigateToPage(targetIntent)
+    } else if (action === 'counseling') {
+      // 如果是心理咨询操作，跳转到心理咨询页面
+      this.navigateToPage('counseling')
+    } else {
+      // 默认跳转到对应页面
+      const targetIntent = intent || type
+      this.navigateToPage(targetIntent)
     }
   },
 
@@ -762,6 +949,76 @@ Page({
     this.setData({
       'publishInfo.remark': e.detail.value
     })
+  },
+
+  // 生成推荐卡片
+  generateRecommendations(intent, input) {
+    console.log('生成推荐卡片，意图:', intent, '输入:', input);
+    
+    const recommendations = []
+    const intentConfig = this.data.intentPages[intent]
+    
+    if (intentConfig) {
+      // 根据意图类型生成不同的推荐卡片
+      if (['carpool', 'sports', 'food', 'study', 'dorm', 'activity'].includes(intent)) {
+        // 功能类推荐卡片
+        recommendations.push({
+          id: `rec_${Date.now()}_1`,
+          type: 'action',
+          title: intentConfig.publishTip || '发布信息',
+          action: 'publish',
+          intent: intent,
+          icon: this.getIntentIcon(intent)
+        })
+        
+        recommendations.push({
+          id: `rec_${Date.now()}_2`,
+          type: 'action', 
+          title: intentConfig.viewTip || '查看信息',
+          action: 'view',
+          intent: intent,
+          icon: this.getIntentIcon(intent)
+        })
+      } else if (['anxiety', 'depression', 'anger', 'loneliness', 'stress', 'happiness', 'love', 'confusion', 'guilt', 'fear', 'counseling'].includes(intent)) {
+        // 情绪类推荐卡片
+        recommendations.push({
+          id: `rec_${Date.now()}_1`,
+          type: 'emotion',
+          title: intentConfig.title || '心理支持',
+          tip: intentConfig.tip || '需要专业的心理支持吗？',
+          action: 'counseling',
+          intent: intent,
+          icon: '💝'
+        })
+      }
+    }
+    
+    console.log('生成的推荐卡片:', recommendations);
+    return recommendations
+  },
+
+  // 获取意图对应的图标
+  getIntentIcon(intent) {
+    const iconMap = {
+      carpool: '🚗',
+      sports: '⚽',
+      food: '🍽️',
+      study: '📚',
+      dorm: '🏠',
+      activity: '🎉',
+      counseling: '💝',
+      anxiety: '😰',
+      depression: '😢',
+      anger: '😠',
+      loneliness: '😔',
+      stress: '😫',
+      happiness: '😊',
+      love: '💕',
+      confusion: '🤔',
+      guilt: '😞',
+      fear: '😨'
+    }
+    return iconMap[intent] || '💡'
   },
 
   // 发布信息

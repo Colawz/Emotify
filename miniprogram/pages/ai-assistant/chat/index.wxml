@@ -43,11 +43,12 @@
                 data-type="{{rec.type}}"
                 data-id="{{rec.id}}"
                 data-action="{{rec.action}}"
+                data-intent="{{rec.intent}}"
               >
-                <image src="{{rec.image}}" mode="aspectFill" class="card-image"/>
+                <view class="card-icon">{{rec.icon}}</view>
                 <view class="card-content">
                   <view class="card-title">{{rec.title}}</view>
-                  <view class="card-description">{{rec.description}}</view>
+                  <view class="card-description" wx:if="{{rec.tip}}">{{rec.tip}}</view>
                 </view>
               </view>
             </view>
@@ -137,4 +138,4 @@
       <t-button theme="primary" bindtap="onPublish">发布</t-button>
     </view>
   </view>
-</t-popup> 
+</t-popup>
