@@ -39,18 +39,29 @@
     </view>
   </scroll-view>
 
-  <!-- 3. 底部输入和操作区 -->
-  <view class="input-area">
-    <view class="action-btn" bindtap="onRestartTap">重聊</view>
-    <view class="action-btn" bindtap="onSummarizeTap">总结</view>
-    <input 
-      class="input-field" 
-      value="{{inputValue}}"
-      placeholder="说点什么吧..."
-      bindinput="onInput"
-      confirm-type="send"
-      bindconfirm="onSend"
-    />
-    <button class="send-btn" bindtap="onSend" disabled="{{!inputValue.trim()}}">发送</button>
+  <!-- 3. 图片展示和输入区 -->
+  <view class="bottom-container">
+    <!-- 图片展示框 -->
+    <view class="image-display-box">
+      <image wx:if="{{latestImageUrl}}" src="{{latestImageUrl}}" class="generated-image-preview" mode="aspectFill" bindtap="previewImage" data-src="{{latestImageUrl}}"/>
+      <view wx:else class="image-placeholder">图片将在这里生成</view>
+      <view wx:if="{{isGeneratingImage}}" class="image-loading-overlay">
+        <view class="loading-text">图片生成中...</view>
+      </view>
+    </view>
+
+    <!-- 输入和操作区 -->
+    <view class="input-area">
+      <view class="action-btn" bindtap="onRestartTap">重聊</view>
+      <input 
+        class="input-field" 
+        value="{{inputValue}}"
+        placeholder="说点什么吧..."
+        bindinput="onInput"
+        confirm-type="send"
+        bindconfirm="onSend"
+      />
+      <button class="send-btn" bindtap="onSend" disabled="{{!inputValue.trim()}}">发送</button>
+    </view>
   </view>
-</view> 
+</view>

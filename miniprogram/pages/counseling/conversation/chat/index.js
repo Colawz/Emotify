@@ -1,31 +1,50 @@
 Page({
   data: {
-    counselor: null, // 当前聊天对象
-    messages: [],    // 消息列表
-    inputValue: '',  // 输入框内容
-    scrollToView: '' // 控制滚动位置
+    counselor: null,
+    messages: [],
+    inputValue: '',
+    scrollToView: '',
+    isLoading: false, // 控制对话加载动画
+    isGeneratingImage: false, // 控制图片生成加载动画
+    latestImageUrl: '', // 最新生成的图片URL
+    userMessageCount: 0, // 用户发送的消息计数
   },
 
   onLoad(options) {
+    // 确保云环境初始化
+    this.ensureCloudInit();
+    
     if (options.counselor) {
-      // 解析从上一个页面传来的JSON字符串
       const counselor = JSON.parse(options.counselor);
       this.setData({ 
         counselor: counselor
       });
-      // 开始新对话
       this.startNewConversation(counselor);
     }
   },
 
-  /**
-   * 点击返回按钮
-   */
+  ensureCloudInit() {
+    if (!wx.cloud) {
+      console.error('云开发环境不可用，请检查基础库版本');
+      return;
+    }
+    
+    // 如果云环境还没有初始化，重新初始化
+    try {
+      wx.cloud.init({
+        env: 'cloud1-1gjz5ckoe28a6c4a',
+        traceUser: true
+      });
+      console.log('页面级云开发初始化完成');
+    } catch (error) {
+      console.error('页面级云开发初始化失败:', error);
+    }
+  },
+
   onNavigateBack() {
     wx.navigateBack();
   },
 
-  // 开始一段新对话
   startNewConversation(counselor) {
     this.setData({
       messages: [
@@ -37,85 +56,66 @@ Page({
       ],
       inputValue: '',
       isLoading: false,
+      latestImageUrl: '',
+      userMessageCount: 0,
     });
   },
 
-  // 处理输入框内容变化
   onInput(e) {
     this.setData({
       inputValue: e.detail.value
     });
   },
 
-  // 发送消息
-  onSend() {
+  async onSend() {
     if (!this.data.inputValue.trim()) {
       return;
     }
 
-    const messages = this.data.messages;
     const userMessage = {
       id: `msg_${Date.now()}`,
       type: 'user',
       content: this.data.inputValue
     };
 
+    const newUserMessageCount = this.data.userMessageCount + 1;
+
     this.setData({
-      messages: [...messages, userMessage],
-      inputValue: '', // 清空输入框
-      scrollToView: userMessage.id // 滚动到新消息
+      messages: [...this.data.messages, userMessage],
+      inputValue: '',
+      scrollToView: userMessage.id,
+      userMessageCount: newUserMessageCount
     });
 
-    // 调用真实的AI回复
-    this.getAiReply();
+    await this.getAiReply();
+
+    if (newUserMessageCount > 0 && newUserMessageCount % 2 === 0) {
+      this.generateDoraImage();
+    }
   },
 
-  /**
-   * 点击"重聊"按钮
-   */
-  onRestartTap() {
-    wx.showModal({
-      title: '确认操作',
-      content: '确定要开始一段新的对话吗？当前聊天记录将被清空。',
-      success: (res) => {
-        if (res.confirm) {
-          this.startNewConversation(this.data.counselor);
-        }
-      }
-    });
-  },
-
-  /**
-   * 点击"总结"按钮
-   */
-  onSummarizeTap() {
-    wx.showToast({
-      title: '总结功能开发中...',
-      icon: 'none'
-    });
-    // 后续可以实现调用AI进行总结
-  },
-
-  // 获取AI的真实回复
   getAiReply() {
     this.setData({ isLoading: true });
     
-    const { counselor, messages } = this.data;
+    // 确保云环境已初始化
+    this.ensureCloudInit();
+    
+    if (!wx.cloud) {
+      console.error('云开发环境不可用');
+      this.handleAiReplyError('云开发环境不可用，请检查基础库版本');
+      return Promise.reject('云开发环境不可用');
+    }
+    
+    const { messages } = this.data;
 
-    // 1. 构建系统提示词 (System Prompt)
-    const systemPrompt = `你现在扮演一个角色，你需要严格按照以下人设进行对话。
-人设名：${counselor.name}
-人设描述：${counselor.description}
-你的任务是始终以这个角色的口吻和身份与用户进行对话，不要暴露你是一个AI模型。请根据用户的输入，以符合人设的方式进行回应。`;
+    const systemPrompt = `你是一个善解人意的好伙伴，你的名字叫Dora。请以这个角色的口吻和身份与用户进行对话，不要暴露你是一个AI模型。`;
 
-    // 2. 准备对话历史 (除了第一条欢迎语)
     const history = messages.slice(1).map(msg => ({
       role: msg.type === 'counselor' ? 'assistant' : 'user',
       content: msg.content
     }));
 
-    // 3. 调用云函数
-    wx.cloud.callFunction({
+    return wx.cloud.callFunction({
       name: 'callAI',
       data: {
         system: systemPrompt,
@@ -138,17 +138,99 @@ Page({
       }
     }).catch(err => {
       console.error('调用AI失败', err);
-      const errorReply = {
-        id: `msg_${Date.now() + 1}`,
-        type: 'counselor',
-        content: '抱歉，我好像走神了，请再说一遍吧。'
-      };
-      this.setData({
-        messages: [...this.data.messages, errorReply],
-        scrollToView: errorReply.id
-      });
+      this.handleAiReplyError('抱歉，我好像走神了，请再说一遍吧。');
     }).finally(() => {
       this.setData({ isLoading: false });
     });
-  }
-}); 
+  },
+
+  handleAiReplyError(message) {
+    const errorReply = {
+      id: `msg_${Date.now() + 1}`,
+      type: 'counselor',
+      content: message
+    };
+    this.setData({
+      messages: [...this.data.messages, errorReply],
+      scrollToView: errorReply.id
+    });
+  },
+
+  generateDoraImage() {
+    this.setData({ isGeneratingImage: true });
+
+    // 确保云环境已初始化
+    this.ensureCloudInit();
+    
+    if (!wx.cloud) {
+      console.error('云开发环境不可用');
+      wx.showToast({
+        title: '云开发环境不可用',
+        icon: 'none'
+      });
+      this.setData({ isGeneratingImage: false });
+      return;
+    }
+
+    const fixedPrompt = '一只可爱的卡通小猫，名字叫Dora，粉色，带有赛博朋克风格的耳机。';
+    
+    const userMessages = this.data.messages.filter(m => m.type === 'user');
+    const recentUserMessages = userMessages.slice(-2).map(m => m.content).join('; ');
+    
+    const finalPrompt = `${fixedPrompt} 她正在和人聊关于"${recentUserMessages}"的话题。`;
+    console.log('Generated Image Prompt:', finalPrompt);
+
+    wx.cloud.callFunction({
+      name: 'generateImage',
+      data: {
+        prompt: finalPrompt,
+        style: 'default',
+        size: '1024x1024'
+      }
+    }).then(res => {
+      console.log('文生图云函数调用结果：', res);
+      if (res.result && res.result.success && res.result.data) {
+        const imageUrl = res.result.data.url || res.result.data.image_url;
+        if (imageUrl) {
+          this.setData({
+            latestImageUrl: imageUrl
+          });
+        } else {
+           throw new Error('图片URL为空');
+        }
+      } else {
+        throw new Error(`图片生成失败: ${res.result?.message || '未知错误'}`);
+      }
+    }).catch(err => {
+      console.error('文生图云函数调用失败：', err);
+      wx.showToast({
+        title: '图片生成服务开小差了',
+        icon: 'none'
+      });
+    }).finally(() => {
+      this.setData({ isGeneratingImage: false });
+    });
+  },
+
+  previewImage(e) {
+    const src = e.currentTarget.dataset.src;
+    if (src) {
+      wx.previewImage({
+        urls: [src],
+        current: src
+      });
+    }
+  },
+
+  onRestartTap() {
+    wx.showModal({
+      title: '确认操作',
+      content: '确定要开始一段新的对话吗？当前聊天记录将被清空。',
+      success: (res) => {
+        if (res.confirm) {
+          this.startNewConversation(this.data.counselor);
+        }
+      }
+    });
+  },
+});
