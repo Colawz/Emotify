@@ -22,6 +22,13 @@
   left: 20rpx;
   z-index: 3;
   padding: 10rpx;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .header-bg {
@@ -144,41 +151,49 @@
   flex-direction: column;
 }
 
+/* 添加新的图片展示容器样式 */
+.image-display-container {
+  padding: 20rpx;
+  background-color: #f8f8f8;
+  border-bottom: 1rpx solid #eee;
+}
+
 .image-display-box {
   position: relative;
-  width: calc(100% - 40rpx);
+  width: 100%;
   height: 300rpx;
-  margin: 20rpx;
+  background-color: #FF1493;
   border-radius: 12rpx;
-  background-color: #e9ecef;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
-  border: 2rpx solid #F06292; /* 红色边框 */
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
 }
 
 .generated-image-preview {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .image-placeholder {
-  color: #adb5bd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #999;
   font-size: 28rpx;
+  background-color: #f5f5f5;
 }
 
 .image-loading-overlay {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 10;
+  justify-content: center;
 }
 
 .loading-text {
@@ -186,12 +201,20 @@
   font-size: 28rpx;
 }
 
+/* 调整聊天消息区域的高度，因为图片区域移到了上面 */
+.messages-container {
+  flex: 1;
+  padding: 20rpx;
+  overflow-y: auto;
+}
+
+/* 调整输入区域的样式 */
 .input-area {
   display: flex;
   align-items: center;
-  padding: 16rpx 20rpx;
-  gap: 16rpx;
+  padding: 20rpx;
   background-color: #fff;
+  border-top: 1rpx solid #eee;
 }
 
 .action-btn {

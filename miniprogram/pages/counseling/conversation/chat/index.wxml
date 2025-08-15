@@ -12,7 +12,18 @@
     </view>
   </view>
 
-  <!-- 2. 聊天消息区域 -->
+  <!-- 2. 图片展示区域 -->
+  <view class="image-display-container">
+    <view class="image-display-box">
+      <image wx:if="{{latestImageUrl}}" src="{{latestImageUrl}}" class="generated-image-preview" mode="aspectFill" bindtap="previewImage" data-src="{{latestImageUrl}}"/>
+      <view wx:else class="image-placeholder">图片将在这里生成</view>
+      <view wx:if="{{isGeneratingImage}}" class="image-loading-overlay">
+        <view class="loading-text">图片生成中...</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 3. 聊天消息区域 -->
   <scroll-view class="messages-container" scroll-y scroll-into-view="{{scrollToView}}">
     <block wx:for="{{messages}}" wx:key="id">
       <view id="{{item.id}}" class="message-row {{item.type === 'user' ? 'user' : 'counselor'}}">
@@ -39,29 +50,17 @@
     </view>
   </scroll-view>
 
-  <!-- 3. 图片展示和输入区 -->
-  <view class="bottom-container">
-    <!-- 图片展示框 -->
-    <view class="image-display-box">
-      <image wx:if="{{latestImageUrl}}" src="{{latestImageUrl}}" class="generated-image-preview" mode="aspectFill" bindtap="previewImage" data-src="{{latestImageUrl}}"/>
-      <view wx:else class="image-placeholder">图片将在这里生成</view>
-      <view wx:if="{{isGeneratingImage}}" class="image-loading-overlay">
-        <view class="loading-text">图片生成中...</view>
-      </view>
-    </view>
-
-    <!-- 输入和操作区 -->
-    <view class="input-area">
-      <view class="action-btn" bindtap="onRestartTap">重聊</view>
-      <input 
-        class="input-field" 
-        value="{{inputValue}}"
-        placeholder="说点什么吧..."
-        bindinput="onInput"
-        confirm-type="send"
-        bindconfirm="onSend"
-      />
-      <button class="send-btn" bindtap="onSend" disabled="{{!inputValue.trim()}}">发送</button>
-    </view>
+  <!-- 4. 输入和操作区 -->
+  <view class="input-area">
+    <view class="action-btn" bindtap="onRestartTap">重聊</view>
+    <input 
+      class="input-field" 
+      value="{{inputValue}}"
+      placeholder="说点什么吧..."
+      bindinput="onInput"
+      confirm-type="send"
+      bindconfirm="onSend"
+    />
+    <button class="send-btn" bindtap="onSend" disabled="{{!inputValue.trim()}}">发送</button>
   </view>
 </view>
