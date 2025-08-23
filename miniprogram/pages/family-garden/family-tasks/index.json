@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "家庭小任务",
+  "navigationBarBackgroundColor": "#ff9a9e",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#f8f9fa",
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "t-icon": "../../miniprogram_npm/tdesign-miniprogram/icon/icon"
+  }
+}

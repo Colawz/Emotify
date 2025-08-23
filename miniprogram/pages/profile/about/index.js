@@ -5,7 +5,7 @@ Page({
    */
   data: {
     appInfo: {
-      name: '校园生活助手',
+      name: '情感支持助手',
       version: '1.0.0',
       description: '专为大学生打造的综合性校园服务应用'
     },
@@ -92,7 +92,7 @@ Page({
    */
   onShareAppMessage() {
     return {
-      title: '校园生活助手 - 让校园生活更美好',
+      title: '情感支持助手 - 让情感支持更贴心',
       path: '/pages/profile/about/index',
       imageUrl: '/assets/images/share-cover.png'
     };

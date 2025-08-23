@@ -1,0 +1,44 @@
+<!--pages/family-garden/index.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="title">亲情驿站</view>
+    <view class="subtitle">让关心变得简单，让爱更有温度</view>
+  </view>
+
+  <!-- 智能提示 - 横向滑动卡片 -->
+  <view class="section-wrapper">
+    <view class="smart-tips-card">
+      <scroll-view class="horizontal-scroll" scroll-x="true" enhanced="true" show-scrollbar="false">
+        <view class="tips-scroll-container">
+          <view class="tip-item" wx:for="{{smartTips}}" wx:key="id" bindtap="onSmartTipTap" data-url="/pages/family-garden/smart-tips/index">
+            <view class="tip-decoration">✨</view>
+            <view class="tip-icon">{{item.icon}}</view>
+            <view class="tip-title">{{item.title}}</view>
+            <view class="tip-desc">{{item.description}}</view>
+            <view class="tip-time">{{item.time}}</view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="card-tape"></view>
+      <view class="card-decoration">🌟</view>
+    </view>
+  </view>
+
+  <!-- 其他功能卡片 -->
+  <view class="cards-container">
+    <view 
+      class="feature-card {{item.cardClass}}" 
+      wx:for="{{otherCards}}" 
+      wx:key="id"
+      data-url="{{item.url}}"
+      bindtap="onCardTap"
+      >
+      <view class="card-icon">{{item.emoji}}</view>
+      <view class="card-content">
+        <view class="card-title">{{item.title}}</view>
+        <view class="card-description">{{item.description}}</view>
+      </view>
+      <view class="card-arrow">→</view>
+    </view>
+  </view>
+</view>

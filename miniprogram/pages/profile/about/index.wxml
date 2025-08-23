@@ -2,7 +2,7 @@
   <!-- 页面头部 -->
   <view class="header">
     <image class="logo" src="/assets/images/logo.png" mode="aspectFit"></image>
-    <text class="app-name">校园生活助手</text>
+    <text class="app-name">情感支持助手</text>
     <text class="version">版本 1.0.0</text>
   </view>
 
@@ -11,7 +11,7 @@
     <view class="section-title">应用介绍</view>
     <view class="section-content">
       <text class="description">
-        校园生活助手是一款专为大学生打造的综合性校园服务应用，集成了AI智能助手、心理疗愈、社交互动等多项功能，致力于为同学们提供更便捷、更温暖的校园生活体验。
+        情感支持助手是一款专为用户打造的综合性情感支持应用，集成了AI智能助手、心理疗愈、社交互动等多项功能，致力于为用户提供更便捷、更温暖的情感支持体验。
       </text>
     </view>
   </view>
@@ -71,7 +71,7 @@
 
   <!-- 版权信息 -->
   <view class="footer">
-    <text class="copyright">© 2024 校园生活助手团队</text>
+    <text class="copyright">© 2024 情感支持助手团队</text>
     <text class="copyright">All Rights Reserved</text>
   </view>
 </view>

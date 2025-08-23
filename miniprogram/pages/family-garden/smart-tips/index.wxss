@@ -1,0 +1,402 @@
+/* pages/family-garden/smart-tips/index.wxss */
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, rgba(255, 182, 193, 0.4) 0%, rgba(255, 218, 185, 0.4) 100%);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  padding: 30rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.header {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(15rpx);
+  -webkit-backdrop-filter: blur(15rpx);
+  padding: 40rpx;
+  border-radius: 32rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.4);
+  color: #8b4513;
+  margin-bottom: 40rpx;
+  text-align: center;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10rpx,
+    rgba(255, 255, 255, 0.1) 10rpx,
+    rgba(255, 255, 255, 0.1) 20rpx
+  );
+  animation: movePattern 20s linear infinite;
+}
+
+@keyframes movePattern {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(20rpx, 20rpx); }
+}
+
+.title {
+  font-size: 52rpx;
+  font-weight: bold;
+  margin-bottom: 16rpx;
+  text-shadow: 2rpx 2rpx 4rpx rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.subtitle {
+  font-size: 30rpx;
+  opacity: 0.8;
+  position: relative;
+  z-index: 1;
+}
+
+.header-decoration {
+  font-size: 36rpx;
+  margin-top: 20rpx;
+  letter-spacing: 8rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.section-wrapper {
+  margin-bottom: 50rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.section-title {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #8b4513;
+  margin-bottom: 30rpx;
+  text-align: center;
+  text-shadow: 1rpx 1rpx 2rpx rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.section-title::before,
+.section-title::after {
+  content: '✨';
+  margin: 0 20rpx;
+  font-size: 32rpx;
+}
+
+/* 网格布局容器 */
+.tips-grid-container,
+.health-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300rpx, 1fr));
+  gap: 30rpx;
+  padding: 10rpx 0;
+  width: 100%;
+}
+
+/* 今日提醒卡片 - 手账风格 */
+.tip-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 30rpx;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10rpx);
+  -webkit-backdrop-filter: blur(10rpx);
+  border-radius: 24rpx;
+  border: 3rpx solid #ffb6c1;
+  box-shadow: 
+    0 8rpx 25rpx rgba(0, 0, 0, 0.1),
+    inset 0 0 20rpx rgba(255, 182, 193, 0.2);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  white-space: normal;
+  transition: all 0.3s ease;
+}
+
+.tip-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60rpx;
+  background: linear-gradient(135deg, rgba(255, 182, 193, 0.3) 0%, rgba(255, 218, 185, 0.3) 100%);
+  border-bottom: 2rpx dashed #ffb6c1;
+}
+
+.card-decoration {
+  position: absolute;
+  top: 15rpx;
+  right: 15rpx;
+  font-size: 32rpx;
+  z-index: 2;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10rpx); }
+}
+
+.tip-icon {
+  font-size: 64rpx;
+  margin-bottom: 20rpx;
+  margin-right: 0;
+  filter: drop-shadow(2rpx 2rpx 4rpx rgba(0, 0, 0, 0.2));
+}
+
+.tip-content {
+  flex: 1;
+  text-align: center;
+  width: 100%;
+}
+
+.tip-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #8b4513;
+  margin-bottom: 12rpx;
+  text-shadow: 1rpx 1rpx 2rpx rgba(0, 0, 0, 0.1);
+}
+
+.tip-desc {
+  font-size: 26rpx;
+  color: #a0522d;
+  margin-bottom: 12rpx;
+  line-height: 1.4;
+}
+
+.tip-time {
+  font-size: 24rpx;
+  color: #cd853f;
+  font-weight: 500;
+}
+
+.tip-action {
+  margin-left: 0;
+  margin-top: 20rpx;
+  width: 100%;
+}
+
+.card-tape {
+  position: absolute;
+  top: -10rpx;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 120rpx;
+  height: 40rpx;
+  background: rgba(255, 182, 193, 0.6);
+  border: 2rpx solid #ff69b4;
+  border-radius: 8rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+  z-index: 3;
+}
+
+/* 健康建议卡片 - 手账风格 */
+.health-card {
+  display: flex;
+  flex-direction: column;
+  padding: 40rpx 30rpx;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10rpx);
+  -webkit-backdrop-filter: blur(10rpx);
+  border-radius: 24rpx;
+  border: 3rpx solid #98fb98;
+  box-shadow: 
+    0 8rpx 25rpx rgba(0, 0, 0, 0.1),
+    inset 0 0 20rpx rgba(152, 251, 152, 0.2);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  white-space: normal;
+  transition: all 0.3s ease;
+}
+
+.health-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60rpx;
+  background: linear-gradient(135deg, rgba(152, 251, 152, 0.3) 0%, rgba(144, 238, 144, 0.3) 100%);
+  border-bottom: 2rpx dashed #98fb98;
+}
+
+.health-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+  text-align: center;
+  justify-content: center;
+}
+
+.health-icon {
+  font-size: 56rpx;
+  margin-right: 16rpx;
+  filter: drop-shadow(2rpx 2rpx 4rpx rgba(0, 0, 0, 0.2));
+}
+
+.health-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2e8b57;
+  text-shadow: 1rpx 1rpx 2rpx rgba(0, 0, 0, 0.1);
+}
+
+.health-content {
+  font-size: 26rpx;
+  color: #3cb371;
+  line-height: 1.6;
+  margin-bottom: 20rpx;
+  text-align: center;
+  flex: 1;
+}
+
+.health-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.health-tag {
+  font-size: 24rpx;
+  background: rgba(152, 251, 152, 0.6);
+  color: #2e8b57;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  border: 1rpx solid #98fb98;
+  font-weight: 500;
+}
+
+.health-time {
+  font-size: 24rpx;
+  color: #3cb371;
+  font-weight: 500;
+}
+
+/* 添加提醒表单 - 手账风格 */
+.add-tip-wrapper {
+  margin-top: 40rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.add-tip-form {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10rpx);
+  -webkit-backdrop-filter: blur(10rpx);
+  padding: 50rpx 40rpx;
+  border-radius: 32rpx;
+  border: 3rpx solid #dda0dd;
+  box-shadow: 
+    0 8rpx 25rpx rgba(0, 0, 0, 0.1),
+    inset 0 0 20rpx rgba(221, 160, 221, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.add-tip-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80rpx;
+  background: linear-gradient(135deg, rgba(221, 160, 221, 0.3) 0%, rgba(218, 112, 214, 0.3) 100%);
+  border-bottom: 2rpx dashed #dda0dd;
+}
+
+.form-decoration {
+  position: absolute;
+  font-size: 40rpx;
+  z-index: 2;
+  animation: float 4s ease-in-out infinite;
+}
+
+.form-decoration:first-of-type {
+  top: 20rpx;
+  left: 20rpx;
+}
+
+.form-decoration:last-of-type {
+  bottom: 20rpx;
+  right: 20rpx;
+  animation-delay: 2s;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  position: relative;
+  z-index: 3;
+}
+
+.form-label {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #8b4513;
+  text-shadow: 1rpx 1rpx 2rpx rgba(0, 0, 0, 0.1);
+}
+
+.form-input {
+  padding: 25rpx 20rpx;
+  border: 2rpx solid #dda0dd;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  background: rgba(255, 255, 255, 0.9);
+  color: #8b4513;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: #9370db;
+  box-shadow: 0 0 15rpx rgba(147, 112, 219, 0.3);
+}
+
+.picker {
+  padding: 25rpx 20rpx;
+  border: 2rpx solid #dda0dd;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  background: rgba(255, 255, 255, 0.9);
+  color: #8b4513;
+  transition: all 0.3s ease;
+}
+
+.picker:active {
+  border-color: #9370db;
+  box-shadow: 0 0 15rpx rgba(147, 112, 219, 0.3);
+}

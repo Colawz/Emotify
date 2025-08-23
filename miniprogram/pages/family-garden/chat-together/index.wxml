@@ -1,0 +1,169 @@
+<!--pages/family-garden/chat-together/index.wxml-->
+<view class="chat-container">
+  <!-- 温馨头部区域 -->
+  <view class="header">
+    <view class="header-bg">
+      <view class="heart-animation">❤️</view>
+      <view class="heart-animation" style="animation-delay: 0.5s;">💕</view>
+      <view class="heart-animation" style="animation-delay: 1s;">💖</view>
+    </view>
+    <view class="header-content">
+      <view class="title">陪我聊聊</view>
+      <view class="subtitle">温暖陪伴，让爱不再遥远</view>
+    </view>
+  </view>
+  
+  <!-- 一键呼叫区域 -->
+  <view class="quick-call-section">
+    <view class="section-title">一键呼叫</view>
+    <view class="quick-call-grid">
+      <view class="quick-call-btn" bindtap="onQuickCall" data-type="voice">
+        <view class="call-icon">📞</view>
+        <view class="call-text">语音通话</view>
+      </view>
+      <view class="quick-call-btn" bindtap="onQuickCall" data-type="video">
+        <view class="call-icon">📹</view>
+        <view class="call-text">视频通话</view>
+      </view>
+      <view class="quick-call-btn" bindtap="onQuickCall" data-type="schedule">
+        <view class="call-icon">⏰</view>
+        <view class="call-text">约定时间</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 陪伴者服务 -->
+  <view class="companion-section">
+    <view class="section-title">陪伴者服务</view>
+    <view class="companion-list">
+      <view class="companion-card" wx:for="{{companions}}" wx:key="id" bindtap="onCompanionTap" data-id="{{item.id}}">
+        <view class="companion-avatar">{{item.avatar}}</view>
+        <view class="companion-info">
+          <view class="companion-header">
+            <view class="companion-name">{{item.name}}</view>
+            <view class="companion-badge {{item.online ? 'online' : 'offline'}}">{{item.online ? '在线' : '离线'}}</view>
+          </view>
+          <view class="companion-meta">
+            <view class="meta-item">{{item.type}}</view>
+            <view class="meta-item">{{item.age}}岁</view>
+            <view class="meta-item">{{item.major}}</view>
+          </view>
+          <view class="companion-stats">
+            <view class="stat-item">⭐ {{item.rating}}</view>
+            <view class="stat-item">💬 {{item.companionCount}}次</view>
+            <view class="stat-item">⚡ {{item.responseRate}}</view>
+          </view>
+          <view class="companion-experience">{{item.experience}}</view>
+          <view class="companion-services-preview">
+            <view class="service-tag" wx:for="{{item.services.slice(0, 3)}}" wx:key="*this" wx:for-item="service">{{service}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 约定时间表单 -->
+  <view class="schedule-form" wx:if="{{showScheduleForm}}">
+    <view class="form-header">
+      <view class="form-title">约定通话时间</view>
+      <view class="close-btn" bindtap="closeScheduleForm">✕</view>
+    </view>
+    <view class="form-content">
+      <view class="form-item">
+        <view class="form-label">选择日期</view>
+        <picker mode="date" bindchange="onDateChange">
+          <view class="picker">{{selectedDate || '请选择日期'}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <view class="form-label">选择时间</view>
+        <picker mode="time" bindchange="onTimeChange">
+          <view class="picker">{{selectedTime || '请选择时间'}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <view class="form-label">通话类型</view>
+        <picker bindchange="onCallTypeChange" value="{{callTypeIndex}}" range="{{callTypes}}">
+          <view class="picker">{{callTypes[callTypeIndex]}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <view class="form-label">备注信息</view>
+        <textarea class="form-textarea" placeholder="请输入备注信息（可选）" value="{{remark}}" bindinput="onRemarkInput"></textarea>
+      </view>
+      <view class="form-actions">
+        <button class="submit-btn" bindtap="submitSchedule">确认约定</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 陪伴者详情 -->
+  <view class="companion-detail" wx:if="{{showCompanionDetail}}">
+    <view class="detail-header">
+      <view class="detail-title">陪伴者详情</view>
+      <view class="close-btn" bindtap="closeCompanionDetail">✕</view>
+    </view>
+    <view class="detail-content" wx:if="{{selectedCompanion}}">
+      <view class="companion-info">
+        <view class="companion-avatar">{{selectedCompanion.avatar}}</view>
+        <view class="companion-details">
+          <view class="companion-name">{{selectedCompanion.name}}</view>
+          <view class="companion-type">{{selectedCompanion.type}}</view>
+          <view class="companion-rating">⭐⭐⭐⭐⭐ {{selectedCompanion.rating}}分</view>
+        </view>
+      </view>
+      
+      <view class="companion-basic-info">
+        <view class="info-row">
+          <view class="info-label">年龄：</view>
+          <view class="info-value">{{selectedCompanion.age}}岁</view>
+        </view>
+        <view class="info-row">
+          <view class="info-label">专业：</view>
+          <view class="info-value">{{selectedCompanion.major}}</view>
+        </view>
+        <view class="info-row">
+          <view class="info-label">经验：</view>
+          <view class="info-value">{{selectedCompanion.experience}}</view>
+        </view>
+        <view class="info-row">
+          <view class="info-label">服务时间：</view>
+          <view class="info-value">{{selectedCompanion.serviceTime}}</view>
+        </view>
+        <view class="info-row">
+          <view class="info-label">响应率：</view>
+          <view class="info-value">{{selectedCompanion.responseRate}}</view>
+        </view>
+        <view class="info-row">
+          <view class="info-label">陪伴次数：</view>
+          <view class="info-value">{{selectedCompanion.companionCount}}次</view>
+        </view>
+      </view>
+      
+      <view class="companion-intro">
+        <view class="intro-title">个人简介</view>
+        <view class="intro-text">{{selectedCompanion.intro}}</view>
+      </view>
+      
+      <view class="companion-specialties">
+        <view class="specialties-title">专长领域</view>
+        <view class="specialties-list">
+          <view class="specialty-item" wx:for="{{selectedCompanion.specialties}}" wx:key="*this">{{item}}</view>
+        </view>
+      </view>
+      
+      <view class="companion-services">
+        <view class="services-title">服务项目</view>
+        <view class="service-list">
+          <view class="service-item" wx:for="{{selectedCompanion.services}}" wx:key="*this">{{item}}</view>
+        </view>
+      </view>
+      
+      <view class="companion-actions">
+        <button class="contact-btn" bindtap="contactCompanion">立即联系</button>
+      </view>
+    </view>
+  </view>
+
+
+</view>

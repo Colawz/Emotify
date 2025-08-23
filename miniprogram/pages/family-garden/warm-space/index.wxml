@@ -1,0 +1,162 @@
+<!--pages/family-garden/warm-space/index.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="title">温暖空间</view>
+    <view class="subtitle">分享生活点滴，记录美好时光</view>
+  </view>
+
+  <!-- 共种家庭小树 -->
+  <view class="tree-container" wx:if="{{currentTab === 'tree'}}">
+    <view class="tree-display">
+      <view class="tree-stage">
+        <view class="tree-emoji {{isWatering ? 'watering' : ''}}">{{familyTree.emoji}}</view>
+        <view class="tree-name">{{familyTree.name}}</view>
+        <view class="tree-level">{{familyTree.level}}</view>
+      </view>
+      <view class="tree-progress">
+        <view class="progress-bar">
+          <view class="progress-fill" style="width: {{familyTree.progress}}%"></view>
+        </view>
+        <view class="progress-text">成长进度：{{familyTree.progress}}/{{familyTree.maxProgress}}</view>
+      </view>
+      <view class="tree-info">
+        <view class="info-item">
+          <view class="info-label">种植天数</view>
+          <view class="info-value">{{familyTree.days}}天</view>
+        </view>
+        <view class="info-item">
+          <view class="info-label">浇水次数</view>
+          <view class="info-value">{{familyTree.waterCount}}次</view>
+        </view>
+        <view class="info-item">
+          <view class="info-label">家庭成员</view>
+          <view class="info-value">{{familyTree.memberCount}}人</view>
+        </view>
+      </view>
+      <view class="tree-actions">
+        <view class="water-btn" bindtap="onWaterTree">
+          <text class="water-icon">💧</text>
+          <text>浇水</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 浇水记录 -->
+    <view class="tree-records">
+      <view class="records-title">浇水记录</view>
+      <view class="records-list">
+        <view class="record-item" wx:for="{{waterRecords}}" wx:key="id">
+          <view class="record-time">{{item.time}}</view>
+          <view class="record-content">{{item.member}} {{item.action}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 家庭动态 -->
+  <view class="warm-container" wx:if="{{currentTab === 'dynamic'}}">
+    <view class="section">
+      <view class="section-header">
+        <view class="section-title">家庭动态</view>
+        <view class="section-action" bindtap="onAddPost">
+          <t-icon name="add" size="40rpx" color="#4caf50" />
+          <text>发布动态</text>
+        </view>
+      </view>
+      <view class="posts-list">
+        <view class="post-card" wx:for="{{familyPosts}}" wx:key="id">
+          <view class="post-header">
+            <view class="post-author">
+              <view class="author-avatar">{{item.authorAvatar}}</view>
+              <view class="author-info">
+                <view class="author-name">{{item.authorName}}</view>
+                <view class="post-time">{{item.time}}</view>
+              </view>
+            </view>
+            <view class="post-menu" bindtap="onPostMenu" data-id="{{item.id}}">
+              <t-icon name="more" size="32rpx" color="#6c757d" />
+            </view>
+          </view>
+          <view class="post-content">{{item.content}}</view>
+          <view class="post-images" wx:if="{{item.images && item.images.length > 0}}">
+            <view class="image-grid">
+              <view class="image-item" wx:for="{{item.images}}" wx:key="index" wx:for-item="image">
+                <t-image src="{{image}}" mode="aspectFill" class="post-image" />
+              </view>
+            </view>
+          </view>
+          <view class="post-actions">
+            <view class="action-item" bindtap="onLikePost" data-id="{{item.id}}">
+              <t-icon name="heart" size="32rpx" color="{{item.isLiked ? '#e91e63' : '#6c757d'}}" />
+              <text>{{item.likeCount}}</text>
+            </view>
+            <view class="action-item" bindtap="onCommentPost" data-id="{{item.id}}">
+              <t-icon name="chat" size="32rpx" color="#6c757d" />
+              <text>{{item.commentCount}}</text>
+            </view>
+            <view class="action-item" bindtap="onSharePost" data-id="{{item.id}}">
+              <t-icon name="share" size="32rpx" color="#6c757d" />
+              <text>分享</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 家庭相册 -->
+  <view class="album-container" wx:if="{{currentTab === 'album'}}">
+    <view class="section">
+      <view class="section-title">家庭相册</view>
+      <view class="album-grid">
+        <view class="album-item" wx:for="{{familyAlbum}}" wx:key="id" bindtap="onAlbumTap" data-id="{{item.id}}">
+          <t-image src="{{item.cover}}" mode="aspectFill" class="album-cover" />
+          <view class="album-info">
+            <view class="album-title">{{item.title}}</view>
+            <view class="album-count">{{item.photoCount}}张照片</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 重要时刻 -->
+  <view class="moments-container" wx:if="{{currentTab === 'moments'}}">
+    <view class="section">
+      <view class="section-title">重要时刻</view>
+      <view class="timeline">
+        <view class="timeline-item" wx:for="{{importantMoments}}" wx:key="id">
+          <view class="timeline-dot"></view>
+          <view class="timeline-content">
+            <view class="moment-date">{{item.date}}</view>
+            <view class="moment-title">{{item.title}}</view>
+            <view class="moment-desc">{{item.description}}</view>
+            <view class="moment-images" wx:if="{{item.images && item.images.length > 0}}">
+              <t-image src="{{item.images[0]}}" mode="aspectFill" class="moment-image" />
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部导航栏 -->
+  <view class="bottom-nav">
+    <view class="nav-item {{currentTab === 'tree' ? 'active' : ''}}" bindtap="onNavTap" data-tab="tree">
+      <view class="nav-icon">🌳</view>
+      <view class="nav-text">家庭小树</view>
+    </view>
+    <view class="nav-item {{currentTab === 'dynamic' ? 'active' : ''}}" bindtap="onNavTap" data-tab="dynamic">
+      <view class="nav-icon">📱</view>
+      <view class="nav-text">家庭动态</view>
+    </view>
+    <view class="nav-item {{currentTab === 'album' ? 'active' : ''}}" bindtap="onNavTap" data-tab="album">
+      <view class="nav-icon">📸</view>
+      <view class="nav-text">家庭相册</view>
+    </view>
+    <view class="nav-item {{currentTab === 'moments' ? 'active' : ''}}" bindtap="onNavTap" data-tab="moments">
+      <view class="nav-icon">⭐</view>
+      <view class="nav-text">重要时刻</view>
+    </view>
+  </view>
+</view>

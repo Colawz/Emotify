@@ -2,6 +2,11 @@
   "pages": [
     "pages/ai-assistant/chat/index",
     "pages/counseling/index",
+    "pages/family-garden/index",
+    "pages/family-garden/smart-tips/index",
+    "pages/family-garden/chat-together/index",
+    "pages/family-garden/warm-space/index",
+    "pages/family-garden/task-management/index",
     "pages/profile/index",
     "pages/profile/chat-history/index",
     "pages/counseling/treehole/index",
@@ -22,7 +27,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#9c26b0",
-    "navigationBarTitleText": "校园生活助手",
+    "navigationBarTitleText": "情感支持助手",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {
@@ -42,6 +47,12 @@
         "text": "心理疗愈",
         "iconPath": "assets/icons/heart.png",
         "selectedIconPath": "assets/icons/heart-active.png"
+      },
+      {
+        "pagePath": "pages/family-garden/index",
+        "text": "亲情驿站",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png"
       },
       {
         "pagePath": "pages/profile/index",

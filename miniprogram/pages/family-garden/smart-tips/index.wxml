@@ -1,0 +1,74 @@
+<!--pages/family-garden/smart-tips/index.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="title">智能提示</view>
+    <view class="subtitle">个性化提醒，关爱家人健康 🌸</view>
+    <view class="header-decoration">✨ 🌷 🌼 ✨</view>
+  </view>
+
+  <!-- 今日提醒 - 网格布局卡片 -->
+  <view class="section-wrapper">
+    <view class="section-title">今日提醒 💝</view>
+    <view class="tips-grid-container">
+      <view class="tip-card" wx:for="{{todayTips}}" wx:key="id">
+        <view class="card-decoration">🌟</view>
+        <view class="tip-icon">{{item.icon}}</view>
+        <view class="tip-content">
+          <view class="tip-title">{{item.title}}</view>
+          <view class="tip-desc">{{item.description}}</view>
+          <view class="tip-time">⏰ {{item.time}}</view>
+        </view>
+        <view class="tip-action">
+          <t-button theme="primary" size="small" bindtap="onCompleteTip" data-id="{{item.id}}">完成 ✅</t-button>
+        </view>
+        <view class="card-tape"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 健康建议 - 网格布局卡片 -->
+  <view class="section-wrapper">
+    <view class="section-title">健康建议 🌱</view>
+    <view class="health-grid-container">
+      <view class="health-card" wx:for="{{healthTips}}" wx:key="id">
+        <view class="card-decoration">🌸</view>
+        <view class="health-header">
+          <view class="health-icon">{{item.icon}}</view>
+          <view class="health-title">{{item.title}}</view>
+        </view>
+        <view class="health-content">{{item.content}}</view>
+        <view class="health-footer">
+          <view class="health-tag">{{item.category}}</view>
+          <view class="health-time">{{item.time}}</view>
+        </view>
+        <view class="card-tape"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加新提醒 - 手账风格表单 -->
+  <view class="add-tip-wrapper">
+    <view class="section-title">添加新提醒 📝</view>
+    <view class="add-tip-form">
+      <view class="form-decoration">🌺</view>
+      <view class="form-item">
+        <view class="form-label">🏷️ 提醒类型</view>
+        <picker bindchange="onTypeChange" value="{{tipTypeIndex}}" range="{{tipTypes}}">
+          <view class="picker">{{tipTypes[tipTypeIndex]}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <view class="form-label">💬 提醒内容</view>
+        <input class="form-input" placeholder="请输入提醒内容" bindinput="onContentInput" value="{{tipContent}}"/>
+      </view>
+      <view class="form-item">
+        <view class="form-label">⏰ 提醒时间</view>
+        <picker mode="time" bindchange="onTimeChange" value="{{tipTime}}">
+          <view class="picker">{{tipTime || '请选择时间'}}</view>
+        </picker>
+      </view>
+      <t-button theme="primary" bindtap="onAddTip" block>添加提醒 🌟</t-button>
+      <view class="form-decoration">🌻</view>
+    </view>
+  </view>
+</view>

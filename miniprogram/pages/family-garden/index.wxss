@@ -1,0 +1,306 @@
+/* pages/family-garden/index.wxss */
+
+/* 主要内容区 - 毛玻璃背景 */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, rgba(255, 182, 193, 0.3) 0%, rgba(173, 216, 230, 0.3) 100%);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+  box-sizing: border-box;
+}
+
+/* 顶部导航栏 - 居中对齐 */
+.header {
+  text-align: center;
+  margin-bottom: 80rpx;
+  padding: 40rpx;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10rpx);
+  -webkit-backdrop-filter: blur(10rpx);
+  border-radius: 32rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 56rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  text-shadow: 2rpx 2rpx 4rpx rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+  font-size: 30rpx;
+  color: #546e7a;
+  margin-top: 16rpx;
+  font-weight: 300;
+}
+
+/* 特色卡片区域 - 居中对齐 */
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+  align-items: center;
+  width: 100%;
+  max-width: 600rpx;
+}
+
+.feature-card {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(15rpx);
+  -webkit-backdrop-filter: blur(15rpx);
+  padding: 50rpx 40rpx;
+  border-radius: 32rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+  max-width: 500rpx;
+}
+
+.feature-card:active {
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+  font-size: 72rpx;
+  margin-right: 30rpx;
+  filter: drop-shadow(2rpx 2rpx 4rpx rgba(0, 0, 0, 0.2));
+}
+
+.card-content {
+  flex: 1;
+  text-align: left;
+}
+
+.card-title {
+  font-size: 38rpx;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 12rpx;
+  text-shadow: 1rpx 1rpx 2rpx rgba(0, 0, 0, 0.1);
+}
+
+.card-description {
+  font-size: 28rpx;
+  color: #546e7a;
+  line-height: 1.4;
+}
+
+.card-arrow {
+  font-size: 44rpx;
+  color: #7f8c8d;
+  margin-left: 20rpx;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:active .card-arrow {
+  transform: translateX(10rpx);
+}
+
+/* 智能提示卡片 - 横向滑动手账风格 */
+.section-wrapper {
+  margin-bottom: 50rpx;
+  width: 105%;
+}
+
+.section-title {
+  font-size: 38rpx;
+  font-weight: bold;
+  color: #8B5CF6;
+  margin-bottom: 25rpx;
+  text-align: center;
+  text-shadow: 0 2rpx 4rpx rgba(139, 92, 246, 0.3);
+}
+
+.smart-tips-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12rpx);
+  -webkit-backdrop-filter: blur(12rpx);
+  border-radius: 28rpx;
+  border: 2rpx solid rgba(139, 92, 246, 0.3);
+  box-shadow: 0 10rpx 40rpx rgba(139, 92, 246, 0.25);
+  overflow: hidden;
+}
+
+.smart-tips-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80rpx;
+  background: linear-gradient(135deg, rgba(221, 160, 221, 0.3) 0%, rgba(218, 112, 214, 0.3) 100%);
+  border-bottom: 2rpx dashed #dda0dd;
+}
+
+.horizontal-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.tips-scroll-container {
+  display: flex;
+  flex-direction: row;
+  gap: 25rpx;
+  padding: 20rpx 30rpx;
+  white-space: nowrap;
+}
+
+.tip-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 35rpx 25rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 24rpx;
+  border: 2rpx solid #dda0dd;
+  box-shadow: 0 6rpx 24rpx rgba(255, 182, 193, 0.4);
+  min-width: 260rpx;
+  max-width: 260rpx;
+  height: 280rpx;
+  position: relative;
+  white-space: normal;
+  transition: all 0.3s ease;
+}
+
+.tip-item:active {
+  transform: scale(0.95);
+}
+
+.tip-decoration {
+  position: absolute;
+  top: 10rpx;
+  right: 10rpx;
+  font-size: 24rpx;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8rpx); }
+}
+
+.tip-icon {
+  font-size: 60rpx;
+  margin-bottom: 20rpx;
+  filter: drop-shadow(0 2rpx 4rpx rgba(0, 0, 0, 0.1));
+}
+
+.tip-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #8B5CF6;
+  margin-bottom: 12rpx;
+  text-align: center;
+}
+
+.tip-time {
+  font-size: 24rpx;
+  color: #666;
+  text-align: center;
+}
+
+.tip-time {
+  font-size: 20rpx;
+  color: #cd853f;
+  font-weight: 500;
+  text-align: center;
+}
+
+.card-tape {
+  position: absolute;
+  top: -8rpx;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 100rpx;
+  height: 30rpx;
+  background: rgba(221, 160, 221, 0.6);
+  border: 1rpx solid #da70d6;
+  border-radius: 6rpx;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.2);
+  z-index: 3;
+}
+
+.card-decoration {
+  position: absolute;
+  top: 15rpx;
+  right: 15rpx;
+  font-size: 28rpx;
+  animation: float 4s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+/* 陪我聊聊卡片 - 蓝色半透明渐变 */
+.chat-card {
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.3) 0%, rgba(0, 242, 254, 0.3) 100%);
+  border: 2rpx solid rgba(79, 172, 254, 0.4);
+}
+
+.chat-card .card-title {
+  color: #3182ce;
+}
+
+.chat-card .card-description {
+  color: #2c5282;
+}
+
+.chat-card .card-arrow {
+  color: #4facfe;
+}
+
+/* 温暖空间卡片 - 绿色半透明渐变 */
+.warm-card {
+  background: linear-gradient(135deg, rgba(132, 250, 176, 0.3) 0%, rgba(143, 211, 244, 0.3) 100%);
+  border: 2rpx solid rgba(132, 250, 176, 0.4);
+  height: 20rpx;
+}
+
+.warm-card .card-title {
+  color: #38a169;
+}
+
+.warm-card .card-description {
+  color: #2f855a;
+}
+
+.warm-card .card-arrow {
+  color: #84fab0;
+}
+
+/* 家庭小任务卡片 - 橙色半透明渐变 */
+.task-card {
+  background: linear-gradient(135deg, rgba(250, 112, 154, 0.3) 0%, rgba(254, 225, 64, 0.3) 100%);
+  border: 2rpx solid rgba(250, 112, 154, 0.4);
+}
+
+.task-card .card-title {
+  color: #ed8936;
+}
+
+.task-card .card-description {
+  color: #dd6b20;
+}
+
+.task-card .card-arrow {
+  color: #fa709a;
+}

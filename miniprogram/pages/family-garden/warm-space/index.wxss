@@ -1,0 +1,666 @@
+/* pages/family-garden/warm-space/index.wxss */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 40rpx 30rpx;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 50rpx;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 16rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #7f8c8d;
+}
+
+.warm-container {
+  max-width: 100%;
+}
+
+.section {
+  margin-bottom: 60rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #34495e;
+}
+
+.section-action {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  padding: 16rpx 24rpx;
+  background: #4caf50;
+  border-radius: 30rpx;
+  color: white;
+  font-size: 26rpx;
+}
+
+/* 家庭动态样式 */
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+.post-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.post-author {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.author-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  color: white;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.post-time {
+  font-size: 24rpx;
+  color: #95a5a6;
+}
+
+.post-menu {
+  padding: 16rpx;
+}
+
+.post-content {
+  font-size: 30rpx;
+  color: #34495e;
+  line-height: 1.6;
+  margin-bottom: 24rpx;
+}
+
+.post-images {
+  margin-bottom: 24rpx;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+}
+
+.image-item {
+  aspect-ratio: 1;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.post-image {
+  width: 100%;
+  height: 100%;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 24rpx;
+  border-top: 2rpx solid #ecf0f1;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 16rpx 24rpx;
+  border-radius: 30rpx;
+  background: #f8f9fa;
+  color: #6c757d;
+  font-size: 26rpx;
+}
+
+.action-item:active {
+  background: #e9ecef;
+}
+
+/* 家庭相册样式 */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30rpx;
+  margin:0 auto 90rpx;
+  width:100%;
+  max-width: 1200rpx;
+  justify-items: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0  20rpx;
+}
+
+.album-item {
+  background: white;
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.12), 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  max-width: 100%;
+  margin: 0 auto;
+  width:200%;
+  border: 1rpx solid rgba(0, 0, 0, 0.05);
+}
+
+.album-item:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1), 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.album-cover {
+  width: 100%;
+  height: 320rpx;
+  object-fit: cover;
+  background: #f8f9fa;
+}
+
+.album-info {
+  padding: 36rpx;
+  text-align: center;
+}
+
+.album-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 16rpx;
+  text-align: center;
+}
+
+/* 家庭小树样式 */
+.tree-container {
+  background: white;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.tree-display {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.tree-stage {
+  margin-bottom: 30rpx;
+}
+
+.tree-emoji {
+  font-size: 120rpx;
+  margin-bottom: 20rpx;
+  animation: treeFloat 3s ease-in-out infinite;
+  transition: all 0.5s ease;
+  display: inline-block;
+}
+
+@keyframes treeFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-10rpx) scale(1.05); }
+}
+
+/* 小树浇水动画 */
+.tree-emoji.watering {
+  animation: treeWatering 0.8s ease-in-out;
+}
+
+@keyframes treeWatering {
+  0% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.1) rotate(-5deg); }
+  50% { transform: scale(1.2) rotate(5deg); }
+  75% { transform: scale(1.1) rotate(-2deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* 进度条动画 */
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50 0%, #8bc34a 100%);
+  border-radius: 10rpx;
+  transition: width 0.8s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: progressShine 2s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.tree-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 10rpx;
+}
+
+.tree-level {
+  font-size: 28rpx;
+  color: #27ae60;
+  background: #e8f5e8;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  display: inline-block;
+}
+
+.tree-progress {
+  margin-top: 30rpx;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 20rpx;
+  background: #ecf0f1;
+  border-radius: 10rpx;
+  overflow: hidden;
+  margin-bottom: 16rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50 0%, #8bc34a 100%);
+  border-radius: 10rpx;
+  transition: width 0.5s ease;
+}
+
+.progress-text {
+  font-size: 26rpx;
+  color: #7f8c8d;
+}
+
+.tree-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.info-item {
+  text-align: center;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 16rpx;
+}
+
+.info-label {
+  font-size: 24rpx;
+  color: #7f8c8d;
+  margin-bottom: 8rpx;
+}
+
+.info-value {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.tree-records {
+  border-top: 2rpx solid #ecf0f1;
+  padding-top: 30rpx;
+}
+
+.records-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #34495e;
+  margin-bottom: 24rpx;
+}
+
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.record-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  border-left: 4rpx solid #4caf50;
+  margin-bottom: 12rpx;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.record-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60rpx;
+  height: 60rpx;
+  background: linear-gradient(135deg, transparent 50%, rgba(76, 175, 80, 0.1) 50%);
+  border-radius: 0 0 0 60rpx;
+}
+
+/* 不同类型的浇水记录样式 */
+.record-item:nth-child(odd) {
+  background: linear-gradient(135deg, #f0f8f0 0%, #f8f9fa 100%);
+  border-left-color: #4caf50;
+}
+
+.record-item:nth-child(even) {
+  background: linear-gradient(135deg, #f0f8ff 0%, #f8f9fa 100%);
+  border-left-color: #2196f3;
+}
+
+.record-item:nth-child(3n) {
+  background: linear-gradient(135deg, #fff0f5 0%, #f8f9fa 100%);
+  border-left-color: #e91e63;
+}
+
+.record-item:nth-child(4n) {
+  background: linear-gradient(135deg, #fff8e1 0%, #f8f9fa 100%);
+  border-left-color: #ffc107;
+}
+
+.record-item:nth-child(5n) {
+  background: linear-gradient(135deg, #f3e5f5 0%, #f8f9fa 100%);
+  border-left-color: #9c27b0;
+}
+
+.record-time {
+  font-size: 24rpx;
+  color: #7f8c8d;
+  min-width: 120rpx;
+  padding-top: 4rpx;
+  font-weight: 500;
+}
+
+.record-content {
+  font-size: 26rpx;
+  color: #34495e;
+  line-height: 1.5;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* 记录项悬停效果 */
+.record-item:active {
+  transform: translateY(-2rpx);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.album-count {
+  font-size: 32rpx;
+  color: #34495e;
+  font-weight: 500;
+}
+
+/* 重要时刻样式 */
+.timeline {
+  position: relative;
+  padding-left: 40rpx;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 20rpx;
+  top: 0;
+  bottom: 0;
+  width: 4rpx;
+  background: linear-gradient(to bottom, #667eea, #764ba2);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 60rpx;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -40rpx;
+  top: 20rpx;
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  background: #667eea;
+  border: 6rpx solid white;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.2);
+}
+
+.timeline-content {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.moment-date {
+  font-size: 24rpx;
+  color: #7f8c8d;
+  margin-bottom: 12rpx;
+}
+
+.moment-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 16rpx;
+}
+
+.moment-desc {
+  font-size: 28rpx;
+  color: #34495e;
+  line-height: 1.6;
+  margin-bottom: 24rpx;
+}
+
+.moment-images {
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.moment-image {
+  width: 100%;
+  height: 200rpx;
+}
+
+/* 家庭成员样式 */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24rpx;
+}
+
+.member-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx 20rpx;
+  text-align: center;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.member-card:active {
+  transform: scale(0.95);
+}
+
+.member-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  color: white;
+  margin: 0 auto 16rpx;
+}
+
+.member-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 8rpx;
+}
+
+.member-role {
+  font-size: 24rpx;
+  color: #7f8c8d;
+}
+
+/* 浇水按钮样式 */
+.tree-actions {
+  text-align: center;
+  margin-top: 30rpx;
+}
+
+.water-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  padding: 20rpx 40rpx;
+  background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
+  border-radius: 50rpx;
+  color: white;
+  font-size: 30rpx;
+  font-weight: bold;
+  box-shadow: 0 8rpx 24rpx rgba(76, 175, 80, 0.3);
+  transition: all 0.3s ease;
+}
+
+.water-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 12rpx rgba(76, 175, 80, 0.3);
+}
+
+.water-icon {
+  font-size: 36rpx;
+  animation: waterDrop 2s ease-in-out infinite;
+}
+
+@keyframes waterDrop {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6rpx); }
+}
+
+/* 底部导航栏样式 */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120rpx;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border-top: 2rpx solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 20rpx;
+  border-radius: 16rpx;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  min-width: 120rpx;
+}
+
+.nav-item.active {
+  background: rgba(102, 126, 234, 0.2);
+  transform: scale(1.05);
+}
+
+.nav-icon {
+  font-size: 48rpx;
+  margin-bottom: 8rpx;
+  transition: all 0.3s ease;
+}
+
+.nav-item.active .nav-icon {
+  transform: scale(1.1);
+}
+
+.nav-text {
+  font-size: 24rpx;
+  color: #666;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.nav-item.active .nav-text {
+  color: #667eea;
+  font-weight: 600;
+}
+
+.nav-item:active {
+  transform: scale(0.95);
+}
+
+/* 调整主容器底部间距，避免被导航栏遮挡 */
+.container {
+  padding-bottom: 140rpx;
+}

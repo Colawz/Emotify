@@ -1,0 +1,188 @@
+<!--pages/family-garden/task-management/index.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="title">亲情关怀</view>
+    <view class="subtitle">温暖陪伴，关爱每一天</view>
+  </view>
+
+  <view class="task-container">
+    <!-- 关怀统计 -->
+    <view class="stats-section">
+      <view class="stat-card">
+        <view class="stat-icon">❤️</view>
+        <view class="stat-info">
+          <view class="stat-number">{{totalTasks}}</view>
+          <view class="stat-label">关怀事项</view>
+        </view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-icon">✅</view>
+        <view class="stat-info">
+          <view class="stat-number">{{completedTasks}}</view>
+          <view class="stat-label">已完成</view>
+        </view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-icon">⏳</view>
+        <view class="stat-info">
+          <view class="stat-number">{{pendingTasks}}</view>
+          <view class="stat-label">待关怀</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 快速添加关怀事项 -->
+    <view class="quick-add-section">
+      <view class="section-title">添加关怀事项</view>
+      <view class="quick-add-form">
+        <t-input 
+          placeholder="说说话或输入需要帮助的事情..." 
+          value="{{newTaskContent}}" 
+          bind:change="onTaskInput"
+          class="task-input"
+        />
+        <view class="form-row">
+          <picker 
+            bindchange="onAssigneeChange" 
+            value="{{selectedAssigneeIndex}}" 
+            range="{{assigneeNames}}"
+            class="assignee-picker"
+          >
+            <view class="picker-item">
+              <text>服务人员：{{assigneeNames[selectedAssigneeIndex]}}</text>
+              <t-icon name="chevron-down" size="32rpx" color="#6c757d" />
+            </view>
+          </picker>
+          <view class="voice-btn" bindtap="onVoiceInput">
+            <t-icon name="sound" size="40rpx" color="#ffffff" />
+          </view>
+          <t-button 
+            theme="primary" 
+            size="small" 
+            bindtap="onAddTask"
+            class="add-btn"
+          >
+            添加
+          </t-button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 任务筛选 -->
+    <view class="filter-section">
+      <view class="filter-tabs">
+        <view 
+          class="filter-tab {{currentFilter === 'all' ? 'active' : ''}}" 
+          bindtap="onFilterChange" 
+          data-filter="all"
+        >
+          全部
+        </view>
+        <view 
+          class="filter-tab {{currentFilter === 'pending' ? 'active' : ''}}" 
+          bindtap="onFilterChange" 
+          data-filter="pending"
+        >
+          待完成
+        </view>
+        <view 
+          class="filter-tab {{currentFilter === 'completed' ? 'active' : ''}}" 
+          bindtap="onFilterChange" 
+          data-filter="completed"
+        >
+          已完成
+        </view>
+      </view>
+    </view>
+
+    <!-- 关怀事项列表 -->
+    <view class="task-list-section">
+      <view class="section-title">关怀事项</view>
+      <view class="task-list">
+        <view 
+          class="task-item {{item.completed ? 'completed' : ''}}" 
+          wx:for="{{filteredTasks}}" 
+          wx:key="id"
+        >
+          <view class="task-checkbox" bindtap="onTaskToggle" data-id="{{item.id}}">
+            <t-checkbox 
+              checked="{{item.completed}}" 
+              disabled
+              class="checkbox"
+            />
+          </view>
+          <view class="task-content" bindtap="onTaskDetail" data-id="{{item.id}}">
+            <view class="task-title">{{item.title}}</view>
+            <view class="task-meta">
+              <view class="task-assignee">
+                <text class="assignee-avatar">{{item.assigneeAvatar}}</text>
+                <text>{{item.assigneeName}}</text>
+              </view>
+              <view class="task-priority priority-{{item.priority}}">
+                {{item.priorityText}}
+              </view>
+              <view class="task-deadline">{{item.deadline}}</view>
+            </view>
+            <view class="task-desc" wx:if="{{item.description}}">{{item.description}}</view>
+          </view>
+          <view class="task-actions">
+            <view class="action-btn" bindtap="onEditTask" data-id="{{item.id}}">
+              <t-icon name="edit" size="32rpx" color="#4caf50" />
+            </view>
+            <view class="action-btn" bindtap="onDeleteTask" data-id="{{item.id}}">
+              <t-icon name="delete" size="32rpx" color="#f44336" />
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="empty-state" wx:if="{{filteredTasks.length === 0}}">
+        <view class="empty-icon">❤️</view>
+        <view class="empty-text">暂无关怀事项</view>
+        <view class="empty-desc">点击上方添加需要帮助的事情</view>
+      </view>
+    </view>
+
+    <!-- 关怀分类 -->
+    <view class="category-section">
+      <view class="section-title">关怀分类</view>
+      <view class="category-grid">
+        <view 
+          class="category-item" 
+          wx:for="{{taskCategories}}" 
+          wx:key="id"
+          bindtap="onCategoryTap" 
+          data-id="{{item.id}}"
+        >
+          <view class="category-icon">{{item.icon}}</view>
+          <view class="category-name">{{item.name}}</view>
+          <view class="category-count">{{item.count}}个事项</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 关怀完成度 -->
+    <view class="progress-section">
+      <view class="section-title">本周关怀完成度</view>
+      <view class="progress-card">
+        <view class="progress-info">
+          <view class="progress-percentage">{{completionRate}}%</view>
+          <view class="progress-text">关怀完成率</view>
+        </view>
+        <view class="progress-bar">
+          <view class="progress-fill" style="width: {{completionRate}}%"></view>
+        </view>
+        <view class="progress-stats">
+          <view class="stat-item">
+            <view class="stat-label">本周完成</view>
+            <view class="stat-value">{{weeklyCompleted}}</view>
+          </view>
+          <view class="stat-item">
+            <view class="stat-label">本周新增</view>
+            <view class="stat-value">{{weeklyAdded}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

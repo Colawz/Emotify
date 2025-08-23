@@ -1,0 +1,400 @@
+/* pages/family-garden/task-management/index.wxss */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+  padding: 40rpx 30rpx;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 50rpx;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 16rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #7f8c8d;
+}
+
+.task-container {
+  max-width: 100%;
+}
+
+/* 统计部分 */
+.stats-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50rpx;
+  gap: 20rpx;
+}
+
+.stat-card {
+  flex: 1;
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  text-align: center;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.stat-icon {
+  font-size: 48rpx;
+}
+
+.stat-info {
+  flex: 1;
+}
+
+.stat-number {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #7f8c8d;
+}
+
+/* 快速添加任务 */
+.quick-add-section {
+  margin-bottom: 50rpx;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #34495e;
+  margin-bottom: 30rpx;
+}
+
+.quick-add-form {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.task-input {
+  margin-bottom: 24rpx;
+}
+
+.form-row {
+  display: flex;
+  gap: 20rpx;
+  align-items: center;
+}
+
+.assignee-picker {
+  flex: 1;
+}
+
+.picker-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  color: #495057;
+}
+
+.add-btn {
+  min-width: 120rpx;
+}
+
+/* 任务筛选 */
+.filter-section {
+  margin-bottom: 40rpx;
+}
+
+.filter-tabs {
+  display: flex;
+  background: white;
+  border-radius: 30rpx;
+  padding: 8rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+}
+
+.filter-tab {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 24rpx;
+  border-radius: 22rpx;
+  font-size: 28rpx;
+  color: #6c757d;
+  transition: all 0.3s ease;
+}
+
+.filter-tab.active {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+  color: white;
+  font-weight: bold;
+}
+
+/* 任务列表 */
+.task-list-section {
+  margin-bottom: 50rpx;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.task-item {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed {
+  opacity: 0.7;
+}
+
+.task-item.completed .task-title {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+.task-checkbox {
+  padding-top: 8rpx;
+}
+
+.checkbox {
+  transform: scale(1.2);
+}
+
+.task-content {
+  flex: 1;
+  cursor: pointer;
+}
+
+.task-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 12rpx;
+}
+
+.task-meta {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 12rpx;
+  flex-wrap: wrap;
+}
+
+.task-assignee {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: 24rpx;
+  color: #6c757d;
+}
+
+.assignee-avatar {
+  font-size: 24rpx;
+}
+
+.task-priority {
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  font-weight: bold;
+}
+
+.priority-high {
+  background: #ffebee;
+  color: #f44336;
+}
+
+.priority-medium {
+  background: #fff3e0;
+  color: #ff9800;
+}
+
+.priority-low {
+  background: #e8f5e8;
+  color: #4caf50;
+}
+
+.task-deadline {
+  font-size: 24rpx;
+  color: #6c757d;
+}
+
+.task-desc {
+  font-size: 26rpx;
+  color: #6c757d;
+  line-height: 1.5;
+}
+
+.task-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.action-btn {
+  padding: 12rpx;
+  border-radius: 50%;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.action-btn:active {
+  background: #e9ecef;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 80rpx 40rpx;
+  background: white;
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 12rpx;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  color: #7f8c8d;
+}
+
+/* 任务分类 */
+.category-section {
+  margin-bottom: 50rpx;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24rpx;
+}
+
+.category-item {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  text-align: center;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.category-item:active {
+  transform: scale(0.95);
+}
+
+.category-icon {
+  font-size: 48rpx;
+  margin-bottom: 16rpx;
+}
+
+.category-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 12rpx;
+}
+
+.category-count {
+  font-size: 24rpx;
+  color: #7f8c8d;
+}
+
+/* 完成度统计 */
+.progress-section {
+  margin-bottom: 50rpx;
+}
+
+.progress-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.progress-info {
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.progress-percentage {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #4caf50;
+  margin-bottom: 8rpx;
+}
+
+.progress-text {
+  font-size: 26rpx;
+  color: #7f8c8d;
+}
+
+.progress-bar {
+  height: 20rpx;
+  background: #e9ecef;
+  border-radius: 10rpx;
+  overflow: hidden;
+  margin-bottom: 30rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #8bc34a);
+  border-radius: 10rpx;
+  transition: width 0.5s ease;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-around;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #7f8c8d;
+  margin-bottom: 8rpx;
+}
+
+.stat-value {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2c3e50;
+}

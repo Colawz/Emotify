@@ -1,41 +1,59 @@
 /* miniprogram/pages/counseling/conversation/index.wxss */
 .page-container {
-  background-color: #f4f7f9;
+  background: linear-gradient(135deg, rgba(255, 182, 193, 0.3) 0%, rgba(173, 216, 230, 0.3) 100%);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
   min-height: 100vh;
   padding: 40rpx;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header {
   margin-bottom: 40rpx;
   text-align: center;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10rpx);
+  -webkit-backdrop-filter: blur(10rpx);
+  padding: 30rpx;
+  border-radius: 32rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
 }
 
 .title {
   font-size: 48rpx;
   font-weight: bold;
-  color: #333;
+  color: #2c3e50;
   margin-bottom: 10rpx;
+  text-shadow: 1rpx 1rpx 2rpx rgba(0, 0, 0, 0.1);
 }
 
 .subtitle {
   font-size: 28rpx;
-  color: #888;
+  color: #546e7a;
 }
 
 .counselor-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 30rpx;
+  width: 100%;
+  max-width: 600rpx;
 }
 
 .counselor-card {
-  background-color: #ffffff;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(15rpx);
+  -webkit-backdrop-filter: blur(15rpx);
   border-radius: 24rpx;
   padding: 30rpx;
   text-align: center;
-  box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease-in-out;
+  border: 2rpx solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,8 +62,8 @@
 }
 
 .counselor-card:active {
-  transform: scale(0.97);
-  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.08);
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.15);
 }
 
 .counselor-avatar {
@@ -53,19 +71,21 @@
   height: 160rpx;
   border-radius: 50%;
   margin-bottom: 20rpx;
-  background-color: #eee;
+  background: rgba(255, 255, 255, 0.3);
+  border: 2rpx solid rgba(255, 255, 255, 0.5);
 }
 
 .counselor-name {
   font-size: 32rpx;
   font-weight: 600;
-  color: #333;
+  color: #2c3e50;
   margin-bottom: 10rpx;
+  text-shadow: 1rpx 1rpx 2rpx rgba(0, 0, 0, 0.1);
 }
 
 .counselor-desc {
   font-size: 24rpx;
-  color: #999;
+  color: #546e7a;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -74,8 +94,8 @@
 }
 
 .create-card {
-  background-color: #fafafa;
-  border: 2rpx dashed #d9d9d9;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2rpx dashed rgba(255, 255, 255, 0.5);
 }
 
 .create-icon-wrapper {
@@ -83,7 +103,8 @@
   height: 160rpx;
   border-radius: 50%;
   margin-bottom: 20rpx;
-  background-color: #e8e8e8;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2rpx solid rgba(255, 255, 255, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,7 +112,7 @@
 
 .create-icon {
   font-size: 80rpx;
-  color: #aaa;
+  color: #7f8c8d;
   font-weight: 300;
 }
 
@@ -99,18 +120,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #8A32E8, #a865e9);
-  color: #fff;
+  background: linear-gradient(135deg, rgba(138, 50, 232, 0.3) 0%, rgba(168, 101, 233, 0.3) 100%);
+  backdrop-filter: blur(15rpx);
+  -webkit-backdrop-filter: blur(15rpx);
+  color: #2c3e50;
   padding: 30rpx 40rpx;
-  margin: 0 30rpx 40rpx;
+  margin: 0 0 40rpx;
   border-radius: 24rpx;
-  box-shadow: 0 8rpx 20rpx rgba(138, 50, 232, 0.3);
-  transition: all 0.2s ease-in-out;
+  border: 2rpx solid rgba(138, 50, 232, 0.4);
+  box-shadow: 0 8rpx 32rpx rgba(138, 50, 232, 0.3);
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+  max-width: 600rpx;
 }
 
 .profile-card:active {
-  transform: scale(0.98);
-  box-shadow: 0 4rpx 10rpx rgba(138, 50, 232, 0.3);
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 20rpx rgba(138, 50, 232, 0.4);
 }
 
 .profile-card-content {
@@ -121,16 +147,18 @@
   font-size: 36rpx;
   font-weight: bold;
   margin-bottom: 10rpx;
+  text-shadow: 1rpx 1rpx 2rpx rgba(0, 0, 0, 0.1);
 }
 
 .profile-card-desc {
   font-size: 26rpx;
-  opacity: 0.9;
+  color: #546e7a;
 }
 
 .profile-card-icon {
   font-size: 60rpx;
   margin-left: 30rpx;
+  color: #8A32E8;
   animation: pulse 2s infinite;
 }
 
@@ -138,4 +166,4 @@
   0% { transform: scale(1); }
   50% { transform: scale(1.1); }
   100% { transform: scale(1); }
-} 
+}

@@ -331,7 +331,7 @@ Page({
   // 分享页面
   onShareAppMessage() {
     return {
-      title: '心理辅导 - 校园生活助手',
+      title: '心理辅导 - 情感支持助手',
       path: '/pages/counseling/index'
     }
   },
@@ -396,4 +396,4 @@ Page({
         });
     }
   },
-}); 
+});

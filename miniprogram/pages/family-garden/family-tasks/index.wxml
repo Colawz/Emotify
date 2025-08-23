@@ -1,0 +1,116 @@
+<!--pages/family-garden/family-tasks/index.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="title">家庭小任务</view>
+    <view class="subtitle">关爱每一天，温暖在身边</view>
+  </view>
+
+  <!-- 今日关怀提醒 -->
+  <view class="care-section">
+    <view class="section-title">今日关怀提醒</view>
+    <view class="care-cards">
+      <view 
+        class="care-card" 
+        wx:for="{{careTasks}}" 
+        wx:key="id"
+        bindtap="onCareTaskTap"
+        data-id="{{item.id}}"
+      >
+        <view class="care-icon">{{item.icon}}</view>
+        <view class="care-content">
+          <view class="care-title">{{item.title}}</view>
+          <view class="care-time">{{item.time}}</view>
+        </view>
+        <view class="care-status {{item.completed ? 'completed' : ''}}">
+          {{item.completed ? '✅' : '⭕'}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 健康监测 -->
+  <view class="health-section">
+    <view class="section-title">健康监测</view>
+    <view class="health-cards">
+      <view 
+        class="health-card" 
+        wx:for="{{healthTasks}}" 
+        wx:key="id"
+        bindtap="onHealthTaskTap"
+        data-id="{{item.id}}"
+      >
+        <view class="health-icon">{{item.icon}}</view>
+        <view class="health-info">
+          <view class="health-title">{{item.title}}</view>
+          <view class="health-desc">{{item.description}}</view>
+        </view>
+        <view class="health-action">
+          <view class="action-btn">记录</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 安全检查 -->
+  <view class="safety-section">
+    <view class="section-title">安全检查</view>
+    <view class="safety-list">
+      <view 
+        class="safety-item" 
+        wx:for="{{safetyTasks}}" 
+        wx:key="id"
+        bindtap="onSafetyTaskTap"
+        data-id="{{item.id}}"
+      >
+        <view class="safety-checkbox {{item.checked ? 'checked' : ''}}">
+          {{item.checked ? '✓' : ''}}
+        </view>
+        <view class="safety-text">{{item.text}}</view>
+      </view>
+    </view>
+    <view class="safety-status">
+      已检查 {{safetyCheckedCount}}/{{safetyTasks.length}} 项
+    </view>
+  </view>
+
+  <!-- 社交互动 -->
+  <view class="social-section">
+    <view class="section-title">社交互动</view>
+    <view class="social-cards">
+      <view 
+        class="social-card" 
+        wx:for="{{socialTasks}}" 
+        wx:key="id"
+        bindtap="onSocialTaskTap"
+        data-id="{{item.id}}"
+      >
+        <view class="social-icon">{{item.icon}}</view>
+        <view class="social-content">
+          <view class="social-title">{{item.title}}</view>
+          <view class="social-desc">{{item.description}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 紧急联系 -->
+  <view class="emergency-section">
+    <view class="section-title">紧急联系</view>
+    <view class="emergency-contacts">
+      <view 
+        class="contact-item" 
+        wx:for="{{emergencyContacts}}" 
+        wx:key="id"
+        bindtap="onEmergencyCall"
+        data-phone="{{item.phone}}"
+      >
+        <view class="contact-avatar">{{item.avatar}}</view>
+        <view class="contact-info">
+          <view class="contact-name">{{item.name}}</view>
+          <view class="contact-relation">{{item.relation}}</view>
+        </view>
+        <view class="contact-phone">{{item.phone}}</view>
+      </view>
+    </view>
+  </view>
+</view>
