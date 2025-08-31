@@ -44,8 +44,8 @@
         <view class="message-bubble">
           <text selectable="true">{{item.content}}</text>
         </view>
-        <!-- 用户头像 (如果需要的话，这里可以放) -->
-        <!-- <image wx:if="{{item.type === 'user'}}" class="avatar" src="{{userInfo.avatarUrl}}" /> -->
+        <!-- 用户头像 -->
+        <image wx:if="{{item.type === 'user'}}" class="avatar" src="{{userInfo.avatarUrl}}" />
       </view>
     </block>
     <!-- 加载中动画 -->
