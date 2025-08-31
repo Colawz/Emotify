@@ -151,21 +151,39 @@
   flex-direction: column;
 }
 
-/* 添加新的图片展示容器样式 */
+/* 新增：角色与生成图片容器 */
 .image-display-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 20rpx;
-  background-color: #f8f8f8;
-  border-bottom: 1rpx solid #eee;
+  background-color: #f0f2f5; /* 更柔和的背景色 */
+  border-bottom: 1rpx solid #e0e0e0;
 }
 
-.image-display-box {
-  position: relative;
+/* 左侧角色形象 */
+.character-image-box {
+  width: 35%; /* 占据较小空间 */
+  padding-right: 10rpx; /* 与右侧保持间距 */
+}
+
+.character-avatar {
   width: 100%;
+  height: 300rpx; /* 固定高度 */
+  border-radius: 16rpx;
+  object-fit: cover;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 右侧AI生成图片 */
+.generated-image-box {
+  position: relative;
+  width: 65%; /* 占据较大空间 */
   height: 300rpx;
-  background-color: #FF1493;
-  border-radius: 12rpx;
+  background-color: #e9ecef;
+  border-radius: 16rpx;
   overflow: hidden;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
 }
 
 .generated-image-preview {

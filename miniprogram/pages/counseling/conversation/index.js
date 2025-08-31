@@ -8,31 +8,31 @@ Page({
       {
         id: 'dora',
         name: 'Dora',
-        avatar: '/images/doro.png', // 这是一个占位符，你需要替换成真实的图片路径
+        avatar: '/assets/Counselor_Headshot/doro.jpg',
         description: '我是Dora，一个充满好奇心和正能量的探险家，愿意倾听你的任何故事。'
       },
       {
         id: 'lazy_goat',
         name: '懒羊羊',
-        avatar: '/images/lan.png', // 这是一个占位符
+        avatar: '/assets/Counselor_Headshot/lan.png',
         description: '虽然我平时很懒，但听你倾诉，我总是有时间的。'
       },
       {
         id: 'grey_wolf',
         name: '灰太狼',
-        avatar: '/images/hui.png', // 这是一个占位符
+        avatar: '/assets/Counselor_Headshot/hui.jpg',
         description: '我屡败屡战，从不放弃！有什么烦恼，跟我说说吧，我帮你分析分析。'
       },
       {
         id: 'boonie_bear_xiongda',
         name: '熊大',
-        avatar: '/images/bear1.jpg', // 这是一个占位符
+        avatar: '/assets/Counselor_Headshot/bear1.png',
         description: '作为森林的守护者，我沉着冷静，可以帮你理清思绪。'
       },
       {
         id: 'boonie_bear_xionger',
         name: '熊二',
-        avatar: '/images/bear2.jpg', // 这是一个占位符
+        avatar: '/assets/Counselor_Headshot/bear2.png',
         description: '俺虽然有点笨，但俺最会安慰人啦！'
       }
     ]
@@ -78,4 +78,4 @@ Page({
   onLoad(options) {
 
   }
-}); 
+});

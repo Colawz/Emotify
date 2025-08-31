@@ -78,7 +78,6 @@ Page({
       ],
       inputValue: '',
       isLoading: false,
-      latestImageUrl: '',
       userMessageCount: 0,
     });
   },
@@ -109,47 +108,46 @@ Page({
       userMessageCount: newUserMessageCount
     });
 
-    await this.getAiReply();
+    await this.callAI();
 
-    if (newUserMessageCount > 0 && newUserMessageCount % 2 === 0) {
+    // 降低图片生成频率，避免触发限流
+    if (newUserMessageCount > 0 && newUserMessageCount % 4 === 0) {
       this.generateDoraImage();
     }
   },
 
-  getAiReply() {
+  async callAI() {
     this.setData({ isLoading: true });
-    
-    // 确保云环境已初始化
-    this.ensureCloudInit();
-    
-    if (!wx.cloud) {
-      console.error('云开发环境不可用');
-      this.handleAiReplyError('云开发环境不可用，请检查基础库版本');
-      return Promise.reject('云开发环境不可用');
-    }
-    
-    const { messages } = this.data;
 
-    const systemPrompt = `你是一个善解人意的好伙伴，你的名字叫Dora。请以这个角色的口吻和身份与用户进行对话，不要暴露你是一个AI模型。`;
+    try {
+      const { messages, counselor } = this.data;
 
-    const history = messages.slice(1).map(msg => ({
-      role: msg.type === 'counselor' ? 'assistant' : 'user',
-      content: msg.content
-    }));
+      const systemPrompt = `你是一个善解人意的好伙伴，你的名字叫${counselor.name}。请以这个角色的口吻和身份与用户进行对话，不要暴露你是一个AI模型。`;
 
-    return wx.cloud.callFunction({
-      name: 'callAI',
-      data: {
-        system: systemPrompt,
-        messages: history
+      const history = messages.slice(1).map(msg => ({
+        role: msg.type === 'counselor' ? 'assistant' : 'user',
+        content: msg.content
+      }));
+
+      const res = await wx.cloud.callFunction({
+        name: 'callAI',
+        data: {
+          system: systemPrompt,
+          messages: history
+        }
+      });
+
+      if (res.result.error) {
+        throw new Error(res.result.message || 'AI服务返回错误');
       }
-    }).then(res => {
-      const aiReplyContent = res.result;
-      if (aiReplyContent) {
+
+      const aiText = res.result?.choices?.[0]?.message?.content?.trim();
+
+      if (aiText) {
         const aiReply = {
           id: `msg_${Date.now() + 1}`,
           type: 'counselor',
-          content: aiReplyContent
+          content: aiText
         };
         this.setData({
           messages: [...this.data.messages, aiReply],
@@ -158,27 +156,40 @@ Page({
       } else {
         throw new Error('AI回复为空');
       }
-    }).catch(err => {
+    } catch (err) {
       console.error('调用AI失败', err);
-      this.handleAiReplyError('抱歉，我好像走神了，请再说一遍吧。');
-    }).finally(() => {
+      const errorReply = {
+        id: `msg_${Date.now() + 1}`,
+        type: 'counselor',
+        content: err.message || '抱歉，我好像走神了，请再说一遍吧。'
+      };
+      this.setData({
+        messages: [...this.data.messages, errorReply],
+        scrollToView: errorReply.id
+      });
+    } finally {
       this.setData({ isLoading: false });
-    });
+    }
   },
 
-  handleAiReplyError(message) {
-    const errorReply = {
-      id: `msg_${Date.now() + 1}`,
-      type: 'counselor',
-      content: message
-    };
-    this.setData({
-      messages: [...this.data.messages, errorReply],
-      scrollToView: errorReply.id
-    });
+  // 确保将本地头像转换为可公网访问的URL
+  async ensurePublicImageUrl(src) {
+    if (!src) return '';
+    if (/^https?:\/\//i.test(src)) return src;
+    try {
+      const info = await wx.getImageInfo({ src });
+      const cloudPath = `avatars/${Date.now()}-${Math.random().toString(36).slice(2,8)}.png`;
+      const uploadRes = await wx.cloud.uploadFile({ cloudPath, filePath: info.path });
+      const tempRes = await wx.cloud.getTempFileURL({ fileList: [uploadRes.fileID] });
+      const url = tempRes.fileList && tempRes.fileList[0] && tempRes.fileList[0].tempFileURL;
+      return url || '';
+    } catch (e) {
+      console.error('获取公共图片URL失败', e);
+      return '';
+    }
   },
 
-  generateDoraImage() {
+  async generateDoraImage() {
     this.setData({ isGeneratingImage: true });
 
     // 确保云环境已初始化
@@ -202,24 +213,28 @@ Page({
     const finalPrompt = `${fixedPrompt} 她正在和人聊关于"${recentUserMessages}"的话题。`;
     console.log('Generated Image Prompt:', finalPrompt);
 
+    // 将本地头像转换为可公网访问的URL
+    const avatarPath = this.data.counselor && this.data.counselor.avatar;
+    const baseImageUrl = await this.ensurePublicImageUrl(avatarPath);
+    if (!baseImageUrl) {
+      wx.showToast({ title: '角色头像不可用', icon: 'none' });
+      this.setData({ isGeneratingImage: false });
+      return;
+    }
+
     wx.cloud.callFunction({
       name: 'generateImage',
       data: {
         prompt: finalPrompt,
-        style: 'default',
-        size: '1024x1024'
+        image_url: baseImageUrl // 使用可公网访问的基础图片
       }
     }).then(res => {
       console.log('文生图云函数调用结果：', res);
-      if (res.result && res.result.success && res.result.data) {
-        const imageUrl = res.result.data.url || res.result.data.image_url;
-        if (imageUrl) {
-          this.setData({
-            latestImageUrl: imageUrl
-          });
-        } else {
-           throw new Error('图片URL为空');
-        }
+      if (res.result && res.result.success && res.result.data && res.result.data.data && res.result.data.data[0].url) {
+        const imageUrl = res.result.data.data[0].url;
+        this.setData({
+          latestImageUrl: imageUrl
+        });
       } else {
         throw new Error(`图片生成失败: ${res.result?.message || '未知错误'}`);
       }

@@ -12,9 +12,15 @@
     </view>
   </view>
 
-  <!-- 2. 图片展示区域 -->
+  <!-- 2. 角色与生成图片展示区 -->
   <view class="image-display-container">
-    <view class="image-display-box">
+    <!-- 左侧：角色形象 -->
+    <view class="character-image-box">
+      <image src="{{counselor.avatar}}" class="character-avatar" mode="aspectFill"></image>
+    </view>
+    
+    <!-- 右侧：AI生成图片 -->
+    <view class="generated-image-box">
       <image wx:if="{{latestImageUrl}}" src="{{latestImageUrl}}" class="generated-image-preview" mode="aspectFill" bindtap="previewImage" data-src="{{latestImageUrl}}"/>
       <view wx:else class="image-placeholder">图片将在这里生成</view>
       <view wx:if="{{isGeneratingImage}}" class="image-loading-overlay">
