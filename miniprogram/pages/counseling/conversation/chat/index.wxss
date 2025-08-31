@@ -157,49 +157,98 @@
   justify-content: space-between;
   align-items: center;
   padding: 20rpx;
-  background-color: #f0f2f5; /* 更柔和的背景色 */
-  border-bottom: 1rpx solid #e0e0e0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-bottom: 1rpx solid #dee2e6;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
 }
 
 /* 左侧角色形象 */
 .character-image-box {
-  width: 35%; /* 占据较小空间 */
-  padding-right: 10rpx; /* 与右侧保持间距 */
+  width: 35%;
+  padding-right: 15rpx;
+  position: relative;
 }
 
 .character-avatar {
   width: 100%;
-  height: 300rpx; /* 固定高度 */
-  border-radius: 16rpx;
+  height: 300rpx;
+  border-radius: 20rpx;
   object-fit: cover;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.12);
+  border: 3rpx solid rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease;
+}
+
+.character-avatar:hover {
+  transform: scale(1.02);
 }
 
 /* 右侧AI生成图片 */
 .generated-image-box {
   position: relative;
-  width: 65%; /* 占据较大空间 */
+  width: 65%;
   height: 300rpx;
-  background-color: #e9ecef;
-  border-radius: 16rpx;
+  background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+  border-radius: 20rpx;
   overflow: hidden;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.12);
+  border: 3rpx solid rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.generated-image-box:hover {
+  transform: translateY(-2rpx);
+  box-shadow: 0 12rpx 32rpx rgba(0, 0, 0, 0.15);
 }
 
 .generated-image-preview {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.generated-image-preview:hover {
+  transform: scale(1.05);
 }
 
 .image-placeholder {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
-  color: #999;
-  font-size: 28rpx;
-  background-color: #f5f5f5;
+  color: #6c757d;
+  font-size: 26rpx;
+  background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+  position: relative;
+}
+
+.image-placeholder::before {
+  content: '🎨';
+  font-size: 60rpx;
+  margin-bottom: 10rpx;
+  opacity: 0.6;
+}
+
+.image-placeholder::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80rpx;
+  height: 80rpx;
+  margin: -40rpx 0 0 -40rpx;
+  border: 4rpx solid #dee2e6;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: placeholder-pulse 2s ease-in-out infinite;
+}
+
+@keyframes placeholder-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 0.8; transform: scale(1.1); }
 }
 
 .image-loading-overlay {
@@ -208,15 +257,32 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(4rpx);
 }
 
 .loading-text {
   color: #fff;
-  font-size: 28rpx;
+  font-size: 26rpx;
+  margin-top: 20rpx;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.3);
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: loading-spin 1s linear infinite;
+}
+
+@keyframes loading-spin {
+  to { transform: rotate(360deg); }
 }
 
 /* 调整聊天消息区域的高度，因为图片区域移到了上面 */
@@ -242,6 +308,21 @@
   background-color: #f0f0f0;
   border-radius: 30rpx;
   text-align: center;
+  margin-right: 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6rpx;
+  transition: all 0.3s ease;
+}
+
+.action-btn.active {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+.action-btn:hover {
+  opacity: 0.8;
 }
 
 .input-field {

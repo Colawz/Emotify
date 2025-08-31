@@ -24,7 +24,8 @@
       <image wx:if="{{latestImageUrl}}" src="{{latestImageUrl}}" class="generated-image-preview" mode="aspectFill" bindtap="previewImage" data-src="{{latestImageUrl}}"/>
       <view wx:else class="image-placeholder">图片将在这里生成</view>
       <view wx:if="{{isGeneratingImage}}" class="image-loading-overlay">
-        <view class="loading-text">图片生成中...</view>
+        <view class="loading-spinner"></view>
+        <text class="loading-text">正在生成图片...</text>
       </view>
     </view>
   </view>
@@ -59,6 +60,10 @@
   <!-- 4. 输入和操作区 -->
   <view class="input-area">
     <view class="action-btn" bindtap="onRestartTap">重聊</view>
+    <view class="action-btn {{imageGenerationEnabled ? 'active' : ''}}" bindtap="onToggleImageGeneration">
+      <t-icon name="{{imageGenerationEnabled ? 'image' : 'image-off'}}" size="20px" />
+      {{imageGenerationEnabled ? '图片开' : '图片关'}}
+    </view>
     <input 
       class="input-field" 
       value="{{inputValue}}"

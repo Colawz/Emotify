@@ -14,6 +14,10 @@ Page({
       name: 'AI咨询师',
       avatar: '/images/ai-avatar.png' // 默认头像
     },
+    // 图像生成相关
+    imageGenerationEnabled: false, // 图像生成开关
+    isGeneratingImage: false, // 图像生成中状态
+    latestImageUrl: '', // 最新生成的图片URL
   },
 
   onLoad(options) {
@@ -367,6 +371,107 @@ Page({
     })
   },
 
+  // 切换图像生成开关
+  onToggleImageGeneration() {
+    const enabled = !this.data.imageGenerationEnabled
+    this.setData({
+      imageGenerationEnabled: enabled
+    })
+    
+    wx.showToast({
+      title: enabled ? '图像生成已开启' : '图像生成已关闭',
+      icon: 'success',
+      duration: 1500
+    })
+  },
+
+  // 生成与对话相关的图像
+  async generateContextualImage(userMessage, aiResponse) {
+    if (!this.data.imageGenerationEnabled) {
+      return
+    }
+    
+    try {
+      this.setData({ isGeneratingImage: true })
+      
+      // 构建图像生成提示词
+      const imagePrompt = await this.buildImagePrompt(userMessage, aiResponse)
+      console.log('图像生成提示词:', imagePrompt)
+      
+      // 调用图像生成API
+      const taskResult = await apiService.generateImage(imagePrompt, this.data.counselor.avatar, 'stylization_all')
+      
+      if (taskResult && taskResult.task_id) {
+        // 轮询获取生成结果
+        const result = await apiService.pollImageResult(taskResult.task_id)
+        
+        if (result && result.output && result.output.results && result.output.results.length > 0) {
+          const imageUrl = result.output.results[0].url
+          this.setData({
+            latestImageUrl: imageUrl,
+            isGeneratingImage: false
+          })
+          
+          console.log('图像生成成功:', imageUrl)
+        }
+      }
+    } catch (error) {
+      console.error('图像生成失败:', error)
+      this.setData({ isGeneratingImage: false })
+      
+      wx.showToast({
+        title: '图像生成失败',
+        icon: 'error',
+        duration: 2000
+      })
+    }
+  },
+
+  // 构建图像生成提示词
+  async buildImagePrompt(userMessage, aiResponse) {
+    try {
+      // 使用AI来生成适合的图像描述
+      const promptGenerationMessages = [{
+        role: 'user',
+        content: `根据以下对话内容，生成一个适合的图像描述提示词，要求：
+1. 描述要简洁明了，不超过50字
+2. 风格要温馨、治愈
+3. 与心理咨询场景相关
+4. 适合转换成法国绘本风格
+
+用户消息：${userMessage}
+AI回复：${aiResponse}
+
+请直接返回图像描述，不要其他内容：`
+      }]
+      
+      const result = await apiService.chat(promptGenerationMessages)
+      
+      if (result && result.choices && result.choices[0] && result.choices[0].message) {
+        let prompt = result.choices[0].message.content.trim()
+        // 添加风格转换指令
+        prompt = `转换成法国绘本风格，${prompt}`
+        return prompt
+      }
+    } catch (error) {
+      console.error('生成图像提示词失败:', error)
+    }
+    
+    // 如果AI生成失败，使用默认提示词
+    return '转换成法国绘本风格，温馨的心理咨询场景，柔和的色彩，治愈系插画'
+  },
+
+  // 图片预览
+  previewImage(e) {
+    const src = e.currentTarget.dataset.src
+    if (src) {
+      wx.previewImage({
+        urls: [src],
+        current: src
+      })
+    }
+  },
+
 
 
   // 输入框内容变化
@@ -504,5 +609,10 @@ Page({
       messages: [...this.data.messages, aiMessage],
       scrollToMessage: `msg-${aiMessage.id}`
     })
+    
+    // 如果启用了图像生成，生成相关图像
+    if (this.data.imageGenerationEnabled) {
+      this.generateContextualImage(input, response.content)
+    }
   }
 })
