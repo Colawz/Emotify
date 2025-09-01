@@ -9,7 +9,7 @@ const config = {
     imageApi: {
       baseUrl: 'https://dashscope.aliyuncs.com',
       apiKey: 'sk-49851ffda0d44d769ce69ec37f632255',
-      model: 'wanx2.1-imageedit'
+      model: 'qwen-image'
     }
   },
   // 生产环境
@@ -40,9 +40,7 @@ module.exports = {
   endpoints: {
     chat: '/api/v3/chat/completions',
     user: '/api/user',
-    // 阿里云通义万相图像编辑接口
-    imageEdit: '/api/v1/services/aigc/image2image/image-synthesis',
-    // 查询任务结果接口
-    taskQuery: '/api/v1/tasks'
+    // 阿里云通义千问文生图接口
+    textToImage: '/api/v1/services/aigc/multimodal-generation/generation'
   }
 }

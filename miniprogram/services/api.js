@@ -106,93 +106,66 @@ class ApiService {
     }
   }
 
-  // 图像生成API - 创建任务
-  async generateImage(prompt, baseImageUrl = null, imageFunction = 'stylization_all') {
+  // 图像生成相关方法
+  async generateImage(prompt, options = {}) {
     try {
-      console.log('准备调用图像生成API，提示词:', prompt)
-      
-      // 构建请求数据
       const requestData = {
         model: apiConfig.imageApi.model,
         input: {
-          function: imageFunction,
-          prompt: prompt
+          messages: [
+            {
+              role: 'user',
+              content: [
+                {
+                  text: prompt
+                }
+              ]
+            }
+          ]
         },
         parameters: {
-          n: 1
+          negative_prompt: options.negative_prompt || '',
+          prompt_extend: options.prompt_extend !== false,
+          watermark: options.watermark !== false,
+          size: options.size || '1328*1328'
+        }
+      }
+
+      const response = await this.request(
+        apiConfig.endpoints.textToImage,
+        {
+          method: 'POST',
+          data: requestData,
+          header: {
+            'Authorization': `Bearer ${apiConfig.imageApi.apiKey}`,
+            'Content-Type': 'application/json'
+          }
+        },
+        apiConfig.imageApi.baseUrl
+      )
+
+      if (response.output && response.output.choices && response.output.choices[0]) {
+        const imageContent = response.output.choices[0].message.content[0]
+        if (imageContent && imageContent.image) {
+          return {
+            success: true,
+            imageUrl: imageContent.image,
+            message: '图像生成成功'
+          }
         }
       }
       
-      // 如果提供了基础图片URL，添加到请求中
-      if (baseImageUrl) {
-        requestData.input.base_image_url = baseImageUrl
-      }
-      
-      const result = await this.request(apiConfig.endpoints.imageEdit, {
-         method: 'POST',
-         header: {
-           'Content-Type': 'application/json',
-           'Authorization': `Bearer ${apiConfig.imageApi.apiKey}`,
-           'X-DashScope-Async': 'enable'
-         },
-         data: requestData
-       }, apiConfig.imageApi.baseUrl)
-      
-      console.log('图像生成API响应:', result)
-      return result
+      throw new Error('图像生成失败，未获取到图像URL')
     } catch (error) {
-      console.error('图像生成API调用失败:', error)
-      throw error
+      console.error('图像生成失败:', error)
+      return {
+        success: false,
+        error: error.message || '图像生成失败'
+      }
     }
   }
   
-  // 查询图像生成任务结果
-  async queryImageTask(taskId) {
-    try {
-      console.log('查询图像生成任务结果，任务ID:', taskId)
-      
-      const result = await this.request(`${apiConfig.endpoints.taskQuery}/${taskId}`, {
-         method: 'GET',
-         header: {
-           'Authorization': `Bearer ${apiConfig.imageApi.apiKey}`
-         }
-       }, apiConfig.imageApi.baseUrl)
-      
-      console.log('任务查询API响应:', result)
-      return result
-    } catch (error) {
-      console.error('任务查询API调用失败:', error)
-      throw error
-    }
-  }
-  
-  // 轮询查询图像生成结果
-  async pollImageResult(taskId, maxAttempts = 30, interval = 2000) {
-    for (let attempt = 0; attempt < maxAttempts; attempt++) {
-      try {
-        const result = await this.queryImageTask(taskId)
-        
-        if (result.task_status === 'SUCCEEDED') {
-          console.log('图像生成成功:', result)
-          return result
-        } else if (result.task_status === 'FAILED') {
-          throw new Error(`图像生成失败: ${result.message || '未知错误'}`)
-        }
-        
-        // 等待指定时间后重试
-        await new Promise(resolve => setTimeout(resolve, interval))
-        console.log(`第${attempt + 1}次查询，任务状态: ${result.task_status}`)
-      } catch (error) {
-        if (attempt === maxAttempts - 1) {
-          throw error
-        }
-        console.log(`查询失败，${interval}ms后重试...`)
-        await new Promise(resolve => setTimeout(resolve, interval))
-      }
-    }
-    
-    throw new Error('图像生成超时')
-  }
+
 
   // 添加更多API方法...
 }

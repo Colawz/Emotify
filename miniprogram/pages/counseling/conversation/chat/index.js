@@ -398,22 +398,30 @@ Page({
       const imagePrompt = await this.buildImagePrompt(userMessage, aiResponse)
       console.log('图像生成提示词:', imagePrompt)
       
-      // 调用图像生成API
-      const taskResult = await apiService.generateImage(imagePrompt, this.data.counselor.avatar, 'stylization_all')
+      // 调用图像生成API（同步调用）
+      const generateResult = await apiService.generateImage(imagePrompt, {
+        size: '1328*1328',
+        prompt_extend: true,
+        watermark: true
+      })
       
-      if (taskResult && taskResult.task_id) {
-        // 轮询获取生成结果
-        const result = await apiService.pollImageResult(taskResult.task_id)
-        
-        if (result && result.output && result.output.results && result.output.results.length > 0) {
-          const imageUrl = result.output.results[0].url
-          this.setData({
-            latestImageUrl: imageUrl,
-            isGeneratingImage: false
-          })
-          
-          console.log('图像生成成功:', imageUrl)
-        }
+      if (generateResult.success && generateResult.imageUrl) {
+        console.log('图像生成完成:', generateResult.imageUrl)
+        this.setData({ 
+          latestImageUrl: generateResult.imageUrl,
+          isGeneratingImage: false 
+        })
+        wx.showToast({
+          title: '图像生成成功',
+          icon: 'success'
+        })
+      } else {
+        console.error('图像生成失败:', generateResult.error)
+        this.setData({ isGeneratingImage: false })
+        wx.showToast({
+          title: generateResult.error || '图像生成失败',
+          icon: 'none'
+        })
       }
     } catch (error) {
       console.error('图像生成失败:', error)
@@ -430,40 +438,43 @@ Page({
   // 构建图像生成提示词
   async buildImagePrompt(userMessage, aiResponse) {
     try {
-      // 使用AI来生成适合的图像描述
-      const promptGenerationMessages = [{
-        role: 'user',
-        content: `根据以下对话内容，生成一个适合的图像描述提示词，要求：
-1. 描述要简洁明了，不超过50字
-2. 风格要温馨、治愈
-3. 与心理咨询场景相关
-4. 适合转换成法国绘本风格
+      // 使用AI来生成更好的图像提示词
+      const promptGenerationMessage = `请根据以下对话内容，生成一个适合用于AI图像生成的提示词。要求：
+1. 提示词应该具体、生动、富有视觉表现力
+2. 包含场景、人物、情感、色彩、风格等元素
+3. 适合心理咨询和情感支持的主题
+4. 提示词长度控制在100字以内
+5. 直接返回提示词，不要其他解释
 
 用户消息：${userMessage}
 AI回复：${aiResponse}
 
-请直接返回图像描述，不要其他内容：`
-      }]
-      
-      const result = await apiService.chat(promptGenerationMessages)
-      
-      if (result && result.choices && result.choices[0] && result.choices[0].message) {
-        let prompt = result.choices[0].message.content.trim()
-        // 添加风格转换指令
-        prompt = `转换成法国绘本风格，${prompt}`
-        return prompt
+请生成图像提示词：`
+
+      const response = await apiService.chat([
+        {
+          role: 'user',
+          content: promptGenerationMessage
+        }
+      ])
+
+      if (response && response.choices && response.choices[0]) {
+        const generatedPrompt = response.choices[0].message.content.trim()
+        return generatedPrompt
+      } else {
+        // 如果AI生成失败，使用默认提示词
+        return `温馨的心理咨询场景，柔和的色彩，宁静祥和的氛围，体现${userMessage.substring(0, 20)}的主题`
       }
     } catch (error) {
-      console.error('生成图像提示词失败:', error)
+      console.error('构建图像提示词失败:', error)
+      // 返回基于用户消息的简单提示词
+      return `温馨的心理咨询场景，柔和的色彩，宁静祥和的氛围，体现情感支持的主题`
     }
-    
-    // 如果AI生成失败，使用默认提示词
-    return '转换成法国绘本风格，温馨的心理咨询场景，柔和的色彩，治愈系插画'
   },
 
   // 图片预览
   previewImage(e) {
-    const src = e.currentTarget.dataset.src
+    const src = this.data.latestImageUrl || e.currentTarget.dataset.src
     if (src) {
       wx.previewImage({
         urls: [src],
