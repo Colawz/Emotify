@@ -435,19 +435,88 @@ Page({
     }
   },
 
+  // 获取咨询师专属风格配置
+  getCounselorImageStyle(counselorId) {
+    const styleConfigs = {
+      'dora': {
+        baseStyle: '充满活力的探险风格',
+        colorPalette: '明亮的橙色、黄色、绿色',
+        atmosphere: '阳光明媚、积极向上、充满好奇心',
+        scene: '热带丛林、探险场景、自然风光',
+        emotion: '友善、好奇、积极、充满正能量',
+        artStyle: '明亮欢快的卡通插画风格'
+      },
+      'lazy_goat': {
+        baseStyle: '温馨慵懒的田园风格',
+        colorPalette: '柔和的粉色、淡绿色、米白色',
+        atmosphere: '宁静舒适、温馨惬意、放松自在',
+        scene: '草原牧场、温馨小屋、午后阳光',
+        emotion: '温和、放松、治愈、安心',
+        artStyle: '温馨治愈的水彩画风格'
+      },
+      'grey_wolf': {
+        baseStyle: '坚韧不拔的励志风格',
+        colorPalette: '深蓝色、银灰色、橙红色',
+        atmosphere: '坚定有力、永不放弃、充满斗志',
+        scene: '山峰顶端、实验室、奋斗场景',
+        emotion: '坚韧、励志、不屈不挠、积极进取',
+        artStyle: '富有力量感的现代插画风格'
+      },
+      'boonie_bear_xiongda': {
+        baseStyle: '沉稳可靠的森林守护风格',
+        colorPalette: '深绿色、棕色、金黄色',
+        atmosphere: '沉着冷静、可靠稳重、自然和谐',
+        scene: '茂密森林、山间小径、自然保护区',
+        emotion: '沉稳、可靠、理性、守护',
+        artStyle: '自然写实的森林系插画风格'
+      },
+      'boonie_bear_xionger': {
+        baseStyle: '憨厚可爱的温暖风格',
+        colorPalette: '暖黄色、浅棕色、粉橙色',
+        atmosphere: '温暖可爱、憨厚朴实、充满爱心',
+        scene: '温馨小屋、花园、温暖的家',
+        emotion: '憨厚、可爱、温暖、安慰',
+        artStyle: '温暖可爱的卡通风格'
+      }
+    }
+    
+    return styleConfigs[counselorId] || {
+      baseStyle: '温馨的心理咨询风格',
+      colorPalette: '柔和的蓝色、绿色、白色',
+      atmosphere: '宁静祥和、温馨治愈',
+      scene: '心理咨询室、温馨场景',
+      emotion: '温暖、支持、理解',
+      artStyle: '温馨治愈的插画风格'
+    }
+  },
+
   // 构建图像生成提示词
   async buildImagePrompt(userMessage, aiResponse) {
     try {
+      // 获取当前咨询师的风格配置
+      const counselorStyle = this.getCounselorImageStyle(this.data.counselor.id)
+      
       // 使用AI来生成更好的图像提示词
-      const promptGenerationMessage = `请根据以下对话内容，生成一个适合用于AI图像生成的提示词。要求：
-1. 提示词应该具体、生动、富有视觉表现力
-2. 包含场景、人物、情感、色彩、风格等元素
-3. 适合心理咨询和情感支持的主题
-4. 提示词长度控制在100字以内
-5. 直接返回提示词，不要其他解释
+      const promptGenerationMessage = `请根据以下对话内容和咨询师风格特色，生成一个适合用于AI图像生成的提示词。
 
+咨询师风格特色：
+- 基础风格：${counselorStyle.baseStyle}
+- 色彩搭配：${counselorStyle.colorPalette}
+- 氛围营造：${counselorStyle.atmosphere}
+- 场景设定：${counselorStyle.scene}
+- 情感表达：${counselorStyle.emotion}
+- 艺术风格：${counselorStyle.artStyle}
+
+对话内容：
 用户消息：${userMessage}
 AI回复：${aiResponse}
+
+要求：
+1. 提示词应该具体、生动、富有视觉表现力
+2. 必须融入咨询师的专属风格特色
+3. 结合对话内容的情感主题
+4. 提示词长度控制在120字以内
+5. 直接返回提示词，不要其他解释
 
 请生成图像提示词：`
 
@@ -462,13 +531,14 @@ AI回复：${aiResponse}
         const generatedPrompt = response.choices[0].message.content.trim()
         return generatedPrompt
       } else {
-        // 如果AI生成失败，使用默认提示词
-        return `温馨的心理咨询场景，柔和的色彩，宁静祥和的氛围，体现${userMessage.substring(0, 20)}的主题`
+        // 如果AI生成失败，使用基于咨询师风格的默认提示词
+        return `${counselorStyle.artStyle}，${counselorStyle.scene}，${counselorStyle.colorPalette}，${counselorStyle.atmosphere}，体现${userMessage.substring(0, 20)}的主题`
       }
     } catch (error) {
       console.error('构建图像提示词失败:', error)
-      // 返回基于用户消息的简单提示词
-      return `温馨的心理咨询场景，柔和的色彩，宁静祥和的氛围，体现情感支持的主题`
+      // 返回基于咨询师风格的简单提示词
+      const counselorStyle = this.getCounselorImageStyle(this.data.counselor.id)
+      return `${counselorStyle.artStyle}，${counselorStyle.atmosphere}，体现情感支持的主题`
     }
   },
 
