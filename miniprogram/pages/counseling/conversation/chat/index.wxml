@@ -31,7 +31,7 @@
   </view>
 
   <!-- 3. 聊天消息区域 -->
-  <scroll-view class="messages-container" scroll-y scroll-into-view="{{scrollToView}}">
+  <scroll-view class="messages-container" scroll-y scroll-into-view="{{scrollToMessage}}">
     <block wx:for="{{messages}}" wx:key="id">
       <view id="{{item.id}}" class="message-row {{item.type === 'user' ? 'user' : 'counselor'}}">
         <!-- AI角色头像 -->
@@ -72,6 +72,6 @@
       confirm-type="send"
       bindconfirm="onSend"
     />
-    <button class="send-btn" bindtap="onSend" disabled="{{!inputValue.trim()}}">发送</button>
+    <button class="send-btn" bindtap="onSend" disabled="{{isSendDisabled}}">发送</button>
   </view>
 </view>

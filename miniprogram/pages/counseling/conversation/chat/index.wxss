@@ -293,27 +293,29 @@
 }
 
 /* 调整输入区域的样式 */
+/* 输入和操作区整体容器样式 */
 .input-area {
-  display: flex;
-  align-items: center;
-  padding: 20rpx;
-  background-color: #fff;
-  border-top: 1rpx solid #eee;
+  display: flex; /* 使用弹性布局，使子元素横向排列 */
+  align-items: center; /* 垂直居中对齐所有子元素 */
+  padding: 10rpx; /* 四周内边距，保证内容不贴边 */
+  background-color: #fff; /* 背景色为白色 */
+  border-top: 1rpx solid #eee; /* 顶部边框，分隔上方内容 */
 }
 
+/* 操作按钮样式（如重聊、图片开关） */
 .action-btn {
-  padding: 12rpx 20rpx;
-  font-size: 26rpx;
-  color: #555;
-  background-color: #f0f0f0;
-  border-radius: 30rpx;
-  text-align: center;
-  margin-right: 10rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6rpx;
-  transition: all 0.3s ease;
+  padding: 10rpx 5rpx; /* 上下12rpx，左右5rpx的内边距，让按钮更紧凑 */
+  font-size: 26rpx; /* 字体大小 */
+  color: #555; /* 字体颜色 */
+  background-color: #f0f0f0; /* 按钮背景色 */
+  border-radius: 30rpx; /* 圆角，按钮更圆润 */
+  text-align: center; /* 文字居中 */
+  margin-right: 8rpx; /* 右侧间距，分隔多个按钮 */
+  display: flex; /* 弹性布局，方便图标和文字横向排列 */
+  align-items: center; /* 垂直居中内容 */
+  justify-content: center; /* 水平居中内容 */
+  gap: 6rpx; /* 图标与文字之间的间距 */
+  transition: all 0.3s ease; /* 状态变化时平滑过渡 */
 }
 
 .action-btn.active {
@@ -336,19 +338,28 @@
   min-width: 0; /* 允许输入框收缩 */
 }
 
+/* 发送按钮样式 */
 .send-btn {
-  background-color: #2196F3; /* 蓝色背景 */
-  color: #fff;
-  border: none;
-  border-radius: 36rpx;
-  padding: 0 25rpx; /* 减小内边距 */
-  height: 72rpx;
-  line-height: 72rpx;
-  font-size: 28rpx;
-  flex-shrink: 0; /* 防止按钮被压缩 */
+  background-color: #8A32E8; /* 紫色背景，突出按钮 */
+  color: #fff; /* 文字为白色，保证对比度 */
+  border: none; /* 无边框，简洁美观 */
+  border-radius: 36rpx; /* 圆角，按钮更圆润 */
+  padding: 0 24rpx; /* 左右内边距，给按钮合适的宽度 */
+  height: 72rpx; /* 按钮高度与输入框一致 */
+  line-height: 72rpx; /* 文字垂直居中 */
+  font-size: 28rpx; /* 字体大小适中，易读 */
+  flex-shrink: 0; /* 防止按钮被压缩，始终保持固定宽度 */
+  margin-left: 8rpx; /* 与输入框保持间距 */
+  transition: all 0.3s ease; /* 状态变化时平滑过渡 */
 }
 
 .send-btn[disabled] {
-  background-color: #a9d6f5;
-  color: #e9ecef;
+  background-color: #d0d0d0; /* 更明显的灰色背景 */
+  color: #999; /* 更清晰的灰色文字 */
+  cursor: not-allowed; /* 禁用状态的鼠标样式 */
+}
+
+.send-btn:not([disabled]):active {
+  background-color: #6A1B9A; /* 按下时的深紫色 */
+  transform: scale(0.98); /* 轻微缩放效果 */
 }

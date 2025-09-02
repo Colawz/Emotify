@@ -18,6 +18,7 @@ Page({
     imageGenerationEnabled: false, // 图像生成开关
     isGeneratingImage: false, // 图像生成中状态
     latestImageUrl: '', // 最新生成的图片URL
+    isSendDisabled: true, // 发送按钮禁用状态
   },
 
   onLoad(options) {
@@ -385,6 +386,28 @@ Page({
     })
   },
 
+  // 重新开始对话
+  onRestartTap() {
+    wx.showModal({
+      title: '重新开始',
+      content: '确定要重新开始对话吗？当前对话内容将被清空。',
+      success: (res) => {
+        if (res.confirm) {
+          this.setData({
+            messages: [],
+            inputValue: '',
+            currentChatId: '',
+            latestImageUrl: ''
+          })
+          wx.showToast({
+            title: '对话已重置',
+            icon: 'success'
+          })
+        }
+      }
+    })
+  },
+
   // 生成与对话相关的图像
   async generateContextualImage(userMessage, aiResponse) {
     if (!this.data.imageGenerationEnabled) {
@@ -441,7 +464,7 @@ Page({
       'dora': {
         baseStyle: '充满活力的探险风格',
         colorPalette: '明亮的橙色、黄色、绿色',
-        atmosphere: '阳光明媚、积极向上、充满好奇心',
+        atmosphere: '阳光明媚、积极向上、充满好奇',
         scene: '热带丛林、探险场景、自然风光',
         emotion: '友善、好奇、积极、充满正能量',
         artStyle: '明亮欢快的卡通插画风格'
@@ -557,8 +580,10 @@ AI回复：${aiResponse}
 
   // 输入框内容变化
   onInput(e) {
+    const v = e.detail.value || ''
     this.setData({
-      inputValue: e.detail.value
+      inputValue: v,
+      isSendDisabled: !v.trim()
     })
   },
 
@@ -579,6 +604,7 @@ AI回复：${aiResponse}
     this.setData({
       messages: [...messages, userMessage],
       inputValue: '',
+      isSendDisabled: true,
       scrollToMessage: `msg-${userMessage.id}`
     })
 
