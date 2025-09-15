@@ -1,11 +1,22 @@
 /* pages/counseling/profile-analysis/index.wxss */
-.container {
-  background-color: #f8f8f8;
-  min-height: 100vh;
+page {
+  height: 100vh;
+  overflow: hidden;
 }
 
+.container {
+  background-color: #f8f8f8;
+  position: relative;
+  height: 100%;
+}
+
+/* 让下方区域成为剩余高度的可滚动区域（减去顶部雷达图高度）*/
 .content-scroll {
-  height: 100vh;
+  position: absolute;
+  top: 580rpx; /* 500rpx 图高 + 2*40rpx 内边距 */
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .chart-wrapper {
@@ -18,9 +29,18 @@
   box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.08);
 }
 
+/* 固定在页面上侧的样式（即使滚动，下方区域滚动，雷达图保持在顶部） */
+.fixed-chart {
+  position: fixed; /* 确保雷达图固定在顶部 */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
 .radar-chart {
-  width: 600rpx;
-  height: 600rpx;
+  width: 500rpx;
+  height: 500rpx;
 }
 
 .card {
@@ -74,3 +94,14 @@
   line-height: 1.6;
   color: #666;
 } 
+
+.strategy-card {
+  padding: 20rpx;
+  text-align: center;
+}
+
+.strategy-text {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.6;
+}

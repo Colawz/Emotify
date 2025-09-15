@@ -1,16 +1,24 @@
 <!-- pages/counseling/profile-analysis/index.wxml -->
 <view class="container">
 
-  <scroll-view scroll-y class="content-scroll">
-    <!-- 雷达图区域 -->
-    <view class="chart-wrapper">
-      <image class="radar-chart" src="{{radarChartSvg}}" mode="aspectFit"></image>
-    </view>
+  <!-- 固定在顶部的雷达图区域 -->
+  <view class="chart-wrapper fixed-chart">
+    <image class="radar-chart" src="{{radarChartSvg}}" mode="aspectFit"></image>
+  </view>
 
+  <!-- 雷达图下方为可滚动区域 -->
+  <scroll-view scroll-y class="content-scroll">
+    
     <!-- 综合建议 -->
     <view class="card suggestion-card">
       <view class="card-title">综合建议</view>
       <view class="card-content">{{suggestion}}</view>
+    </view>
+
+    <!-- 当前的回复策略 -->
+    <view class="card suggestion-card">
+      <view class="card-title">当前的回复策略（依据您的大五人格特征）</view>
+        <view class="card-content">{{strategy}}</view>
     </view>
     
     <!-- 评估指标依据 -->
@@ -24,4 +32,4 @@
       </view>
     </view>
   </scroll-view>
-</view> 
+</view>
