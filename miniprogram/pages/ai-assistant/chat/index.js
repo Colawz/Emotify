@@ -78,27 +78,27 @@ Page({
       anxiety: {
         path: '/pages/counseling/conversation/index',
         title: '焦虑情绪支持',
-        tip: '我注意到您提到了焦虑。您需要专业的心理支持吗？'
+        tip: '我注意到您提到了焦虑。需要带您前去寻求专业的心理支持吗？'
       },
       depression: {
         path: '/pages/counseling/conversation/index',
         title: '抑郁情绪关怀',
-        tip: '我感受到了您的低落情绪。让我为您提供一些温暖的陪伴和建议。'
+        tip: '我感受到了您的低落情绪。需要带您前去寻求专业的心理支持吗？'
       },
       anger: {
         path: '/pages/counseling/conversation/index',
         title: '愤怒情绪管理',
-        tip: '愤怒是正常的情绪。让我们一起找到平静下来的方法。'
+        tip: '愤怒是正常的情绪。需要带您前去寻求专业的心理支持吗？'
       },
       loneliness: {
         path: '/pages/counseling/conversation/index',
         title: '孤独感支持',
-        tip: '孤独可能很痛苦。我在这里陪伴您。我们一起聊聊吧？'
+        tip: '孤独可能很痛苦。需要带您前去寻求专业的心理支持吗？'
       },
       stress: {
         path: '/pages/counseling/conversation/index',
         title: '压力缓解指导',
-        tip: '看起来您承受了很大的压力。您需要一些放松和减压的建议吗？'
+        tip: '看起来您承受了很大的压力。需要带您前去寻求专业的心理支持吗？'
       },
       happiness: {
         path: '/pages/counseling/conversation/index',
@@ -108,22 +108,22 @@ Page({
       love: {
         path: '/pages/counseling/conversation/index',
         title: '情感关系咨询',
-        tip: '感情关系可能很复杂。您想聊聊您的情感困扰吗？'
+        tip: '感情关系可能很复杂。需要带您前去寻求专业的心理支持吗？'
       },
       confusion: {
         path: '/pages/counseling/conversation/index',
         title: '人生困惑指导',
-        tip: '迷茫时最需要指引。让我们一起找到前进的方向。'
+        tip: '迷茫时最需要指引。需要带您前去寻求专业的心理支持吗？'
       },
       guilt: {
         path: '/pages/counseling/conversation/index',
         title: '内疚情绪咨询',
-        tip: '内疚可能很痛苦。让我们一起学会原谅自己。'
+        tip: '内疚可能很痛苦。需要带您前去寻求专业的心理支持吗？'
       },
       fear: {
         path: '/pages/counseling/conversation/index',
         title: '恐惧克服支持',
-        tip: '我理解恐惧的感受。让我们一起面对和克服这些恐惧。'
+        tip: '我理解恐惧的感受。需要带您前去寻求专业的心理支持吗？'
       }
       
     },
