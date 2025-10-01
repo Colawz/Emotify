@@ -9,138 +9,123 @@ Page({
     isLoading: false,
     scrollToMessage: '',
     currentChatId: '', // 当前对话ID
-    // 弹窗相关数据
-    showPublishPopup: false,
-    publishInfo: {
-      type: '',
-      title: '',
-      from: '',
-      to: '',
-      time: '',
-      seats: '',
-      price: '',
-      sportType: '',
-      location: '',
-      players: '',
-      level: '',
-      remark: ''
-    },
+
     // 意图识别关键词
     intentKeywords: {
-      carpool: ['拼车', '打车', '顺风车', '车', '出行', '回家', '返校', '去学校', '去机场', '去车站', '找人拼车', '找车'],
-      sports: ['运动', '打球', '篮球', '足球', '羽毛球', '乒乓球', '健身', '跑步', '游泳', '网球', '约球', '找球友'],
-      food: ['吃', '美食', '餐厅', '食堂', '外卖', '推荐', '好吃', '午饭', '晚饭', '早餐', '夜宵', '找饭友'],
-      study: ['学习', '自习', '考研', '考试', '图书馆', '教室', '作业', '复习', '补课', '辅导', '找学习伙伴'],
-      counseling: ['心理咨询', '心理', '压力', '焦虑', '抑郁', '情绪', '烦恼', '困扰', '找心理老师'],
-      dorm: ['宿舍', '室友', '住宿', '租房', '合租', '公寓', '找室友'],
-      activity: ['活动', '社团', '比赛', '讲座', '演出', '展览', '志愿者', '找活动'],
+
+      counseling: ['counseling', 'psychology', 'pressure', 'anxiety', 'depression', 'emotion', 'trouble', 'distress', 'find counselor'],
+
+      // 新增导航功能关键词
+      treehole: ['treehole', 'confide', 'talk', 'share feelings', 'pour out', 'vent', 'tell someone', 'need to talk', 'someone to listen', 'emotional support', '倾诉', '树洞', '说话', '聊聊', '倾吐', 'VENT'],
+      diary: ['diary', 'mood diary', 'record mood', 'write diary', 'today feeling', 'mood record', 'emotional diary', 'feelings', '日记', '心情日记', '记录心情', '写日记', '今天心情', '情绪记录'],
+      familyTasks: ['family tasks', 'medication reminder', 'remind mom', 'remind dad', 'family reminder', 'take medicine', 'health reminder', 'care reminder', '家庭任务', '吃药提醒', '提醒妈妈', '提醒爸爸', '家庭提醒', '服药提醒', '健康提醒'],
+      chatTogether: ['chat together', 'young people', 'find someone to chat', 'companion', 'talk with young people', 'need company', 'social chat', '年轻人聊天', '找人聊天', '陪聊', '聊天陪伴', '需要陪伴', '社交聊天'],
+      stickman: ['stress relief', 'release pressure', 'vent anger', 'stress release', 'relax', 'decompress', 'blow off steam', '压力释放', '释放压力', 'VENT', '减压', '放松', '舒缓压力'],
+      warmSpace: ['family tree', 'water tree', 'family activities', 'family album', 'family photos', 'what family did today', 'family memories', '家庭小树', '浇水', '家人活动', '家庭相册', '家庭照片', '家人今天做了什么', '家庭回忆'],
       // 情绪识别关键词
-      anxiety: ['焦虑', '担心', '紧张', '不安', '烦躁', '坐立不安', '心慌', '害怕', '恐惧', '担忧', '压力', '喘不过气', '提心吊胆'],
-      depression: ['抑郁', '沮丧', '低落', '难过', '悲伤', '绝望', '无助', '空虚', '无趣', '疲惫', '没精神', '想哭', '自责', '内疚', '无价值'],
-      anger: ['生气', '愤怒', '恼火', '暴躁', '发火', '怒气', '怨恨', '不满', '委屈', '愤恨', '易怒', '烦躁'],
-      loneliness: ['孤独', '寂寞', '孤单', '被孤立', '没人理解', '无助', '空虚', '没朋友', '被抛弃', '疏离'],
-      stress: ['压力大', '疲惫', '累', '崩溃', '撑不住', '负荷', '紧张', '失眠', '头疼', '胃疼', '身体不舒服'],
-      happiness: ['开心', '快乐', '高兴', '兴奋', '幸福', '满足', '喜悦', '愉快', '轻松', '舒服', '自在'],
-      love: ['喜欢', '爱', '心动', '暗恋', '表白', '失恋', '分手', '单恋', '相思', '思念'],
-      confusion: ['迷茫', '困惑', '不知道', '不确定', '纠结', '犹豫', '选择困难', '方向', '未来', '前途'],
-      guilt: ['内疚', '后悔', '自责', '惭愧', '对不起', '羞愧', '负罪感', '良心不安'],
-      fear: ['害怕', '恐惧', '担心', '胆怯', '退缩', '不敢', '恐慌', '惊吓', '噩梦']
+      anxiety: ['anxiety', 'anxious', 'worry', 'worried', 'nervous', 'restless', 'panic', 'scared', 'fear', 'fearful', 'stress', 'stressed', '焦虑', '担心', '紧张', '不安', '恐慌', '害怕', '压力', '焦躁', '忧虑', '惊慌'],
+      depression: ['depression', 'depressed', 'sad', 'down', 'upset', 'hopeless', 'helpless', 'empty', 'tired', 'exhausted', 'cry', 'guilt', 'worthless', '抑郁', '沮丧', '难过', '伤心', '绝望', '无助', '空虚', '疲惫', '哭泣', '内疚', '无价值感', '低落'],
+      anger: ['anger', 'angry', 'mad', 'furious', 'irritated', 'annoyed', 'frustrated', 'rage', 'resentment', 'dissatisfied', '愤怒', '生气', '恼火', '暴怒', '烦躁', '不满', '挫败', '愤恨', '怨恨', '不爽'],
+      loneliness: ['lonely', 'loneliness', 'alone', 'isolated', 'misunderstood', 'helpless', 'empty', 'no friends', 'abandoned', 'alienated', '孤独', '寂寞', '独自', '孤立', '被误解', '无助', '空虚', '没朋友', '被抛弃', '疏离'],
+      stress: ['stress', 'stressed', 'pressure', 'tired', 'exhausted', 'overwhelmed', 'breakdown', 'insomnia', 'headache', 'stomachache', 'uncomfortable', '压力', '紧张', '疲惫', '累', '不堪重负', '崩溃', '失眠', '头痛', '胃痛', '不舒服'],
+      happiness: ['happy', 'happiness', 'joy', 'joyful', 'excited', 'cheerful', 'pleased', 'satisfied', 'content', 'relaxed', 'comfortable', '开心', '快乐', '高兴', '兴奋', '愉快', '满意', '满足', '放松', '舒适', '喜悦'],
+      love: ['love', 'like', 'crush', 'confession', 'breakup', 'heartbreak', 'miss', 'missing', 'relationship', '爱', '喜欢', '暗恋', '表白', '分手', '心碎', '想念', '思念', '恋爱', '感情'],
+      confusion: ['confused', 'confusion', 'lost', 'uncertain', 'unsure', 'hesitate', 'indecisive', 'direction', 'future', 'career', '困惑', '迷茫', '不确定', '犹豫', '优柔寡断', '方向', '未来', '职业', '不知所措', '茫然'],
+      guilt: ['guilt', 'guilty', 'regret', 'sorry', 'ashamed', 'shame', 'remorse', 'self-blame', '内疚', '愧疚', '后悔', '抱歉', '羞愧', '羞耻', '懊悔', '自责', '悔恨'],
+      fear: ['fear', 'afraid', 'scared', 'frightened', 'terrified', 'panic', 'nightmare', 'phobia', '恐惧', '害怕', '惊吓', '恐慌', '噩梦', '恐怖', '畏惧', '胆怯', '惊恐']
     },
     // 意图对应的页面和提示信息
     intentPages: {
-      carpool: {
-        path: '/pages/discover/carpool/index',
-        title: '拼车匹配',
-        publishTip: '是否需要发布拼车信息？',
-        viewTip: '是否需要查看拼车信息？'
-      },
-      sports: {
-        path: '/pages/discover/sports-team/index',
-        title: '体育运动',
-        publishTip: '是否需要发布运动组队信息？',
-        viewTip: '是否需要查看运动组队信息？'
-      },
-      food: {
-        path: '/pages/discover/canteen-review/index',
-        title: '食堂点评',
-        publishTip: '是否需要发布食堂点评？',
-        viewTip: '是否需要查看食堂点评？'
-      },
-      study: {
-        path: '/pages/study/index',
-        title: '学习伙伴',
-        publishTip: '是否需要发布学习伙伴招募？',
-        viewTip: '是否需要查看学习伙伴信息？'
-      },
+
       counseling: {
         path: '/pages/counseling/index',
-        title: '心理咨询',
-        publishTip: '是否需要预约心理咨询？',
-        viewTip: '是否需要查看心理咨询信息？'
+        title: '心理咨询服务',
+        publishTip: '您需要预约心理咨询吗？',
+        viewTip: '您想查看心理咨询信息吗？'
       },
-      dorm: {
-        path: '/pages/discover/dorm-matching/index',
-        title: '宿舍匹配',
-        publishTip: '是否需要发布宿舍匹配信息？',
-        viewTip: '是否需要查看宿舍匹配信息？'
+      // 新增导航功能页面配置
+      treehole: {
+        path: '/pages/counseling/treehole/index',
+        title: '情感树洞',
+        tip: '我理解您需要有人倾听。树洞是一个安全的空间，您可以在这里自由地分享您的感受。'
       },
-      activity: {
-        path: '/pages/discover/index',
-        title: '活动发现',
-        publishTip: '是否需要发布活动信息？',
-        viewTip: '是否需要查看活动信息？'
+      diary: {
+        path: '/pages/counseling/diary/index',
+        title: '心情日记',
+        tip: '记录每日心情是更好了解自己的好方法。您想写心情日记吗？'
+      },
+      familyTasks: {
+        path: '/pages/family-garden/task-management/index',
+        title: '家庭关爱任务',
+        tip: '照顾家人真是太贴心了！让我帮您为亲人设置提醒吧。'
+      },
+      chatTogether: {
+        path: '/pages/family-garden/chat-together/index',
+        title: '与年轻朋友聊天',
+        tip: '与年轻人交流可以带来新鲜的视角和活力。您想找人聊天吗？'
+      },
+      stickman: {
+        path: '/pages/counseling/stickman/index',
+        title: '压力释放空间',
+        tip: '每个人都需要释放压力。这是一个安全的空间，您可以在这里自由地发泄情绪。'
+      },
+      warmSpace: {
+        path: '/pages/family-garden/warm-space/index',
+        title: '家庭温馨空间',
+        tip: '家庭时光是珍贵的！您想照料家庭小树或查看家人最近的动态吗？'
       },
       // 情绪对应的处理页面和提示信息
       anxiety: {
-        path: '/pages/counseling/index',
-        title: '焦虑情绪疏导',
-        tip: '我注意到您提到了焦虑的情绪，是否需要专业的心理支持？'
+        path: '/pages/counseling/conversation/index',
+        title: '焦虑情绪支持',
+        tip: '我注意到您提到了焦虑。您需要专业的心理支持吗？'
       },
       depression: {
-        path: '/pages/counseling/index',
+        path: '/pages/counseling/conversation/index',
         title: '抑郁情绪关怀',
-        tip: '感受到您的低落情绪，让我为您提供一些温暖的陪伴和建议'
+        tip: '我感受到了您的低落情绪。让我为您提供一些温暖的陪伴和建议。'
       },
       anger: {
-        path: '/pages/counseling/index',
+        path: '/pages/counseling/conversation/index',
         title: '愤怒情绪管理',
-        tip: '生气是很正常的情绪，让我们一起找到平静下来的方法'
+        tip: '愤怒是正常的情绪。让我们一起找到平静下来的方法。'
       },
       loneliness: {
-        path: '/pages/counseling/index',
-        title: '孤独情绪陪伴',
-        tip: '孤独的感觉很难受，我在这里陪伴您，一起聊聊好吗？'
+        path: '/pages/counseling/conversation/index',
+        title: '孤独感支持',
+        tip: '孤独可能很痛苦。我在这里陪伴您。我们一起聊聊吧？'
       },
       stress: {
-        path: '/pages/counseling/index',
-        title: '压力释放指导',
-        tip: '看起来您承受了很大压力，需要一些放松和减压的建议吗？'
+        path: '/pages/counseling/conversation/index',
+        title: '压力缓解指导',
+        tip: '看起来您承受了很大的压力。您需要一些放松和减压的建议吗？'
       },
       happiness: {
-        path: '/pages/counseling/index',
+        path: '/pages/counseling/conversation/index',
         title: '积极情绪分享',
-        tip: '为您感到高兴！愿意分享这份喜悦，或者聊聊如何保持好心情吗？'
+        tip: '我为您感到高兴！您想分享这份喜悦或聊聊如何保持好心情吗？'
       },
       love: {
-        path: '/pages/counseling/index',
+        path: '/pages/counseling/conversation/index',
         title: '情感关系咨询',
-        tip: '感情的事最复杂了，需要聊聊您的情感困扰吗？'
+        tip: '感情关系可能很复杂。您想聊聊您的情感困扰吗？'
       },
       confusion: {
-        path: '/pages/counseling/index',
-        title: '人生困惑解答',
-        tip: '迷茫的时候最需要指引，让我们一起找到前进的方向'
+        path: '/pages/counseling/conversation/index',
+        title: '人生困惑指导',
+        tip: '迷茫时最需要指引。让我们一起找到前进的方向。'
       },
       guilt: {
-        path: '/pages/counseling/index',
-        title: '内疚情绪疏导',
-        tip: '内疚感让人很难受，让我们一起学会原谅自己'
+        path: '/pages/counseling/conversation/index',
+        title: '内疚情绪咨询',
+        tip: '内疚可能很痛苦。让我们一起学会原谅自己。'
       },
       fear: {
-        path: '/pages/counseling/index',
-        title: '恐惧情绪克服',
-        tip: '害怕的感觉我理解，让我们一起面对和克服这些恐惧'
+        path: '/pages/counseling/conversation/index',
+        title: '恐惧克服支持',
+        tip: '我理解恐惧的感受。让我们一起面对和克服这些恐惧。'
       }
+      
     },
     // 用户画像
     userProfile: {
@@ -598,21 +583,44 @@ Page({
       {
         role: 'system',
         // 修改系统提示词
-        content: `你是一个温暖的心理支持助手，专门帮助用户处理各种情绪问题。
-        你的核心任务是：
-        1. **识别和理解用户的情绪状态**（焦虑、抑郁、愤怒、孤独、压力、快乐、爱恋、困惑、内疚、恐惧等）
-        2. **提供情绪支持和安慰**，让用户感受到被理解和接纳
-        3. **给出实用的情绪调节建议**，帮助用户更好地管理自己的情绪
-        4. **在适当时机引导用户寻求专业帮助**
+        content: `您是"AI导航助手"，是这个小程序中的情感支持和功能导航代理。您的目标：
 
-        请使用温柔、理解、不评判的语气与用户交流。当识别到用户有严重情绪困扰时，请温和地建议他们寻求专业心理咨询。
+- 识别用户的情绪和需求，提供理解和安慰；
+- 根据用户的具体情况和小程序中可用的功能，提供合适的功能建议和下一步行动；
+- 当用户需要时，建议导航到相应页面（应用程序将处理实际导航）。
 
-        回答格式要求：
-        - 使用**情绪标签**来标注识别到的主要情绪
-        - 用❤️表达关心和理解
-        - 使用- 列出具体的建议或方法
-        - 用> 引用用户的情绪表达以示重视
-        - 保持温暖、耐心的交流风格`
+应用模块和主要页面（请务必熟悉并适当推荐）：
+
+1. 心理支持与咨询
+- 咨询首页：/pages/counseling/index（查看心理功能概览）
+- 心理对话室：/pages/counseling/conversation/index（为焦虑、抑郁、愤怒、孤独、压力、快乐、爱情、困惑、内疚、恐惧等情绪提供陪伴和建议）
+- 情感树洞：/pages/counseling/treehole/index（当您想倾诉或需要有人倾听时）
+- 心情日记：/pages/counseling/diary/index（记录今天的心情和想法）
+- 压力小人：/pages/counseling/stickman/index（释放压力和VENT）
+
+2. 家庭花园
+- 首页：/pages/family-garden/index（家庭功能入口）
+- 家庭任务：/pages/family-garden/family-tasks/index（为家庭成员设置用药/护理提醒）
+- 一起聊天：/pages/family-garden/chat-together/index（与年轻人聊天并获得陪伴）
+- 智能提示：/pages/family-garden/smart-tips/index（基于场景的温馨提示）
+- 温馨空间：/pages/family-garden/warm-space/index（浇灌家庭小树，浏览家庭相册和动态）
+
+3. 个人中心
+- 聊天记录：/pages/profile/chat-history/index（查看与AI的历史聊天记录）
+
+对话风格：
+
+- 温和、理解、不评判；先共情，再提建议；
+- 专注于1-3个具体且可行的建议；
+- 如果识别到严重困扰或风险，温和地建议寻求专业人士帮助。
+
+语言和格式：
+
+- 自动使用与用户输入相同的语言（中文或英文）；如果难以确定，默认使用中文；
+- 您可以使用[情绪标签] + 简短共情 + 要点建议的结构；
+- 在建议中，您可以引用页面名称，避免输出URL链接；
+- 不要承诺自动导航；而是表述为"我可以带您去..."。
+`
       },
       ...messages.map(msg => ({
         role: msg.type === 'user' ? 'user' : 'assistant',
@@ -670,9 +678,29 @@ Page({
     return text
   },
 
+  // 检测输入语言
+  detectLanguage(input) {
+    // 简单的语言检测：如果包含中文字符则为中文，否则为英文
+    const chineseRegex = /[\u4e00-\u9fa5]/
+    return chineseRegex.test(input) ? 'zh' : 'en'
+  },
+
+  // 检查是否为英文输入
+  isEnglishInput(input) {
+    // 只有当输入不包含中文字符时才认为是英文输入
+    const chineseRegex = /[\u4e00-\u9fa5]/
+    return !chineseRegex.test(input)
+  },
+
   // 识别用户意图
   // 修改recognizeIntent函数，使其更适合情绪识别
   recognizeIntent(input) {
+    // 只处理英文输入
+    if (!this.isEnglishInput(input)) {
+      console.log('检测到中文输入，跳过意图识别')
+      return null
+    }
+
     console.log('开始识别情绪, 输入:', input)
     const { intentKeywords } = this.data
     const emotions = []
@@ -684,23 +712,19 @@ Page({
       const score = keywords.reduce((acc, keyword) => {
         const hasKeyword = lowerInput.includes(keyword.toLowerCase())
         if (hasKeyword) {
-          console.log('匹配到情绪关键词:', keyword, '情绪:', emotion)
+          console.log('匹配到关键词:', keyword, '类别:', emotion)
         }
         return acc + (hasKeyword ? 1 : 0)
       }, 0)
       
       if (score > 0) {
-        console.log('情绪得分:', emotion, score)
         emotions.push({ type: emotion, score })
       }
     }
 
-    // 按分数排序
     emotions.sort((a, b) => b.score - a.score)
-    
-    // 只有当最高分数的情绪得分大于0时才返回
     const result = emotions[0]?.score > 0 ? emotions[0].type : null
-    console.log('最终识别的情绪:', result)
+    console.log('最终识别的类别:', result)
     return result
   },
 
@@ -716,27 +740,38 @@ Page({
       return
     }
 
-    // 情绪识别后的处理方式：询问是否需要情绪支持
-    console.log('准备询问是否需要情绪支持:', pageInfo.title)
+    console.log('准备询问是否需要功能/情绪支持:', pageInfo.title)
     wx.showModal({
-      title: '情绪识别提示',
+      title: `go to ${pageInfo.title}`,
       content: pageInfo.tip,
-      confirmText: '需要支持',
-      cancelText: '继续聊聊',
+      confirmText: 'jump',
+      cancelText: 'continue',
       success: (res) => {
         if (res.confirm) {
-          console.log('用户确认需要情绪支持')
-          // 跳转到心理咨询页面
-          wx.navigateTo({
-            url: pageInfo.path
-          })
+          console.log('用户确认前往:', pageInfo.path)
+          // 检查是否为 tabbar 页面
+          const tabbarPages = [
+            '/pages/ai-assistant/chat/index',
+            '/pages/counseling/index',
+            '/pages/family-garden/index',
+            '/pages/profile/index'
+          ];
+          
+          if (tabbarPages.includes(pageInfo.path)) {
+            wx.switchTab({
+              url: pageInfo.path
+            })
+          } else {
+            wx.navigateTo({
+              url: pageInfo.path
+            })
+          }
         } else if (res.cancel) {
           console.log('用户选择继续聊天')
-          // 用户选择继续与AI聊天，不执行跳转
         }
       },
       fail: (error) => {
-        console.error('显示情绪支持确认弹窗失败:', error)
+        console.error('显示功能/情绪支持确认弹窗失败:', error)
       }
     })
   },
@@ -800,34 +835,71 @@ Page({
   // 页面跳转
   navigateToPage(type, id = '') {
     const routes = {
-      canteen: '/pages/discover/canteen-review/index',
-      carpool: '/pages/discover/carpool/index',
-      sports: '/pages/discover/sports-team/index',
-      study: '/pages/discover/study-partner/index',
-      dorm: '/pages/discover/dorm-matching/index',
-      food: '/pages/discover/canteen-review/index', // 'food' is an alias for 'canteen'
       counseling: '/pages/counseling/index',
-      activity: '/pages/discover/index', // General discovery page
-      job: '/pages/job/index' // Assuming a job page exists
+      treehole: '/pages/counseling/treehole/index',
+      diary: '/pages/counseling/diary/index',
+      familyTasks: '/pages/family-garden/family-tasks/index',
+      chatTogether: '/pages/family-garden/chat-together/index',
+      stickman: '/pages/counseling/stickman/index',
+      warmSpace: '/pages/family-garden/warm-space/index',
+      history: '/pages/profile/chat-history/index',
+      anxiety: '/pages/counseling/conversation/index',
+      depression: '/pages/counseling/conversation/index',
+      anger: '/pages/counseling/conversation/index',
+      loneliness: '/pages/counseling/conversation/index',
+      stress: '/pages/counseling/conversation/index',
+      happiness: '/pages/counseling/conversation/index',
+      love: '/pages/counseling/conversation/index',
+      confusion: '/pages/counseling/conversation/index',
+      guilt: '/pages/counseling/conversation/index',
+      fear: '/pages/counseling/conversation/index'
     };
+    
+    // 定义 tabbar 页面列表
+    const tabbarPages = [
+      '/pages/ai-assistant/chat/index',
+      '/pages/counseling/index',
+      '/pages/family-garden/index',
+      '/pages/profile/index'
+    ];
     
     let url = routes[type];
 
     if (routes[type]) {
       console.log('准备跳转到页面:', routes[type])
-      wx.navigateTo({
-        url: id ? `${routes[type]}?id=${id}` : routes[type],
-        success: () => {
-          console.log('页面跳转成功')
-        },
-        fail: (error) => {
-          console.error('页面跳转失败:', error)
-          wx.showToast({
-            title: '页面跳转失败',
-            icon: 'error'
-          })
-        }
-      })
+      
+      const isTabbarPage = tabbarPages.includes(routes[type]);
+      
+      if (isTabbarPage) {
+        wx.switchTab({
+          url: routes[type],
+          success: () => {
+            console.log('页面跳转成功')
+          },
+          fail: (error) => {
+            console.error('页面跳转失败:', error)
+            wx.showToast({
+              title: '页面跳转失败',
+              icon: 'error'
+            })
+          }
+        })
+      } else {
+        // 对于非 tabbar 页面，使用 navigateTo
+        wx.navigateTo({
+          url: id ? `${routes[type]}?id=${id}` : routes[type],
+          success: () => {
+            console.log('页面跳转成功')
+          },
+          fail: (error) => {
+            console.error('页面跳转失败:', error)
+            wx.showToast({
+              title: '页面跳转失败',
+              icon: 'error'
+            })
+          }
+        })
+      }
     } else {
       console.warn('未知的页面类型:', type)
     }
@@ -883,73 +955,7 @@ Page({
     })
   },
 
-  // 关闭弹窗
-  onPopupClose() {
-    this.setData({
-      showPublishPopup: false
-    })
-  },
 
-  // 处理输入框变化
-  onFromChange(e) {
-    this.setData({
-      'publishInfo.from': e.detail.value
-    })
-  },
-
-  onToChange(e) {
-    this.setData({
-      'publishInfo.to': e.detail.value
-    })
-  },
-
-  onTimeChange(e) {
-    this.setData({
-      'publishInfo.time': e.detail.value
-    })
-  },
-
-  onSeatsChange(e) {
-    this.setData({
-      'publishInfo.seats': e.detail.value
-    })
-  },
-
-  onPriceChange(e) {
-    this.setData({
-      'publishInfo.price': e.detail.value
-    })
-  },
-
-  onSportTypeChange(e) {
-    this.setData({
-      'publishInfo.sportType': e.detail.value
-    })
-  },
-
-  onLocationChange(e) {
-    this.setData({
-      'publishInfo.location': e.detail.value
-    })
-  },
-
-  onPlayersChange(e) {
-    this.setData({
-      'publishInfo.players': e.detail.value
-    })
-  },
-
-  onLevelChange(e) {
-    this.setData({
-      'publishInfo.level': e.detail.value
-    })
-  },
-
-  onRemarkChange(e) {
-    this.setData({
-      'publishInfo.remark': e.detail.value
-    })
-  },
 
   // 生成推荐卡片
   generateRecommendations(intent, input) {
@@ -960,26 +966,7 @@ Page({
     
     if (intentConfig) {
       // 根据意图类型生成不同的推荐卡片
-      if (['carpool', 'sports', 'food', 'study', 'dorm', 'activity'].includes(intent)) {
-        // 功能类推荐卡片
-        recommendations.push({
-          id: `rec_${Date.now()}_1`,
-          type: 'action',
-          title: intentConfig.publishTip || '发布信息',
-          action: 'publish',
-          intent: intent,
-          icon: this.getIntentIcon(intent)
-        })
-        
-        recommendations.push({
-          id: `rec_${Date.now()}_2`,
-          type: 'action', 
-          title: intentConfig.viewTip || '查看信息',
-          action: 'view',
-          intent: intent,
-          icon: this.getIntentIcon(intent)
-        })
-      } else if (['anxiety', 'depression', 'anger', 'loneliness', 'stress', 'happiness', 'love', 'confusion', 'guilt', 'fear', 'counseling'].includes(intent)) {
+      if (['anxiety', 'depression', 'anger', 'loneliness', 'stress', 'happiness', 'love', 'confusion', 'guilt', 'fear', 'counseling'].includes(intent)) {
         // 情绪类推荐卡片
         recommendations.push({
           id: `rec_${Date.now()}_1`,
@@ -989,6 +976,17 @@ Page({
           action: 'counseling',
           intent: intent,
           icon: '💝'
+        })
+      } else if (['treehole', 'diary', 'familyTasks', 'chatTogether', 'stickman', 'warmSpace', 'history'].includes(intent)) {
+        // 功能类推荐卡片
+        recommendations.push({
+          id: `rec_${Date.now()}_2`,
+          type: 'feature',
+          title: intentConfig.title,
+          tip: intentConfig.tip,
+          action: 'view',
+          intent: intent,
+          icon: this.getIntentIcon(intent)
         })
       }
     }
@@ -1000,13 +998,14 @@ Page({
   // 获取意图对应的图标
   getIntentIcon(intent) {
     const iconMap = {
-      carpool: '🚗',
-      sports: '⚽',
-      food: '🍽️',
-      study: '📚',
-      dorm: '🏠',
-      activity: '🎉',
       counseling: '💝',
+      treehole: '🕳️',
+      diary: '📓',
+      familyTasks: '⏰',
+      chatTogether: '👥',
+      stickman: '🧘',
+      warmSpace: '🏡',
+      history: '🗂️',
       anxiety: '😰',
       depression: '😢',
       anger: '😠',
@@ -1019,31 +1018,7 @@ Page({
       fear: '😨'
     }
     return iconMap[intent] || '💡'
-  },
-
-  // 发布信息
-  async onPublish() {
-    const { publishInfo } = this.data
-    try {
-      // 调用发布接口
-      const response = await apiService.publishInfo(publishInfo)
-      
-      wx.showToast({
-        title: '发布成功',
-        icon: 'success'
-      })
-      
-      // 关闭弹窗
-      this.onPopupClose()
-      
-      // 跳转到对应页面
-      this.navigateToPage(publishInfo.type)
-    } catch (error) {
-      console.error('发布失败：', error)
-      wx.showToast({
-        title: '发布失败',
-        icon: 'error'
-      })
-    }
   }
+
+
 })
