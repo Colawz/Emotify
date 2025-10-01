@@ -2,17 +2,24 @@
 .game-container {
   position: relative;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - env(safe-area-inset-top));
+  height: calc(100vh - constant(safe-area-inset-top)); /* iOS < 11.2 兼容 */
   background: linear-gradient(to bottom, #ff6b6b 0%, #ffa500 100%);
   overflow: hidden;
+  /* 让整个容器从状态栏下面开始 */
+  margin-top: env(safe-area-inset-top);
+  margin-top: constant(safe-area-inset-top); /* iOS < 11.2 兼容 */
+  box-sizing: border-box;
 }
 
 /* 游戏头部 */
 .game-header {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 70rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 750rpx;
   height: 120rpx;
   display: flex;
   align-items: center;
@@ -21,6 +28,7 @@
   background: rgba(0, 0, 0, 0.8);
   z-index: 100;
   box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.3);
+  border-radius: 16rpx;
 }
 
 .back-btn {
@@ -53,23 +61,29 @@
 /* 游戏画布 */
 .game-canvas {
   position: absolute;
-  top: 120rpx;
-  left: 0;
-  width: 100%;
-  height: calc(100% - 240rpx);
+  top: 210rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 750rpx;
+  height: calc(100% - 350rpx);
   background: rgba(255, 255, 255, 0.1);
+  border-radius: 16rpx;
 }
 
 /* 武器选择栏 */
 .weapon-bar {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 20rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 750rpx;
   height: 120rpx;
   background: rgba(0, 0, 0, 0.9);
   padding: 16rpx;
   z-index: 100;
+  border-radius: 16rpx;
 }
 
 .weapon-title {
@@ -194,8 +208,8 @@
 /* 重新开始按钮 */
 .restart-btn {
   position: absolute;
-  top: 140rpx;
-  right: 32rpx;
+  top: 220rpx;
+  right: 5%;
   width: 80rpx;
   height: 80rpx;
   border-radius: 50%;
@@ -209,4 +223,4 @@
 
 .restart-btn:active {
   transform: scale(0.95);
-} 
+}
