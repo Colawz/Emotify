@@ -106,29 +106,22 @@ class ApiService {
     }
   }
 
-  // 图像生成相关方法
+  // 图像生成相关方法 - 豆包API
   async generateImage(prompt, options = {}) {
     try {
       const requestData = {
         model: apiConfig.imageApi.model,
-        input: {
-          messages: [
-            {
-              role: 'user',
-              content: [
-                {
-                  text: prompt
-                }
-              ]
-            }
-          ]
-        },
-        parameters: {
-          negative_prompt: options.negative_prompt || '',
-          prompt_extend: options.prompt_extend !== false,
-          watermark: options.watermark !== false,
-          size: options.size || '1328*1328'
-        }
+        prompt: prompt,
+        sequential_image_generation: "disabled",
+        response_format: "url",
+        size: options.size || "2K",
+        stream: false,
+        watermark: options.watermark !== false
+      }
+
+      // 如果有参考图像，添加到请求中
+      if (options.referenceImage) {
+        requestData.image = options.referenceImage
       }
 
       const response = await this.request(
@@ -144,14 +137,11 @@ class ApiService {
         apiConfig.imageApi.baseUrl
       )
 
-      if (response.output && response.output.choices && response.output.choices[0]) {
-        const imageContent = response.output.choices[0].message.content[0]
-        if (imageContent && imageContent.image) {
-          return {
-            success: true,
-            imageUrl: imageContent.image,
-            message: '图像生成成功'
-          }
+      if (response.data && response.data.length > 0 && response.data[0].url) {
+        return {
+          success: true,
+          imageUrl: response.data[0].url,
+          message: '图像生成成功'
         }
       }
       

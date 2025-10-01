@@ -14,7 +14,7 @@ Page({
       {
         id: 'lazy_goat',
         name: '懒羊羊',
-        avatar: '/assets/Counselor_Headshot/lan.png',
+        avatar: '/assets/Counselor_Headshot/lan.jpg',
         description: '虽然我平时很懒，但听你倾诉，我总是有时间的。'
       },
       {

@@ -421,11 +421,32 @@ Page({
       const imagePrompt = await this.buildImagePrompt(userMessage, aiResponse)
       console.log('图像生成提示词:', imagePrompt)
       
+      // 获取咨询师对应的云存储参考图像URL
+      let referenceImageUrl = null
+      const counselorId = this.data.counselor.id
+      
+      // 咨询师ID到云存储URL的映射
+      const counselorImageUrls = {
+        'dora': 'https://636c-cloud1-1gjz5ckoe28a6c4a-1373873601.tcb.qcloud.la/avatars/doro.jpg?sign=833aa0e732cc5db603cf26f69c34f29a&t=1759326097',
+        'lazy_goat': 'https://636c-cloud1-1gjz5ckoe28a6c4a-1373873601.tcb.qcloud.la/avatars/lan.jpg?sign=0427133a2865c35bd774410e3a089ca9&t=1759326287',
+        'grey_wolf': 'https://636c-cloud1-1gjz5ckoe28a6c4a-1373873601.tcb.qcloud.la/avatars/hui.jpg?sign=1e83b0a1f6b1acf8a7a739a98d605897&t=1759326311',
+        'boonie_bear_xiongda': 'https://636c-cloud1-1gjz5ckoe28a6c4a-1373873601.tcb.qcloud.la/avatars/bear1.png?sign=f77e34c44f345ffc5e164694f3f3b3f3&t=1759326324',
+        'boonie_bear_xionger': 'https://636c-cloud1-1gjz5ckoe28a6c4a-1373873601.tcb.qcloud.la/avatars/bear2.png?sign=d360d9b9d015ac16940aaf69afd1e8c6&t=1759326345'
+      }
+      
+      // 根据咨询师ID获取对应的参考图像URL
+      referenceImageUrl = counselorImageUrls[counselorId]
+      if (referenceImageUrl) {
+        console.log(`咨询师 ${counselorId} 的参考图像URL:`, referenceImageUrl)
+      } else {
+        console.warn(`未找到咨询师 ${counselorId} 的参考图像URL`)
+      }
+      
       // 调用图像生成API（同步调用）
       const generateResult = await apiService.generateImage(imagePrompt, {
-        size: '1328*1328',
-        prompt_extend: true,
-        watermark: true
+        size: '2K',
+        watermark: true,
+        referenceImage: referenceImageUrl
       })
       
       if (generateResult.success && generateResult.imageUrl) {
@@ -538,8 +559,9 @@ AI回复：${aiResponse}
 1. 提示词应该具体、生动、富有视觉表现力
 2. 必须融入咨询师的专属风格特色
 3. 结合对话内容的情感主题
-4. 提示词长度控制在120字以内
-5. 直接返回提示词，不要其他解释
+4. 在提示词开头加入"参考提供的人物形象"
+5. 提示词长度控制在120字以内
+6. 直接返回提示词，不要其他解释
 
 请生成图像提示词：`
 
@@ -552,16 +574,20 @@ AI回复：${aiResponse}
 
       if (response && response.choices && response.choices[0]) {
         const generatedPrompt = response.choices[0].message.content.trim()
-        return generatedPrompt
+        // 确保提示词包含"参考提供的人物形象"
+        const finalPrompt = generatedPrompt.startsWith('参考提供的人物形象') 
+          ? generatedPrompt 
+          : `参考提供的人物形象，${generatedPrompt}`
+        return finalPrompt
       } else {
         // 如果AI生成失败，使用基于咨询师风格的默认提示词
-        return `${counselorStyle.artStyle}，${counselorStyle.scene}，${counselorStyle.colorPalette}，${counselorStyle.atmosphere}，体现${userMessage.substring(0, 20)}的主题`
+        return `参考提供的人物形象，${counselorStyle.artStyle}，${counselorStyle.scene}，${counselorStyle.colorPalette}，${counselorStyle.atmosphere}，体现${userMessage.substring(0, 20)}的主题`
       }
     } catch (error) {
       console.error('构建图像提示词失败:', error)
       // 返回基于咨询师风格的简单提示词
       const counselorStyle = this.getCounselorImageStyle(this.data.counselor.id)
-      return `${counselorStyle.artStyle}，${counselorStyle.atmosphere}，体现情感支持的主题`
+      return `参考提供的人物形象，${counselorStyle.artStyle}，${counselorStyle.atmosphere}，体现情感支持的主题`
     }
   },
 

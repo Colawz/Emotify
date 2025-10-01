@@ -5,11 +5,11 @@ const config = {
     baseUrl: 'https://ark.cn-beijing.volces.com',
     apiKey: 'dd3adf72-d36a-4cd6-ad0e-3817a23d63f7',
     model: 'deepseek-v3-250324',
-    // 阿里云通义万相图像生成API配置
+    // 豆包图像生成API配置
     imageApi: {
-      baseUrl: 'https://dashscope.aliyuncs.com',
-      apiKey: 'sk-49851ffda0d44d769ce69ec37f632255',
-      model: 'qwen-image'
+      baseUrl: 'https://ark.cn-beijing.volces.com',
+      apiKey: '1d9596f7-ae01-4ca7-b35e-fb7d1e9e2f8b',
+      model: 'doubao-seedream-4-0-250828'
     }
   },
   // 生产环境
@@ -17,11 +17,11 @@ const config = {
     baseUrl: 'https://ark.cn-beijing.volces.com',
     apiKey: 'dd3adf72-d36a-4cd6-ad0e-3817a23d63f7    ',
     model: 'deepseek-v3-250324',
-    // 阿里云通义万相图像生成API配置
+    // 豆包图像生成API配置
     imageApi: {
-      baseUrl: 'https://dashscope.aliyuncs.com',
-      apiKey: 'sk-49851ffda0d44d769ce69ec37f632255',
-      model: 'wanx2.1-imageedit'
+      baseUrl: 'https://ark.cn-beijing.volces.com',
+      apiKey: '1d9596f7-ae01-4ca7-b35e-fb7d1e9e2f8b',
+      model: 'doubao-seedream-4-0-250828'
     }
   }
 }
@@ -40,7 +40,7 @@ module.exports = {
   endpoints: {
     chat: '/api/v3/chat/completions',
     user: '/api/user',
-    // 阿里云通义千问文生图接口
-    textToImage: '/api/v1/services/aigc/multimodal-generation/generation'
+    // 豆包图像生成接口
+    textToImage: '/api/v3/images/generations'
   }
 }
