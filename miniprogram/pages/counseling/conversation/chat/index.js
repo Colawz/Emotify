@@ -483,6 +483,7 @@ Page({
   getCounselorImageStyle(counselorId) {
     const styleConfigs = {
       'dora': {
+        characterDescription: '朵拉，动画片《爱探险的朵拉》中的主角',
         baseStyle: '充满活力的探险风格',
         colorPalette: '明亮的橙色、黄色、绿色',
         atmosphere: '阳光明媚、积极向上、充满好奇',
@@ -491,6 +492,7 @@ Page({
         artStyle: '明亮欢快的卡通插画风格'
       },
       'lazy_goat': {
+        characterDescription: '懒羊羊，动画片《喜羊羊与灰太狼》中的角色',
         baseStyle: '温馨慵懒的田园风格',
         colorPalette: '柔和的粉色、淡绿色、米白色',
         atmosphere: '宁静舒适、温馨惬意、放松自在',
@@ -499,6 +501,7 @@ Page({
         artStyle: '温馨治愈的水彩画风格'
       },
       'grey_wolf': {
+        characterDescription: '灰太狼，动画片《喜羊羊与灰太狼》中的角色',
         baseStyle: '坚韧不拔的励志风格',
         colorPalette: '深蓝色、银灰色、橙红色',
         atmosphere: '坚定有力、永不放弃、充满斗志',
@@ -507,6 +510,7 @@ Page({
         artStyle: '富有力量感的现代插画风格'
       },
       'boonie_bear_xiongda': {
+        characterDescription: '熊大，动画片《熊出没》中的角色',
         baseStyle: '沉稳可靠的森林守护风格',
         colorPalette: '深绿色、棕色、金黄色',
         atmosphere: '沉着冷静、可靠稳重、自然和谐',
@@ -515,6 +519,7 @@ Page({
         artStyle: '自然写实的森林系插画风格'
       },
       'boonie_bear_xionger': {
+        characterDescription: '熊二，动画片《熊出没》中的角色',
         baseStyle: '憨厚可爱的温暖风格',
         colorPalette: '暖黄色、浅棕色、粉橙色',
         atmosphere: '温暖可爱、憨厚朴实、充满爱心',
@@ -541,9 +546,10 @@ Page({
       const counselorStyle = this.getCounselorImageStyle(this.data.counselor.id)
       
       // 使用AI来生成更好的图像提示词
-      const promptGenerationMessage = `请根据以下对话内容和咨询师风格特色，生成一个适合用于AI图像生成的提示词。
+      const promptGenerationMessage = `请根据以下对话内容和咨询师角色特色，生成一个适合用于AI图像生成的提示词。
 
-咨询师风格特色：
+咨询师角色信息：
+- 角色描述：${counselorStyle.characterDescription}
 - 基础风格：${counselorStyle.baseStyle}
 - 色彩搭配：${counselorStyle.colorPalette}
 - 氛围营造：${counselorStyle.atmosphere}
@@ -557,7 +563,7 @@ AI回复：${aiResponse}
 
 要求：
 1. 提示词应该具体、生动、富有视觉表现力
-2. 必须融入咨询师的专属风格特色
+2. 必须融入咨询师的角色身份和专属风格特色
 3. 结合对话内容的情感主题
 4. 在提示词开头加入"参考提供的人物形象"
 5. 提示词长度控制在120字以内
@@ -581,7 +587,7 @@ AI回复：${aiResponse}
         return finalPrompt
       } else {
         // 如果AI生成失败，使用基于咨询师风格的默认提示词
-        return `参考提供的人物形象，${counselorStyle.artStyle}，${counselorStyle.scene}，${counselorStyle.colorPalette}，${counselorStyle.atmosphere}，体现${userMessage.substring(0, 20)}的主题`
+        return `参考提供的人物形象，${counselorStyle.characterDescription}，${counselorStyle.artStyle}，${counselorStyle.scene}，${counselorStyle.colorPalette}，${counselorStyle.atmosphere}，体现${userMessage.substring(0, 20)}的主题`
       }
     } catch (error) {
       console.error('构建图像提示词失败:', error)
