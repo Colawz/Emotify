@@ -425,21 +425,35 @@ Page({
       let referenceImageUrl = null
       const counselorId = this.data.counselor.id
       
-      // 咨询师ID到云存储URL的映射
-      const counselorImageUrls = {
-        'dora': 'https://636c-cloud1-1gjz5ckoe28a6c4a-1373873601.tcb.qcloud.la/avatars/doro.jpg?sign=833aa0e732cc5db603cf26f69c34f29a&t=1759326097',
-        'lazy_goat': 'https://636c-cloud1-1gjz5ckoe28a6c4a-1373873601.tcb.qcloud.la/avatars/lan.jpg?sign=0427133a2865c35bd774410e3a089ca9&t=1759326287',
-        'grey_wolf': 'https://636c-cloud1-1gjz5ckoe28a6c4a-1373873601.tcb.qcloud.la/avatars/hui.jpg?sign=1e83b0a1f6b1acf8a7a739a98d605897&t=1759326311',
-        'boonie_bear_xiongda': 'https://636c-cloud1-1gjz5ckoe28a6c4a-1373873601.tcb.qcloud.la/avatars/bear1.png?sign=f77e34c44f345ffc5e164694f3f3b3f3&t=1759326324',
-        'boonie_bear_xionger': 'https://636c-cloud1-1gjz5ckoe28a6c4a-1373873601.tcb.qcloud.la/avatars/bear2.png?sign=d360d9b9d015ac16940aaf69afd1e8c6&t=1759326345'
+      // 咨询师ID到云存储File ID的映射
+      const counselorImageFileIds = {
+        'dora': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/doro.jpg',
+        'lazy_goat': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/lan.jpg',
+        'grey_wolf': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/hui.jpg',
+        'boonie_bear_xiongda': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/bear1.png',
+        'boonie_bear_xionger': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/bear2.png'
       }
       
       // 根据咨询师ID获取对应的参考图像URL
-      referenceImageUrl = counselorImageUrls[counselorId]
-      if (referenceImageUrl) {
-        console.log(`咨询师 ${counselorId} 的参考图像URL:`, referenceImageUrl)
+      const fileId = counselorImageFileIds[counselorId]
+      if (fileId) {
+        try {
+          // 动态获取云存储文件的下载链接
+          const result = await wx.cloud.getTempFileURL({
+            fileList: [fileId]
+          })
+          
+          if (result.fileList && result.fileList.length > 0 && result.fileList[0].tempFileURL) {
+            referenceImageUrl = result.fileList[0].tempFileURL
+            console.log(`咨询师 ${counselorId} 的参考图像URL:`, referenceImageUrl)
+          } else {
+            console.warn(`获取咨询师 ${counselorId} 的参考图像URL失败:`, result)
+          }
+        } catch (error) {
+          console.error(`获取咨询师 ${counselorId} 的云存储文件URL时出错:`, error)
+        }
       } else {
-        console.warn(`未找到咨询师 ${counselorId} 的参考图像URL`)
+        console.warn(`未找到咨询师 ${counselorId} 的参考图像File ID`)
       }
       
       // 调用图像生成API（同步调用）
@@ -483,7 +497,7 @@ Page({
   getCounselorImageStyle(counselorId) {
     const styleConfigs = {
       'dora': {
-        characterDescription: '朵拉，动画片《爱探险的朵拉》中的主角',
+        characterDescription: '朵拉，动画片《爱探险的朵拉》中的主角，是一个勇敢好奇的小女孩探险家',
         baseStyle: '充满活力的探险风格',
         colorPalette: '明亮的橙色、黄色、绿色',
         atmosphere: '阳光明媚、积极向上、充满好奇',
@@ -492,7 +506,7 @@ Page({
         artStyle: '明亮欢快的卡通插画风格'
       },
       'lazy_goat': {
-        characterDescription: '懒羊羊，动画片《喜羊羊与灰太狼》中的角色',
+        characterDescription: '懒羊羊，动画片《喜羊羊与灰太狼》中的角色，是一只温和慵懒的小羊',
         baseStyle: '温馨慵懒的田园风格',
         colorPalette: '柔和的粉色、淡绿色、米白色',
         atmosphere: '宁静舒适、温馨惬意、放松自在',
@@ -501,7 +515,7 @@ Page({
         artStyle: '温馨治愈的水彩画风格'
       },
       'grey_wolf': {
-        characterDescription: '灰太狼，动画片《喜羊羊与灰太狼》中的角色',
+        characterDescription: '灰太狼，动画片《喜羊羊与灰太狼》中的角色，是一只坚韧不拔的狼',
         baseStyle: '坚韧不拔的励志风格',
         colorPalette: '深蓝色、银灰色、橙红色',
         atmosphere: '坚定有力、永不放弃、充满斗志',
@@ -510,7 +524,7 @@ Page({
         artStyle: '富有力量感的现代插画风格'
       },
       'boonie_bear_xiongda': {
-        characterDescription: '熊大，动画片《熊出没》中的角色',
+        characterDescription: '熊大，动画片《熊出没》中的角色，是一只沉稳可靠的棕熊',
         baseStyle: '沉稳可靠的森林守护风格',
         colorPalette: '深绿色、棕色、金黄色',
         atmosphere: '沉着冷静、可靠稳重、自然和谐',
@@ -519,7 +533,7 @@ Page({
         artStyle: '自然写实的森林系插画风格'
       },
       'boonie_bear_xionger': {
-        characterDescription: '熊二，动画片《熊出没》中的角色',
+        characterDescription: '熊二，动画片《熊出没》中的角色，是一只憨厚可爱的棕熊',
         baseStyle: '憨厚可爱的温暖风格',
         colorPalette: '暖黄色、浅棕色、粉橙色',
         atmosphere: '温暖可爱、憨厚朴实、充满爱心',
@@ -530,6 +544,7 @@ Page({
     }
     
     return styleConfigs[counselorId] || {
+      characterDescription: 'AI心理咨询师，专业的心理健康支持角色',
       baseStyle: '温馨的心理咨询风格',
       colorPalette: '柔和的蓝色、绿色、白色',
       atmosphere: '宁静祥和、温馨治愈',
@@ -593,7 +608,7 @@ AI回复：${aiResponse}
       console.error('构建图像提示词失败:', error)
       // 返回基于咨询师风格的简单提示词
       const counselorStyle = this.getCounselorImageStyle(this.data.counselor.id)
-      return `参考提供的人物形象，${counselorStyle.artStyle}，${counselorStyle.atmosphere}，体现情感支持的主题`
+      return `参考提供的人物形象，${counselorStyle.characterDescription}，${counselorStyle.artStyle}，${counselorStyle.atmosphere}，体现情感支持的主题`
     }
   },
 

@@ -10,7 +10,7 @@
     <view class="message system" id="welcome" wx:if="{{!currentChatId}}">
       <view class="message-content">
         <view class="welcome-text">
-          <text>Hello! I am your AI assistant. You can describe any psychological or life issues you encounter, and I will actively help you solve them!</text>
+          <text>你好！我是你的智能导航助手。你可以描述任何心理或生活中的问题，我可以给你建议，并引导你去体验系统的各个功能哦！</text>
         </view>
       
       </view>
@@ -74,7 +74,7 @@
         class="input" 
         value="{{inputValue}}" 
         bindinput="onInput" 
-        placeholder="input..." 
+        placeholder="输入....." 
         confirm-type="send"
         bindconfirm="onSend"
       />
