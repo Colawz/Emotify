@@ -56,6 +56,8 @@
       wx:for="{{effects}}" 
       wx:key="id"
       class="effect-item"
+      data-size="{{item.size}}"
+      data-weapon-type="{{item.weaponType}}"
       style="left: {{item.x}}px; top: {{item.y}}px; opacity: {{item.opacity}}"
     >
       <text class="effect-text" style="color: {{item.color}}">{{item.text}}</text>
@@ -66,4 +68,4 @@
   <view class="restart-btn" bindtap="restartGame" wx:if="{{!showInstructions}}">
     <t-icon name="refresh" size="40rpx" color="#fff" />
   </view>
-</view> 
+</view>

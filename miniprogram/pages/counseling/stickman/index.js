@@ -297,26 +297,107 @@ Page({
   // 创建特效
   createEffect(x, y, weapon) {
     const effects = this.data.effects;
-    const effectTexts = ['POW', 'BAM', 'HIT', 'BANG', 'ZAP'];
-    const randomText = effectTexts[Math.floor(Math.random() * effectTexts.length)];
     
-    const effect = {
+    // 根据武器类型定义不同的特效
+    const weaponEffects = {
+      fist: {
+        texts: ['拳！', 'POW', 'BAM'],
+        particles: ['●', '◆', '▲'],
+        size: 'normal',
+        duration: 800,
+        shake: true
+      },
+      bat: {
+        texts: ['CRACK!', 'SMASH', '啪！'],
+        particles: ['━', '┃', '╱'],
+        size: 'large',
+        duration: 1000,
+        shake: true
+      },
+      hammer: {
+        texts: ['BOOM!', 'CRASH', '轰！'],
+        particles: ['★', '✦', '◉'],
+        size: 'huge',
+        duration: 1200,
+        shake: true,
+        shockwave: true
+      },
+      sword: {
+        texts: ['SLASH!', 'CUT', '斩！'],
+        particles: ['╱', '╲', '│'],
+        size: 'sharp',
+        duration: 900,
+        trail: true
+      },
+      magic: {
+        texts: ['ZAP!', 'MAGIC', '魔法！'],
+        particles: ['✨', '⭐', '💫'],
+        size: 'sparkle',
+        duration: 1500,
+        glow: true,
+        multiple: true
+      }
+    };
+    
+    const weaponEffect = weaponEffects[weapon.id] || weaponEffects.fist;
+    const randomText = weaponEffect.texts[Math.floor(Math.random() * weaponEffect.texts.length)];
+    const randomParticle = weaponEffect.particles[Math.floor(Math.random() * weaponEffect.particles.length)];
+    
+    // 主要特效
+    const mainEffect = {
       id: Date.now() + Math.random(),
-      x: x + (Math.random() - 0.5) * 40,
-      y: y + (Math.random() - 0.5) * 40,
+      x: x + (Math.random() - 0.5) * 30,
+      y: y + (Math.random() - 0.5) * 30,
       text: randomText,
       color: weapon.color,
       opacity: 1,
-      timer: 60 // 60帧后消失
+      size: weaponEffect.size,
+      weaponType: weapon.id,
+      timer: 60
     };
     
-    effects.push(effect);
+    effects.push(mainEffect);
+    
+    // 粒子特效
+    for (let i = 0; i < (weaponEffect.multiple ? 5 : 3); i++) {
+      const particle = {
+        id: Date.now() + Math.random() + i,
+        x: x + (Math.random() - 0.5) * 60,
+        y: y + (Math.random() - 0.5) * 60,
+        text: randomParticle,
+        color: weapon.color,
+        opacity: 0.8,
+        size: 'particle',
+        weaponType: weapon.id,
+        timer: 40 + i * 10,
+        isParticle: true
+      };
+      effects.push(particle);
+    }
+    
+    // 冲击波特效（锤子专用）
+    if (weaponEffect.shockwave) {
+      const shockwave = {
+        id: Date.now() + Math.random() + 100,
+        x: x,
+        y: y,
+        text: '◯',
+        color: weapon.color,
+        opacity: 0.6,
+        size: 'shockwave',
+        weaponType: weapon.id,
+        timer: 30,
+        isShockwave: true
+      };
+      effects.push(shockwave);
+    }
+    
     this.setData({ effects });
     
     // 设置特效消失定时器
     setTimeout(() => {
-      this.removeEffect(effect.id);
-    }, 1000);
+      this.removeEffect(mainEffect.id);
+    }, weaponEffect.duration);
   },
 
   // 更新特效
@@ -368,4 +449,4 @@ Page({
       this.data.canvas.cancelAnimationFrame(this.data.animationId);
     }
   }
-}); 
+});
