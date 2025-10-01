@@ -421,39 +421,56 @@ Page({
       const imagePrompt = await this.buildImagePrompt(userMessage, aiResponse)
       console.log('图像生成提示词:', imagePrompt)
       
-      // 获取咨询师对应的云存储参考图像URL
+      // 获取咨询师对应的云存储参考图像（通过 fileID 动态生成临时URL）
       let referenceImageUrl = null
       const counselorId = this.data.counselor.id
       
-      // 咨询师ID到云存储File ID的映射
-      const counselorImageFileIds = {
-        'dora': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/doro.jpg',
-        'lazy_goat': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/lan.jpg',
-        'grey_wolf': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/hui.jpg',
-        'boonie_bear_xiongda': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/bear1.png',
-        'boonie_bear_xionger': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/bear2.png'
-      }
-      
-      // 根据咨询师ID获取对应的参考图像URL
-      const fileId = counselorImageFileIds[counselorId]
-      if (fileId) {
-        try {
-          // 动态获取云存储文件的下载链接
-          const result = await wx.cloud.getTempFileURL({
-            fileList: [fileId]
-          })
-          
-          if (result.fileList && result.fileList.length > 0 && result.fileList[0].tempFileURL) {
-            referenceImageUrl = result.fileList[0].tempFileURL
-            console.log(`咨询师 ${counselorId} 的参考图像URL:`, referenceImageUrl)
-          } else {
-            console.warn(`获取咨询师 ${counselorId} 的参考图像URL失败:`, result)
-          }
-        } catch (error) {
-          console.error(`获取咨询师 ${counselorId} 的云存储文件URL时出错:`, error)
+      try {
+        // 咨询师ID到云存储 fileID 的映射（fileID稳定不变）
+        const counselorFileIds = {
+          'dora': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/doro.jpg',
+          'lazy_goat': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/lan.jpg',
+          'grey_wolf': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/hui.jpg',
+          'boonie_bear_xiongda': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/bear1.png',
+          'boonie_bear_xionger': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/bear2.png'
         }
-      } else {
-        console.warn(`未找到咨询师 ${counselorId} 的参考图像File ID`)
+        const fileId = counselorFileIds[counselorId]
+        if (fileId && wx.cloud) {
+          await this.ensureCloudInit()
+          const tempUrl = await this.getTempFileUrl(fileId)
+          if (tempUrl) {
+            referenceImageUrl = this.sanitizeUrl(tempUrl)
+            console.log(`咨询师 ${counselorId} 的参考图像临时URL:`, referenceImageUrl)
+          } else {
+            console.warn(`未获取到咨询师 ${counselorId} 的临时URL，将不传入参考图像`)
+          }
+        } else {
+          console.warn(`未找到咨询师 ${counselorId} 的fileID或wx.cloud不可用，将不传入参考图像`)
+        }
+      } catch (e) {
+        console.warn('获取临时URL失败，将不传入参考图像:', e)
+      }
+
+      // 使用稳定的 fileID 在运行时获取临时URL，避免下载地址频繁变动
+      try {
+        const counselorFileIds = {
+          'dora': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/doro.jpg',
+          'lazy_goat': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/lan.jpg',
+          'grey_wolf': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/hui.jpg',
+          'boonie_bear_xiongda': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/bear1.png',
+          'boonie_bear_xionger': 'cloud://cloud1-1gjz5ckoe28a6c4a.636c-cloud1-1gjz5ckoe28a6c4a-1373873601/avatars/bear2.png'
+        }
+        const fileId = counselorFileIds[counselorId]
+        if (fileId && wx.cloud) {
+          await this.ensureCloudInit()
+          const tempUrl = await this.getTempFileUrl(fileId)
+          if (tempUrl) {
+            referenceImageUrl = tempUrl
+            console.log('通过fileID获取到的临时URL:', referenceImageUrl)
+          }
+        }
+      } catch (e) {
+        console.warn('根据fileID获取临时URL失败:', e)
       }
       
       // 调用图像生成API（同步调用）
@@ -493,6 +510,35 @@ Page({
     }
   },
 
+  // 简单的URL清洗，去除尾部逗号/空白
+  sanitizeUrl(url) {
+    return (url || '').trim().replace(/[，,]\s*$/, '')
+  },
+
+  // 云开发初始化与临时URL获取封装
+  async ensureCloudInit() {
+    if (!wx.cloud) return
+    try {
+      await wx.cloud.init({
+        env: 'cloud1-1gjz5ckoe28a6c4a',
+        traceUser: true
+      })
+    } catch (e) {
+      // 可能已初始化，忽略即可
+    }
+  },
+
+  async getTempFileUrl(fileId) {
+    try {
+      const res = await wx.cloud.getTempFileURL({ fileList: [fileId] })
+      const item = res && res.fileList && res.fileList[0]
+      return item && item.tempFileURL ? item.tempFileURL : null
+    } catch (e) {
+      console.warn('wx.cloud.getTempFileURL 调用失败:', e)
+      return null
+    }
+  },
+
   // 获取咨询师专属风格配置
   getCounselorImageStyle(counselorId) {
     const styleConfigs = {
@@ -514,14 +560,14 @@ Page({
         emotion: '温和、放松、治愈、安心',
         artStyle: '温馨治愈的水彩画风格'
       },
-      'grey_wolf': {
-        characterDescription: '灰太狼，动画片《喜羊羊与灰太狼》中的角色，是一只坚韧不拔的狼',
-        baseStyle: '坚韧不拔的励志风格',
-        colorPalette: '深蓝色、银灰色、橙红色',
-        atmosphere: '坚定有力、永不放弃、充满斗志',
-        scene: '山峰顶端、实验室、奋斗场景',
-        emotion: '坚韧、励志、不屈不挠、积极进取',
-        artStyle: '富有力量感的现代插画风格'
+      'human_psychologist': {
+        characterDescription: '人类心理咨询师，受过专业训练，善于倾听与共情',
+        baseStyle: '温暖专业的心理咨询风格',
+        colorPalette: '柔和的蓝色、米白色、浅绿色',
+        atmosphere: '宁静可靠、治愈、被理解',
+        scene: '心理咨询室、温馨办公空间、静谧角落',
+        emotion: '共情、支持、安慰、理性',
+        artStyle: '温柔克制的写实插画风格'
       },
       'boonie_bear_xiongda': {
         characterDescription: '熊大，动画片《熊出没》中的角色，是一只沉稳可靠的棕熊',

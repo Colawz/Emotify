@@ -12,17 +12,18 @@ Page({
         description: '我是Dora，一个充满好奇心和正能量的探险家，愿意倾听你的任何故事。'
       },
       {
+        id: 'human_psychologist',
+        name: '咨询师晨晨',
+        avatar: '/assets/Counselor_Headshot/human.jpg',
+        description: '专业的人类心理咨询师，为你提供温暖与专业的支持。'
+      },
+      {
         id: 'lazy_goat',
         name: '懒羊羊',
         avatar: '/assets/Counselor_Headshot/lan.jpg',
         description: '虽然我平时很懒，但听你倾诉，我总是有时间的。'
       },
-      {
-        id: 'grey_wolf',
-        name: '灰太狼',
-        avatar: '/assets/Counselor_Headshot/hui.jpg',
-        description: '我屡败屡战，从不放弃！有什么烦恼，跟我说说吧，我帮你分析分析。'
-      },
+      
       {
         id: 'boonie_bear_xiongda',
         name: '熊大',
