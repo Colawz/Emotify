@@ -6,61 +6,61 @@ Page({
     selectedDate: '',
     selectedTime: '',
     callTypeIndex: 0,
-    callTypes: ['语音通话', '视频通话'],
+    callTypes: ['语音通话', '视频通话', '文字聊天'],
     remark: '',
     selectedCompanion: null,
 
     companions: [
       {
         id: 1,
-        name: '温暖陪伴者',
-        type: '学生志愿者',
+        name: '小王',
+        type: '情感陪伴',
         rating: 4.9,
-        avatar: '👤',
-        intro: '我是大学生志愿者，热爱与人交流，擅长倾听和陪伴。希望能用我的时间和温暖，为您带来愉快的聊天体验。',
-        services: ['💬 日常聊天', '🎵 音乐分享', '📚 故事分享', '🌟 情感支持'],
+        avatar: '/assets/avatars_chat_with_me/1.jpg',
+        intro: '我是一个温暖贴心的陪伴者，擅长倾听和提供情感支持。',
+        services: ['情感支持', '生活指导', '压力缓解', '情感咨询'],
         online: true,
-        age: 22,
+        age: 25,
         major: '心理学',
-        experience: '2年陪伴经验',
+        experience: '3年心理咨询经验',
         companionCount: 156,
         responseRate: '98%',
-        serviceTime: '周一至周五 18:00-22:00',
-        specialties: ['情感倾听', '心理疏导', '生活分享', '学习指导']
+        serviceTime: '9:00-22:00',
+        specialties: ['焦虑缓解', '情绪调节', '人际关系']
       },
       {
         id: 2,
-        name: '阳光陪伴者',
-        type: '专业陪伴师',
+        name: '暖暖',
+        type: '生活导师',
         rating: 4.8,
-        avatar: '🌞',
-        intro: '我是一名专业的陪伴师，具有丰富的沟通经验和心理学知识。擅长为不同年龄段的人提供个性化的陪伴服务。',
-        services: ['💬 深度交流', '🧠 心理支持', '🎯 目标规划', '🌱 成长陪伴'],
-        online: true,
-        age: 28,
-        major: '应用心理学',
-        experience: '5年陪伴经验',
-        companionCount: 342,
+        avatar: '/assets/avatars_chat_with_me/2.png',
+        intro: '专业的生活教练，帮助你找到人生方向和动力。',
+        services: ['生活规划', '目标设定', '职业指导', '个人成长'],
+        online: false,
+        age: 32,
+        major: '管理学',
+        experience: '5年生活指导经验',
+        companionCount: 203,
         responseRate: '95%',
-        serviceTime: '周一至周日 10:00-22:00',
-        specialties: ['专业咨询', '情绪管理', '关系指导', '生涯规划']
+        serviceTime: '10:00-20:00',
+        specialties: ['职业规划', '时间管理', '目标达成']
       },
       {
         id: 3,
-        name: '知心陪伴者',
-        type: '退休教师',
+        name: '小月',
+        type: '学习伙伴',
         rating: 4.7,
-        avatar: '👵',
-        intro: '我是一名退休的语文教师，有丰富的人生阅历和教学经验。喜欢与年轻人交流，分享人生智慧和温暖关怀。',
-        services: ['💬 人生分享', '📖 文化交流', '🍵 生活指导', '🎨 兴趣培养'],
-        online: false,
-        age: 62,
-        major: '汉语言文学',
-        experience: '10年陪伴经验',
+        avatar: '/assets/avatars_chat_with_me/3.png',
+        intro: '耐心的学习陪伴者，帮助你克服学习困难，提高效率。',
+        services: ['学习规划', '学习方法', '考试准备', '学业支持'],
+        online: true,
+        age: 23,
+        major: '教育学',
+        experience: '2年教育指导经验',
         companionCount: 89,
-        responseRate: '92%',
-        serviceTime: '周二、周四、周六 14:00-18:00',
-        specialties: ['人生指导', '文化传承', '情感支持', '兴趣培养']
+        responseRate: '97%',
+        serviceTime: '14:00-23:00',
+        specialties: ['学习效率', '考试焦虑', '学习习惯']
       }
     ]
   },
@@ -71,67 +71,65 @@ Page({
   },
 
   // 一键呼叫功能
-  onQuickCall: function(e) {
+  onQuickCall(e) {
     const type = e.currentTarget.dataset.type;
+    console.log('快速呼叫类型:', type);
     
-    switch(type) {
-      case 'voice':
-        this.makeVoiceCall();
-        break;
-      case 'video':
-        this.makeVideoCall();
-        break;
-      case 'schedule':
-        this.showScheduleForm();
-        break;
+    if (type === 'schedule') {
+      this.setData({
+        showScheduleForm: true
+      });
+    } else {
+      wx.showToast({
+        title: type === 'voice' ? '正在连接语音通话...' : '正在连接视频通话...',
+        icon: 'loading',
+        duration: 2000
+      });
+      
+      // 模拟连接过程
+      setTimeout(() => {
+        wx.showToast({
+          title: '连接成功！',
+          icon: 'success'
+        });
+      }, 2000);
     }
   },
 
   // 语音通话
-  makeVoiceCall: function() {
-    wx.showModal({
-      title: '语音通话',
-      content: '正在为您连接语音通话...',
-      showCancel: false,
-      success: (res) => {
-        if (res.confirm) {
-          // 这里可以添加实际的通话逻辑
-          wx.showToast({
-            title: '通话功能开发中',
-            icon: 'none'
-          });
-        }
-      }
+  onVoiceCall() {
+    wx.showToast({
+      title: '正在连接语音通话...',
+      icon: 'loading',
+      duration: 2000
     });
   },
 
   // 视频通话
-  makeVideoCall: function() {
-    wx.showModal({
-      title: '视频通话',
-      content: '正在为您连接视频通话...',
-      showCancel: false,
-      success: (res) => {
-        if (res.confirm) {
-          // 这里可以添加实际的通话逻辑
-          wx.showToast({
-            title: '通话功能开发中',
-            icon: 'none'
-          });
-        }
-      }
+  onVideoCall() {
+    wx.showToast({
+      title: '正在连接视频通话...',
+      icon: 'loading',
+      duration: 2000
     });
   },
 
-  // 显示约定时间表单
-  showScheduleForm: function() {
+  // 预约时间
+  onScheduleCall() {
     this.setData({
       showScheduleForm: true
     });
   },
 
-  // 关闭约定时间表单
-  closeScheduleForm: function() {
+  // 显示预约表单
+  showScheduleForm() {
+    this.setData({
+      showScheduleForm: true
+    });
+  },
+
+  // 关闭预约表单
+  closeScheduleForm() {
     this.setData({
       showScheduleForm: false,
       selectedDate: '',
@@ -142,117 +140,102 @@ Page({
   },
 
   // 日期选择
-  onDateChange: function(e) {
+  onDateChange(e) {
     this.setData({
       selectedDate: e.detail.value
     });
   },
 
   // 时间选择
-  onTimeChange: function(e) {
+  onTimeChange(e) {
     this.setData({
       selectedTime: e.detail.value
     });
   },
 
   // 通话类型选择
-  onCallTypeChange: function(e) {
+  onCallTypeChange(e) {
     this.setData({
       callTypeIndex: e.detail.value
     });
   },
 
   // 备注输入
-  onRemarkInput: function(e) {
+  onRemarkInput(e) {
     this.setData({
       remark: e.detail.value
     });
   },
 
-  // 提交约定
-  submitSchedule: function() {
-    const { selectedDate, selectedTime, callTypeIndex, remark } = this.data;
-    
-    if (!selectedDate || !selectedTime) {
+  // 提交预约
+  submitSchedule() {
+    if (!this.data.selectedDate || !this.data.selectedTime) {
       wx.showToast({
         title: '请选择日期和时间',
         icon: 'none'
       });
       return;
     }
-    
-    const callType = this.data.callTypes[callTypeIndex];
-    const scheduleInfo = {
-      date: selectedDate,
-      time: selectedTime,
-      type: callType,
-      remark: remark,
-      createTime: new Date().toISOString()
-    };
-    
-    // 这里可以添加保存到数据库的逻辑
-    console.log('约定信息:', scheduleInfo);
-    
-    wx.showModal({
-      title: '约定成功',
-      content: `您已成功约定${callType}，时间：${selectedDate} ${selectedTime}`,
-      showCancel: false,
-      success: (res) => {
-        if (res.confirm) {
-          this.closeScheduleForm();
-          wx.showToast({
-            title: '约定成功',
-            icon: 'success'
-          });
-        }
-      }
+
+    wx.showToast({
+      title: '预约成功！',
+      icon: 'success'
+    });
+
+    this.closeScheduleForm();
+  },
+
+  // 预约成功
+  onScheduleSuccess() {
+    wx.showToast({
+      title: '预约成功！我们会及时联系您',
+      icon: 'success',
+      duration: 2000
+    });
+    this.setData({
+      showScheduleForm: false
     });
   },
 
-  // 陪伴者服务
-  onCompanionTap: function(e) {
-    const companionId = e.currentTarget.dataset.id;
-    const companion = this.data.companions.find(item => item.id === companionId);
-    
-    if (companion) {
-      this.setData({
-        selectedCompanion: companion,
-        showCompanionDetail: true
-      });
-    }
+  // 显示陪伴者详情
+  onCompanionTap(e) {
+    const id = e.currentTarget.dataset.id;
+    const companion = this.data.companions.find(c => c.id === id);
+    this.setData({
+      selectedCompanion: companion,
+      showCompanionDetail: true
+    });
   },
 
   // 关闭陪伴者详情
-  closeCompanionDetail: function() {
+  closeCompanionDetail() {
     this.setData({
-      showCompanionDetail: false
+      showCompanionDetail: false,
+      selectedCompanion: null
     });
   },
 
   // 联系陪伴者
-  contactCompanion: function() {
-    wx.showModal({
-      title: '联系陪伴者',
-      content: '正在为您连接陪伴者...',
-      showCancel: false,
-      success: (res) => {
-        if (res.confirm) {
-          // 这里可以添加实际的联系逻辑
-          wx.showToast({
-            title: '联系功能开发中',
-            icon: 'none'
-          });
-        }
-      }
+  contactCompanion() {
+    wx.showToast({
+      title: '正在连接陪伴者...',
+      icon: 'loading',
+      duration: 2000
     });
+    
+    setTimeout(() => {
+      wx.showToast({
+        title: '连接成功！',
+        icon: 'success'
+      });
+    }, 2000);
   },
 
-  // 分享功能
-  onShareAppMessage: function() {
+  // 分享应用
+  onShareAppMessage() {
     return {
-      title: '陪我聊聊 - 温暖陪伴，让爱不再遥远',
-      path: '/pages/family-garden/chat-together/index',
-      imageUrl: '/images/share-image.jpg'
+      title: '温暖陪伴，让爱更近',
+      path: '/pages/family-garden/chat-together/index'
     };
   },
 

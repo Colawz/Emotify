@@ -1,17 +1,17 @@
 <!-- pages/counseling/treehole/publish.wxml -->
 <view class="publish-container">
   <!-- 顶部导航栏 -->
-  <t-navbar class="custom-navbar" title="发布树洞" fixed="{{true}}" titleMaxLength="{{8}}">
+  <t-navbar class="custom-navbar" title="发布帖子" fixed="{{true}}" titleMaxLength="{{8}}">
     <t-icon slot="left" name="chevron-left" size="48rpx" bind:click="onBackTap" />
   </t-navbar>
 
   <!-- 主体内容 -->
   <view class="content-wrapper">
-    <!-- 内容输入区 -->
+    <!-- 内容输入区域 -->
     <view class="input-area">
       <t-textarea 
         value="{{content}}" 
-        placeholder="分享你的心情、困惑或求助..."
+        placeholder="分享你的感受、困惑或求助..."
         maxlength="500"
         autosize="{{ { minRows: 4, maxRows: 8 } }}"
         indicator
@@ -59,7 +59,7 @@
           <view class="toggle-dot"></view>
         </view>
       </view>
-      <view class="anonymous-tip">开启后，你的个人信息将不会展示给其他用户</view>
+      <view class="anonymous-tip">开启后，其他用户将无法看到你的个人信息</view>
     </view>
   </view>
 

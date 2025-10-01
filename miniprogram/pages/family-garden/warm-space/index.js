@@ -57,8 +57,8 @@ Page({
         time: '2小时前',
         content: '今天做了小明最爱吃的红烧肉，看着他吃得那么香，心里特别满足。孩子健康成长就是最大的幸福！',
         images: [
-          'https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=红烧肉',
-          'https://via.placeholder.com/300x200/4ECDC4/FFFFFF?text=小明吃饭'
+          '/assets/images_warm_space/红烧肉.png', 
+          '/assets/images_warm_space/吃红烧肉.png' 
         ],
         likeCount: 12,
         commentCount: 3,
@@ -71,7 +71,7 @@ Page({
         time: '昨天',
         content: '周末带孩子们去公园玩，看到他们开心的样子，所有的辛苦都值得了。家庭时光是最珍贵的财富。',
         images: [
-          'https://via.placeholder.com/300x200/45B7D1/FFFFFF?text=公园游玩'
+          '/assets/images_warm_space/公园.png' 
         ],
         likeCount: 8,
         commentCount: 5,
@@ -84,25 +84,25 @@ Page({
       {
         id: 1,
         title: '2024春节',
-        cover: 'https://via.placeholder.com/400x300/FF6B6B/FFFFFF?text=春节',
+        cover: '/assets/images_warm_space/年夜饭.png', 
         photoCount: 24
       },
       {
         id: 2,
         title: '小明生日',
-        cover: 'https://via.placeholder.com/400x300/4ECDC4/FFFFFF?text=生日',
+         cover:  '/assets/images_warm_space/小明生日.png', 
         photoCount: 18
       },
       {
         id: 3,
         title: '家庭旅行',
-        cover: 'https://via.placeholder.com/400x300/45B7D1/FFFFFF?text=旅行',
+        cover: '/assets/images_warm_space/旅行.png', 
         photoCount: 32
       },
       {
         id: 4,
         title: '日常点滴',
-        cover: 'https://via.placeholder.com/400x300/96CEB4/FFFFFF?text=日常',
+        cover: '/assets/images_warm_space/日常.png', 
         photoCount: 56
       }
     ],
@@ -115,7 +115,7 @@ Page({
         title: '新年家庭聚会',
         description: '全家人一起迎接新年，许下了美好的愿望，希望新的一年家人健康平安。',
         images: [
-          'https://via.placeholder.com/400x200/FF6B6B/FFFFFF?text=新年聚会'
+          '/assets/images_warm_space/元旦家庭聚会.png' 
         ]
       },
       {
@@ -124,7 +124,7 @@ Page({
         title: '小明考试第一名',
         description: '小明在期末考试中取得了全班第一的好成绩，全家人都为他感到骄傲！',
         images: [
-          'https://via.placeholder.com/400x200/4ECDC4/FFFFFF?text=成绩单'
+          '/assets/images_warm_space/第一名.png' 
         ]
       },
       {
@@ -133,7 +133,7 @@ Page({
         title: '国庆家庭旅行',
         description: '全家人一起去海边旅行，孩子们第一次看到大海，特别兴奋。',
         images: [
-          'https://via.placeholder.com/400x200/45B7D1/FFFFFF?text=海边旅行'
+          '/assets/images_warm_space/国庆旅行.png' 
         ]
       }
     ],

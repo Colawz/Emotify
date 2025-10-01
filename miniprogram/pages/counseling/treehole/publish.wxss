@@ -1,107 +1,138 @@
-/* pages/counseling/treehole/publish.wxss */
+/* 页面容器 */
 .publish-container {
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
-  background-color: #f5f5f5;
-  padding-top: 120rpx; /* 为顶部导航栏预留空间 */
-  padding-bottom: 140rpx; /* 为底部操作栏预留空间 */
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding-bottom: 120rpx;
 }
 
 /* 导航栏样式 */
 .custom-navbar {
-  background-color: #fff;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10rpx);
   border-bottom: 1rpx solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2rpx 20rpx rgba(0, 0, 0, 0.05);
 }
 
-/* 主体内容区 */
+/* 内容包装器 */
 .content-wrapper {
-  flex: 1;
-  padding: 32rpx;
+  padding: 120rpx 32rpx 32rpx;
+  max-width: 750rpx;
+  margin: 0 auto;
 }
 
 /* 输入区域 */
 .input-area {
-  background-color: #fff;
-  border-radius: 16rpx;
-  padding: 24rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 32rpx;
   margin-bottom: 32rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.08);
+  border: 1rpx solid rgba(16, 185, 129, 0.1);
+  transition: all 0.3s ease;
+}
+
+.input-area:focus-within {
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 8rpx 32rpx rgba(16, 185, 129, 0.15);
+  transform: translateY(-2rpx);
 }
 
 /* 上传区域 */
 .upload-area {
-  background-color: #fff;
-  border-radius: 16rpx;
-  padding: 24rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 32rpx;
   margin-bottom: 32rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.08);
+  border: 1rpx solid rgba(16, 185, 129, 0.1);
 }
 
 /* 标签区域 */
 .tag-area {
-  background-color: #fff;
-  border-radius: 16rpx;
-  padding: 24rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 32rpx;
   margin-bottom: 32rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.08);
+  border: 1rpx solid rgba(16, 185, 129, 0.1);
 }
 
 .area-title {
-  font-size: 30rpx;
-  font-weight: 500;
-  color: #333;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1f2937;
   margin-bottom: 24rpx;
+  position: relative;
+  padding-left: 16rpx;
+}
+
+.area-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6rpx;
+  height: 32rpx;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-radius: 3rpx;
 }
 
 .tag-grid {
   display: flex;
   flex-wrap: wrap;
+  gap: 16rpx;
 }
 
 /* 匿名设置区域 */
 .anonymous-area {
-  background-color: #fff;
-  border-radius: 16rpx;
-  padding: 24rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.08);
+  border: 1rpx solid rgba(16, 185, 129, 0.1);
 }
 
 .anonymous-switch {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f3f4f6;
   margin-bottom: 16rpx;
 }
 
 .anonymous-text {
-  font-size: 28rpx;
-  color: #333;
+  font-size: 30rpx;
+  color: #374151;
+  font-weight: 500;
 }
 
 .anonymous-toggle {
-  width: 80rpx;
-  height: 40rpx;
-  background-color: #e0e0e0;
-  border-radius: 20rpx;
+  width: 88rpx;
+  height: 48rpx;
+  background: #e5e7eb;
+  border-radius: 24rpx;
   position: relative;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .anonymous-toggle.active {
-  background-color: #10b981;
+  background: linear-gradient(135deg, #10b981, #059669);
 }
 
 .toggle-dot {
-  width: 32rpx;
-  height: 32rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background: #ffffff;
   border-radius: 50%;
-  background-color: #fff;
   position: absolute;
   top: 4rpx;
   left: 4rpx;
-  transition: transform 0.3s;
-  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
 }
 
 .anonymous-toggle.active .toggle-dot {
@@ -110,7 +141,12 @@
 
 .anonymous-tip {
   font-size: 24rpx;
-  color: #999;
+  color: #9ca3af;
+  line-height: 1.5;
+  padding: 16rpx 20rpx;
+  background: #f9fafb;
+  border-radius: 16rpx;
+  border-left: 4rpx solid #10b981;
 }
 
 /* 底部操作栏 */
@@ -119,8 +155,129 @@
   bottom: 0;
   left: 0;
   right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10rpx);
   padding: 24rpx 32rpx;
-  background-color: #fff;
-  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
-  z-index: 100;
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+  border-top: 1rpx solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+/* 头像选择区域样式 */
+.avatar-area {
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.08);
+  border: 1rpx solid rgba(16, 185, 129, 0.1);
+}
+
+.avatar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+  margin-top: 24rpx;
+  justify-content: flex-start;
+}
+
+.avatar-item {
+  position: relative;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 4rpx solid transparent;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.avatar-item image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.avatar-item.selected {
+  border-color: #10b981;
+  transform: scale(1.05);
+  box-shadow: 0 8rpx 24rpx rgba(16, 185, 129, 0.3);
+}
+
+.avatar-item::after {
+  content: '';
+  position: absolute;
+  top: -6rpx;
+  left: -6rpx;
+  right: -6rpx;
+  bottom: -6rpx;
+  border-radius: 50%;
+  border: 3rpx solid #10b981;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+.avatar-item.selected::after {
+  opacity: 1;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .content-wrapper {
+    padding: 120rpx 24rpx 24rpx;
+  }
+  
+  .avatar-item {
+    width: 100rpx;
+    height: 100rpx;
+  }
+  
+  .avatar-grid {
+    gap: 16rpx;
+  }
+}
+
+/* 暗色模式支持 */
+@media (prefers-color-scheme: dark) {
+  .publish-container {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  }
+  
+  .input-area,
+  .upload-area,
+  .tag-area,
+  .anonymous-area,
+  .avatar-area {
+    background: #374151;
+    border-color: rgba(16, 185, 129, 0.2);
+  }
+  
+  .area-title {
+    color: #f9fafb;
+  }
+  
+  .anonymous-text {
+    color: #e5e7eb;
+  }
+  
+  .anonymous-tip {
+    background: #4b5563;
+    color: #d1d5db;
+  }
 }

@@ -9,7 +9,7 @@
     </view>
     <view class="header-content">
       <view class="title">陪我聊聊</view>
-      <view class="subtitle">温暖陪伴，让爱不再遥远</view>
+      <view class="subtitle">温暖陪伴，让爱更近</view>
     </view>
   </view>
   
@@ -27,7 +27,7 @@
       </view>
       <view class="quick-call-btn" bindtap="onQuickCall" data-type="schedule">
         <view class="call-icon">⏰</view>
-        <view class="call-text">约定时间</view>
+        <view class="call-text">预约时间</view>
       </view>
     </view>
   </view>
@@ -37,7 +37,9 @@
     <view class="section-title">陪伴者服务</view>
     <view class="companion-list">
       <view class="companion-card" wx:for="{{companions}}" wx:key="id" bindtap="onCompanionTap" data-id="{{item.id}}">
-        <view class="companion-avatar">{{item.avatar}}</view>
+        <view class="companion-avatar">
+          <image src="{{item.avatar}}" class="avatar-image" mode="aspectFill" />
+        </view>
         <view class="companion-info">
           <view class="companion-header">
             <view class="companion-name">{{item.name}}</view>
@@ -65,7 +67,7 @@
   <!-- 约定时间表单 -->
   <view class="schedule-form" wx:if="{{showScheduleForm}}">
     <view class="form-header">
-      <view class="form-title">约定通话时间</view>
+      <view class="form-title">预约通话时间</view>
       <view class="close-btn" bindtap="closeScheduleForm">✕</view>
     </view>
     <view class="form-content">
@@ -88,11 +90,11 @@
         </picker>
       </view>
       <view class="form-item">
-        <view class="form-label">备注信息</view>
-        <textarea class="form-textarea" placeholder="请输入备注信息（可选）" value="{{remark}}" bindinput="onRemarkInput"></textarea>
+        <view class="form-label">备注</view>
+        <textarea class="form-textarea" placeholder="请输入备注（可选）" value="{{remark}}" bindinput="onRemarkInput"></textarea>
       </view>
       <view class="form-actions">
-        <button class="submit-btn" bindtap="submitSchedule">确认约定</button>
+        <button class="submit-btn" bindtap="submitSchedule">确认预约</button>
       </view>
     </view>
   </view>
@@ -105,7 +107,9 @@
     </view>
     <view class="detail-content" wx:if="{{selectedCompanion}}">
       <view class="companion-info">
-        <view class="companion-avatar">{{selectedCompanion.avatar}}</view>
+        <view class="companion-avatar">
+          <image src="{{selectedCompanion.avatar}}" class="avatar-image" mode="aspectFill" />
+        </view>
         <view class="companion-details">
           <view class="companion-name">{{selectedCompanion.name}}</view>
           <view class="companion-type">{{selectedCompanion.type}}</view>
@@ -131,7 +135,7 @@
           <view class="info-value">{{selectedCompanion.serviceTime}}</view>
         </view>
         <view class="info-row">
-          <view class="info-label">响应率：</view>
+          <view class="info-label">回复率：</view>
           <view class="info-value">{{selectedCompanion.responseRate}}</view>
         </view>
         <view class="info-row">
@@ -141,12 +145,12 @@
       </view>
       
       <view class="companion-intro">
-        <view class="intro-title">个人简介</view>
+        <view class="intro-title">个人介绍</view>
         <view class="intro-text">{{selectedCompanion.intro}}</view>
       </view>
       
       <view class="companion-specialties">
-        <view class="specialties-title">专长领域</view>
+        <view class="specialties-title">专长</view>
         <view class="specialties-list">
           <view class="specialty-item" wx:for="{{selectedCompanion.specialties}}" wx:key="*this">{{item}}</view>
         </view>

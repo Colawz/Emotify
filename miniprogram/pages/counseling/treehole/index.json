@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "心情树洞",
+  "navigationBarTitleText": "Tree Hole",
   "usingComponents": {
     "t-avatar": "tdesign-miniprogram/avatar/avatar",
     "t-button": "tdesign-miniprogram/button/button",

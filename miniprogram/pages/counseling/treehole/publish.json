@@ -1,5 +1,6 @@
 {
-  "navigationBarTitleText": "发布树洞",
+  "navigationBarTitleText": "Publish a post",
+
   "usingComponents": {
     "t-avatar": "tdesign-miniprogram/avatar/avatar",
     "t-button": "tdesign-miniprogram/button/button",

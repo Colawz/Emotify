@@ -4,7 +4,7 @@
   <view class="hero-section">
     <view class="hero-content">
       <text class="hero-title">情绪树洞</text>
-      <text class="hero-subtitle">在这里，释放你的情绪，倾听彼此的心声</text>
+      <text class="hero-subtitle">敞开心扉，在这里寻求心灵的慰藉</text>
     </view>
   </view>
 
@@ -20,11 +20,11 @@
       <view class="post-card" wx:for="{{postList}}" wx:key="id" bindtap="onPostTap" data-id="{{item.id}}">
         <view class="post-header">
           <view class="post-avatar-wrapper">
-            <t-avatar image="https://via.placeholder.com/40" size="medium" />
+            <t-avatar image="{{item.avatar}}" size="medium" />
             <view class="emotion-badge">💭</view>
           </view>
           <view class="post-user-info">
-            <view class="post-username">匿名用户</view>
+            <view class="post-username">Anonymous User</view>
             <view class="post-time">{{item.publishTime}}</view>
           </view>
           <t-icon name="more" size="48rpx" color="#b8b8b8" />
@@ -68,7 +68,7 @@
         <view class="comment-section" wx:if="{{item.comments.length > 0}}">
           <view class="comment-divider"></view>
           <view class="comment" wx:for="{{item.comments}}" wx:for-item="comment" wx:key="id">
-            <t-avatar image="https://via.placeholder.com/32" size="small" />
+            <t-avatar image="{{comment.avatar}}" size="small" />
             <view class="comment-content">
               <view class="comment-header">
                 <text class="comment-username">{{comment.username}}</text>
@@ -83,8 +83,8 @@
     <block wx:else>
       <view class="empty-list">
         <view class="empty-icon">🌳</view>
-        <text class="empty-text">树洞里还没有心声</text>
-        <text class="empty-subtitle">成为第一个倾诉者吧</text>
+        <text class="empty-text">No voices in the tree hole yet</text>
+        <text class="empty-subtitle">Be the first to share your thoughts</text>
       </view>
     </block>
   </scroll-view>
@@ -96,13 +96,5 @@
     </view>
   </view>
   
-  <!-- 底部导航栏 -->
-  <view class="tab-bar-container">
-    <t-tab-bar value="{{currentTab}}" split="{{false}}" theme="tag" bindchange="onTabBarChange" fixed="{{true}}" style="--td-tab-bar-color: #999999; --td-tab-bar-active-color: #9c26b0;">
-      <t-tab-bar-item value="ai-chat" icon="notification" label="AI助手" />
-      <t-tab-bar-item value="discover" icon="view-module" label="发现" />
-      <t-tab-bar-item value="message" icon="chat" label="消息" />
-      <t-tab-bar-item value="profile" icon="user" label="我的" />
-    </t-tab-bar>
-  </view>
-</view> 
+
+</view>
