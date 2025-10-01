@@ -53,10 +53,13 @@
 /* 聊天记录区域 */
 .chat-container {
   flex: 1; /* 占据剩余空间 */
-  overflow-y: auto; /* 允许垂直滚动 */
-  padding-bottom: 130rpx; /* 为底部固定区域留出空间，避免输入框遮挡 */
+  box-sizing: border-box; /* 避免因内边距造成的高度误差 */
+  /* 为底部固定输入区域预留空间，尽量贴近但不遮挡 */
+  padding-bottom: 104rpx; /* 基础高度（72rpx 输入 + 上下 padding） */
+  /* iOS 安全区兼容（支持则使用 calc 叠加，不支持则回退到上面的基础值） */
+  padding-bottom: calc(104rpx + env(safe-area-inset-bottom));
+  padding-bottom: calc(104rpx + constant(safe-area-inset-bottom));
   padding-top: 0; /* 确保没有顶部填充 */
-  -webkit-overflow-scrolling: touch; /* 增强iOS滚动体验 */
 }
 
 .message-list {

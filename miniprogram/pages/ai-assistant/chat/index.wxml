@@ -10,19 +10,14 @@
     <view class="message system" id="welcome" wx:if="{{!currentChatId}}">
       <view class="message-content">
         <view class="welcome-text">
-          <text>你好！我是你的AI助手，你可以向我描述你遇到的心理与生活上的各种问题，我会积极为你解答哦！</text>
+          <text>Hello! I am your AI assistant. You can describe any psychological or life issues you encounter, and I will actively help you solve them!</text>
         </view>
       
       </view>
     </view>
 
     <!-- 消息列表 -->
-    <scroll-view 
-      scroll-y 
-      class="message-list" 
-      scroll-into-view="{{scrollToMessage}}"
-      bindscrolltoupper="onScrollToUpper"
-    >
+    <view class="message-list">
       <block wx:for="{{messages}}" wx:key="id">
         <view id="msg-{{item.id}}" class="message {{item.type}}">
           <view class="avatar">
@@ -55,7 +50,7 @@
           </view>
         </view>
       </block>
-    </scroll-view>
+    </view>
 
     <!-- 加载状态 -->
     <view class="loading" wx:if="{{isLoading}}">
@@ -79,7 +74,7 @@
         class="input" 
         value="{{inputValue}}" 
         bindinput="onInput" 
-        placeholder="输入消息..." 
+        placeholder="input..." 
         confirm-type="send"
         bindconfirm="onSend"
       />

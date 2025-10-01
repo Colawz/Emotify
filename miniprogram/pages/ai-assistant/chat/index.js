@@ -695,22 +695,17 @@ Page({
   // 识别用户意图
   // 修改recognizeIntent函数，使其更适合情绪识别
   recognizeIntent(input) {
-    // 只处理英文输入
-    if (!this.isEnglishInput(input)) {
-      console.log('检测到中文输入，跳过意图识别')
-      return null
-    }
-
-    console.log('开始识别情绪, 输入:', input)
+    console.log('开始识别意图, 输入:', input)
     const { intentKeywords } = this.data
     const emotions = []
     
-    // 将输入文本转换为小写以进行不区分大小写的匹配
+    // 将输入文本转换为小写以进行不区分大小写的匹配（对英文有效）
     const lowerInput = input.toLowerCase()
     
     for (const [emotion, keywords] of Object.entries(intentKeywords)) {
       const score = keywords.reduce((acc, keyword) => {
-        const hasKeyword = lowerInput.includes(keyword.toLowerCase())
+        // 对于中文关键词，直接匹配；对于英文关键词，转换为小写后匹配
+        const hasKeyword = input.includes(keyword) || lowerInput.includes(keyword.toLowerCase())
         if (hasKeyword) {
           console.log('匹配到关键词:', keyword, '类别:', emotion)
         }
@@ -742,10 +737,10 @@ Page({
 
     console.log('准备询问是否需要功能/情绪支持:', pageInfo.title)
     wx.showModal({
-      title: `go to ${pageInfo.title}`,
+      title: `前往${pageInfo.title}`,
       content: pageInfo.tip,
-      confirmText: 'jump',
-      cancelText: 'continue',
+      confirmText: '跳转',
+      cancelText: '返回',
       success: (res) => {
         if (res.confirm) {
           console.log('用户确认前往:', pageInfo.path)
