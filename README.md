@@ -1,200 +1,201 @@
 # Emotify
 
-Emotify 是一个基于微信小程序原生能力与微信云开发实现的情感支持类应用原型，当前代码主线围绕 4 个一级入口展开：
+Emotify 是我们做的一款微信小程序。
 
-- `AI助手`：聊天式情绪识别、功能推荐与页面导航
+我们想做的不是一个单纯的 AI 聊天框，而是一个把情绪支持、心理陪伴、家庭关怀和轻量记录放在一起的小程序入口。用户可以在这里和 AI 助手对话，也可以去树洞倾诉、写心情日记、选择不同风格的陪聊角色，或者进入亲情驿站做一些更偏家庭陪伴和提醒的事情。
+
+这个仓库就是项目当前的源码。仓库里还保留了一些早期命名和旧页面，我们后面会继续统一，但主线功能已经比较清楚了。
+
+## 我们现在做了什么
+
+目前小程序主要分成 4 个入口：
+
+- `AI助手`：聊天、识别情绪、推荐功能入口
 - `心理疗愈`：角色陪聊、树洞、日记、画像、解压互动
-- `亲情驿站`：家庭关怀提醒、陪伴聊天、温暖空间、任务管理
-- `我的`：登录、消息、聊天历史、个人资料
+- `亲情驿站`：提醒、陪伴、温暖空间、任务管理
+- `我的`：登录、消息、聊天记录、个人资料
 
-> 说明：仓库里同时保留了 `Emotify`、`情感支持助手`、`心生启翔` 等命名痕迹。本文档以当前代码实际实现为准，而不是只依据早期 PRD。
+### AI 助手
 
-## 项目概览
+`miniprogram/pages/ai-assistant/chat/`
 
-从代码实现看，这个项目不是单一“AI 聊天页”，而是一个将情绪支持、心理陪伴、家庭关怀和轻量社交原型放在同一个微信小程序里的综合型应用。
+这一块是整个小程序的总入口之一。用户输入一句话以后，AI 助手会先理解用户大概在说什么，再决定更适合把用户带去哪个页面。
 
-当前技术路线比较明确：
+现在已经接上的能力有：
 
-- 前端使用微信小程序原生目录结构，主代码位于 `miniprogram/`
-- UI 组件基于 `tdesign-miniprogram`
-- 后端能力依赖微信云开发
-- AI 能力通过云函数 `callAI` 转发到火山引擎方舟 API
-- 聊天记录和用户信息同时使用云数据库与本地缓存兜底
+- 聊天式交互
+- 中英文关键词识别
+- 情绪和需求分类
+- 推荐卡片生成
+- 页面跳转引导
+- 对话历史保存
+- 简单用户画像累计
 
-## 当前已实现的功能
+已经覆盖的部分情绪和意图包括：
 
-### 1. AI 助手
+- 焦虑
+- 抑郁
+- 愤怒
+- 孤独
+- 压力
+- 快乐
+- 爱情
+- 困惑
+- 内疚
+- 恐惧
+- 树洞
+- 日记
+- 家庭任务
+- 陪我聊聊
+- 解压游戏
+- 温暖空间
+- 历史记录
 
-代码位置：`miniprogram/pages/ai-assistant/chat/`
+### 心理疗愈
 
-已实现能力：
+`miniprogram/pages/counseling/`
 
-- 自然语言聊天入口，支持中英文输入
-- 基于关键词的意图识别
-- 针对情绪与需求生成推荐卡片
-- 可引导用户跳转到树洞、日记、心理对话、家庭任务、温暖空间等页面
-- 对话内容可生成标题并保存到历史记录
-- 用户画像会根据输入内容累积兴趣标签
+这是我们最核心的一块。
 
-当前识别的主要意图包括：
+现在已经有这些页面：
 
-- 情绪类：焦虑、抑郁、愤怒、孤独、压力、快乐、爱情、困惑、内疚、恐惧
-- 功能类：树洞、日记、家庭任务、陪我聊聊、解压游戏、温暖空间、历史记录
+- `index`：心理疗愈首页
+- `conversation/index`：选择陪聊角色
+- `conversation/chat/index`：进入角色陪聊
+- `conversation/create/index`：创建专属陪聊角色
+- `treehole/index`：情绪树洞列表
+- `treehole/publish`：发布树洞内容
+- `diary/index`：心情日记分类
+- `diary/topics/index`：日记主题选择
+- `diary/write/index`：写日记
+- `user-profile/index`：足迹与活动统计
+- `profile-analysis/index`：心理画像展示
+- `stickman/index`：解压小游戏
 
-### 2. 心理疗愈模块
+这一块目前已经能跑通的主链路有：
 
-代码位置：`miniprogram/pages/counseling/`
+- 选择预设角色进行陪聊
+- 自己创建一个专属角色再开始聊天
+- 给不同角色生成不同的 system prompt
+- 保存陪聊历史
+- 读取历史对话
+- 在对话里接入图像生成能力
 
-已落地页面包括：
+### 亲情驿站
 
-- `index`：心理疗愈首页，聚合陪聊、树洞、日记、足迹、解压游戏入口
-- `conversation/index`：咨询师/聊天伙伴选择页
-- `conversation/chat/index`：角色扮演式陪聊页
-- `conversation/create/index`：自定义专属聊天伙伴
-- `treehole/index`：匿名树洞列表
-- `treehole/publish`：树洞发帖页
-- `diary/*`：心情日记分类、主题选择、写作与保存
-- `user-profile/index`：日记足迹与活动统计
-- `profile-analysis/index`：基于静态数据生成的大五人格雷达图
-- `stickman/index`：Canvas 版“暴揍火柴人”解压小游戏
+`miniprogram/pages/family-garden/`
 
-其中较完整的实现有：
+这一块更偏家庭陪伴和关怀场景。
 
-- 角色陪聊：可选择预设角色，也可创建自定义角色
-- 角色化系统提示词：咨询页会按选中角色生成专属 system prompt
-- 历史对话持久化：保存到 `History` 集合，失败时回退到本地 `chats`
-- 图像生成能力：咨询对话代码里已经接入图像生成流程，可根据对话内容和咨询师形象生成配图
-
-### 3. 亲情驿站模块
-
-代码位置：`miniprogram/pages/family-garden/`
-
-当前实现更偏“交互原型”，主要页面有：
+目前已经做了这些页面：
 
 - `index`：亲情驿站首页
-- `smart-tips/index`：提醒事项与健康建议
-- `chat-together/index`：陪伴者列表、语音/视频/预约交互原型
-- `warm-space/index`：家庭小树、动态、相册、重要时刻
-- `task-management/index`：面向关怀场景的任务管理
-- `family-tasks/index`：家庭小任务、健康监测、安全检查、紧急联系人
+- `smart-tips/index`：提醒和健康建议
+- `chat-together/index`：陪伴聊天与预约交互
+- `warm-space/index`：家庭小树、相册、动态、重要时刻
+- `task-management/index`：家庭任务管理
+- `family-tasks/index`：关怀任务、健康监测、安全检查、紧急联系人
 
-这部分页面的特点是：
+这一部分页面的视觉和交互已经做出来了，不过不少内容还在用页面内置数据演示，后面会继续把数据层补完整。
 
-- 视觉与交互完成度较高
-- 业务数据主要来自页面内置 mock 数据
-- 多数操作停留在本地状态更新或弹窗交互
+### 我的
 
-### 4. 个人中心
+`miniprogram/pages/profile/`
 
-代码位置：`miniprogram/pages/profile/`
-
-已实现能力：
+个人中心现在已经接了这些能力：
 
 - 自定义头像和昵称登录
-- 调用云函数获取 `openid`
+- 通过云函数拿 `openid`
 - 新用户头像上传到云存储
-- 用户信息写入 `User` 集合
-- AI 对话历史查看、删除、清空
-- 站内消息列表与模拟私聊页
-- 关于页与基础设置入口
+- 用户资料写入 `User` 集合
+- 查看、删除、清空 AI 聊天历史
+- 消息页和私聊页
+- 关于页和基础设置入口
 
-## 技术架构
+## 技术方案
 
-### 前端
+这个项目目前采用的是微信小程序原生方案。
 
-- 微信小程序原生页面结构
-- 主要代码以 JavaScript 为主
-- `app.ts` 和部分官方 quickstart 文件仍保留，但当前业务主线主要运行在 `app.js` 和各页面 `.js`
-- 全局组件依赖 `tdesign-miniprogram`
+- 前端主目录：`miniprogram/`
+- UI 组件库：`tdesign-miniprogram`
+- 云能力：微信云开发
+- AI 调用方式：前端调云函数，云函数再去请求外部模型接口
 
-### 云开发
+项目里现在主要用到两个云函数：
 
-项目当前绑定了一个固定云环境：
+- `cloudfunctions/callAI`
+- `cloudfunctions/getUserInfo`
 
-- 云环境 ID：`cloud1-1gjz5ckoe28a6c4a`
+### `callAI`
 
-如果你要迁移到自己的环境，至少需要同步调整这些位置：
+这个云函数负责统一代理 AI 请求。
 
-- `miniprogram/app.js`
-- `miniprogram/pages/ai-assistant/chat/index.js`
-- `miniprogram/pages/counseling/conversation/chat/index.js`
-- 微信开发者工具中的云开发环境配置
+我们现在把两类能力都放在这里：
 
-### 云函数
+- `chat`：聊天补全
+- `generateImage`：图像生成
 
-#### `cloudfunctions/callAI`
+默认配置如下：
 
-职责：
+- 聊天模型：`deepseek-v3-250324`
+- 生图模型：`doubao-seedream-4-0-250828`
+- Base URL：`https://ark.cn-beijing.volces.com`
 
-- 统一代理前端 AI 请求，避免小程序前端直连外部模型接口
-- 支持两种 `action`
-  - `chat`：聊天补全
-  - `generateImage`：图像生成
+### `getUserInfo`
 
-实际接入：
+这个云函数主要做两件事：
 
-- 聊天模型默认：`deepseek-v3-250324`
-- 图像模型默认：`doubao-seedream-4-0-250828`
-- 默认 API Base URL：`https://ark.cn-beijing.volces.com`
+- 读取当前微信用户的 `openid`
+- 去 `User` 集合里检查这个用户是不是已经注册过
 
-#### `cloudfunctions/getUserInfo`
+## 数据存储
 
-职责：
+现在主要用到两个云数据库集合：
 
-- 获取当前微信用户 `openid`
-- 查询 `User` 集合中是否已有用户记录
-- 返回 `existingUser` 与 `isNewUser`
+| 集合名 | 用途 |
+| --- | --- |
+| `User` | 用户资料 |
+| `History` | AI / 陪聊历史记录 |
 
-## 数据存储现状
+除了云数据库，我们也保留了一部分本地缓存做兜底：
 
-### 云数据库
+- `userInfo`
+- `userProfile`
+- `chats`
+- `diaries`
+- `logs`
 
-当前代码明确使用了 2 个集合：
-
-| 集合名 | 用途 | 主要字段 |
-| --- | --- | --- |
-| `User` | 用户资料 | `openid`, `nickName`, `avatarUrl` |
-| `History` | AI / 咨询聊天历史 | `id`, `messages`, `title`, `lastUpdate`, `openid` |
-
-### 本地缓存
-
-代码中还使用了微信本地存储做兜底或轻量持久化：
-
-- `userInfo`：当前用户信息
-- `userProfile`：AI 助手累计的兴趣画像
-- `chats`：云数据库不可用时的聊天记录
-- `diaries`：心情日记内容
-- `logs`：启动日志
+比如聊天记录这条链路，优先会走云数据库；如果云端不可用，代码里也保留了本地缓存兜底。
 
 ## 项目结构
 
 ```text
 .
-├─ miniprogram/                 # 小程序前端主目录
+├─ miniprogram/
 │  ├─ app.js
 │  ├─ app.json
 │  ├─ services/
-│  │  └─ api.js                 # 云函数调用封装
+│  │  └─ api.js
 │  └─ pages/
 │     ├─ ai-assistant/
 │     ├─ counseling/
 │     ├─ family-garden/
 │     └─ profile/
 ├─ cloudfunctions/
-│  ├─ callAI/                   # AI 聊天 / 图像生成代理
-│  ├─ getUserInfo/              # 获取 openid 与用户判定
+│  ├─ callAI/
+│  ├─ getUserInfo/
 │  └─ test/
 ├─ docs/
-│  └─ prd.md                    # 早期产品规划文档
+│  └─ prd.md
 ├─ i18n/
-├─ miniapp/                     # 多平台工程生成目录
-├─ README_IMAGE_GENERATION.md   # 图像生成功能补充说明
-└─ project.config.json          # 微信开发者工具工程配置
+├─ miniapp/
+├─ README_IMAGE_GENERATION.md
+└─ project.config.json
 ```
 
-## 本地开发
+## 怎么跑起来
 
-这个仓库没有配置常规的前端 `npm scripts`，开发方式以微信开发者工具为主。
+这个项目不是常规的 Web 前端工程，主要还是通过微信开发者工具来跑。
 
 ### 1. 安装根依赖
 
@@ -204,104 +205,90 @@ npm install
 
 ### 2. 安装云函数依赖
 
-至少需要安装：
-
 ```bash
 cd cloudfunctions/callAI && npm install
 cd ../getUserInfo && npm install
 ```
 
-如果你是通过微信开发者工具打开项目，也可以直接在云函数面板里安装依赖并部署。
+如果你直接用微信开发者工具，也可以在云函数面板里安装依赖再部署。
 
 ### 3. 配置环境变量
 
-复制根目录环境变量模板：
+先复制一份环境变量模板：
 
 ```bash
 cp .env.example .env
 ```
 
-可配置项：
+需要的变量有：
 
 | 变量名 | 说明 |
 | --- | --- |
-| `ARK_API_KEY` | 方舟聊天模型 API Key |
-| `ARK_IMAGE_API_KEY` | 方舟图像生成 API Key，不填时回退到 `ARK_API_KEY` |
-| `ARK_BASE_URL` | 可选，自定义 API 基础地址 |
+| `ARK_API_KEY` | 聊天模型的 API Key |
+| `ARK_IMAGE_API_KEY` | 图像生成的 API Key |
+| `ARK_BASE_URL` | 可选，自定义接口地址 |
 
-说明：
+`callAI` 会优先读取云开发控制台里的环境变量；本地调试时如果读不到，就会回退到根目录的 `.env`。
 
-- `callAI` 云函数会优先读取云开发控制台中的环境变量
-- 本地开发时会回退读取仓库根目录的 `.env`
-- 不要把真实密钥提交到仓库
+### 4. 用微信开发者工具导入
 
-### 4. 导入微信开发者工具
+导入仓库根目录后，确认下面几项：
 
-导入项目根目录后，重点确认：
+- `miniprogramRoot` 是 `miniprogram/`
+- `cloudfunctionRoot` 是 `cloudfunctions/`
+- 小程序工程已经执行过“构建 npm”
+- AppID 和云环境是你自己的可用配置
 
-- `miniprogramRoot` 指向 `miniprogram/`
-- `cloudfunctionRoot` 指向 `cloudfunctions/`
-- 工程已执行“构建 npm”
-- 使用的 AppID、云环境与当前账号权限匹配
-
-当前仓库里的 `project.config.json` 已写入示例 AppID，如果你要在自己的账号下运行，通常需要改成你自己的小程序 AppID。
+仓库里的 `project.config.json` 现在保留了项目开发时的配置。如果你是自己拉下来运行，通常需要换成你自己的 AppID。
 
 ### 5. 准备云开发资源
 
-建议至少创建以下集合：
+最少需要准备这些东西：
 
-- `User`
-- `History`
+- 数据库集合 `User`
+- 数据库集合 `History`
+- 云函数 `callAI`
+- 云函数 `getUserInfo`
+- 云存储权限
+- 数据库权限
 
-并完成：
+## 现在的完成度
 
-- 云函数部署：`callAI`、`getUserInfo`
-- 云存储权限配置
-- 数据库权限配置
+这个项目不是空壳，但也还没有到“所有页面都是真实后端”的状态。
 
-## 当前状态说明
-
-如果你要继续开发这个项目，下面这些判断很关键：
-
-### 已经比较成型的部分
+已经比较完整的部分：
 
 - AI 助手聊天主链路
-- 咨询角色陪聊主链路
-- 用户登录与头像上传
+- 角色陪聊主链路
+- 用户登录和头像上传
 - 聊天历史保存与读取
-- 小程序整体页面组织与视觉风格
+- 页面整体结构和视觉风格
 
-### 更偏原型/演示的部分
+还在继续补的部分：
 
-- 树洞列表内容主要是 mock 数据
-- 日记保存在本地缓存，不走云端
-- 亲情驿站大多数模块以页面内 mock 数据为主
-- 心理画像是静态演示数据，不是真正的测评结果计算
-- 消息页与私聊页是模拟社交数据
+- 树洞列表目前主要还是演示数据
+- 日记目前保存在本地缓存
+- 亲情驿站很多页面还是以页面内置数据为主
+- 心理画像现在是静态演示版本
+- 消息页和私聊页也是模拟数据
 
-### 代码中保留的早期痕迹
+仓库里也还保留了一些早期内容：
 
-- `docs/prd.md` 里还有宿舍匹配、拼车、体育匹配、工大点评等更早规划
-- `pages/_archive/` 保留了旧首页原型
-- 工程仍带有部分 quickstart/multi-platform 生成目录
+- `docs/prd.md` 里有更早一版产品设想
+- `pages/_archive/` 里留了旧首页原型
+- 一些页面文案里还会看到早期命名
+
+这些我们后面会继续收口和统一。
 
 ## 补充文档
 
-- 图像生成补充说明：[`README_IMAGE_GENERATION.md`](./README_IMAGE_GENERATION.md)
+- 图像生成说明：[`README_IMAGE_GENERATION.md`](./README_IMAGE_GENERATION.md)
 - 早期 PRD：[`docs/prd.md`](./docs/prd.md)
 
-## 总结
+## 最后
 
-从当前代码状态看，Emotify 已经具备一个“可演示、可继续扩展”的微信小程序原型骨架：
+这个项目对我们来说，不只是做一个“能对话”的小程序。
 
-- 有明确的产品结构
-- 有真实接入的 AI 与云开发能力
-- 有较完整的聊天与登录数据链路
-- 也同时保留了不少 mock 数据页面与早期功能规划
+我们更想做的是一个让用户在不同状态下都能找到入口的产品：情绪上头的时候可以先说一句话，想认真梳理的时候可以去陪聊或日记，想照顾家人的时候也能马上进入亲情驿站。
 
-如果后续继续推进，最值得优先补强的方向会是：
-
-1. 统一数据模型，减少 mock 与本地缓存分裂
-2. 补齐云数据库设计与权限规则
-3. 统一命名和页面路由，清理历史原型残留
-4. 给核心页面补充真实后端与状态管理
+仓库会继续更新，README 也会跟着一起补齐。
