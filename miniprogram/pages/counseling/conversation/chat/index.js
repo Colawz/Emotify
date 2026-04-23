@@ -553,11 +553,11 @@ Page({
       },
       'lazy_goat': {
         characterDescription: '懒羊羊，动画片《喜羊羊与灰太狼》中的角色，是一只温和慵懒的小羊',
-        baseStyle: '温馨慵懒的田园风格',
-        colorPalette: '柔和的粉色、淡绿色、米白色',
-        atmosphere: '宁静舒适、温馨惬意、放松自在',
-        scene: '草原牧场、温馨小屋、午后阳光',
-        emotion: '温和、放松、治愈、安心',
+        baseStyle: '温馨慵懒的田园风格、动画片《喜羊羊与灰太狼》',
+        colorPalette: '柔和的粉色、淡绿色、米白色、动画片《喜羊羊与灰太狼》懒羊羊',
+        atmosphere: '宁静舒适、温馨惬意、放松自在、动画片《喜羊羊与灰太狼》懒羊羊',
+        scene: '草原牧场、温馨小屋、午后阳光、动画片《喜羊羊与灰太狼》懒羊羊',
+        emotion: '温和、放松、治愈、安心、动画片《喜羊羊与灰太狼》懒羊羊',
         artStyle: '温馨治愈的水彩画风格'
       },
       'human_psychologist': {
@@ -570,22 +570,22 @@ Page({
         artStyle: '温柔克制的写实插画风格'
       },
       'boonie_bear_xiongda': {
-        characterDescription: '熊大，动画片《熊出没》中的角色，是一只沉稳可靠的棕熊',
-        baseStyle: '沉稳可靠的森林守护风格',
-        colorPalette: '深绿色、棕色、金黄色',
-        atmosphere: '沉着冷静、可靠稳重、自然和谐',
-        scene: '茂密森林、山间小径、自然保护区',
-        emotion: '沉稳、可靠、理性、守护',
-        artStyle: '自然写实的森林系插画风格'
+        characterDescription: '熊大，动画片《熊出没》中的角色，卡通形象',
+        baseStyle: '憨厚可爱的温暖风格，卡通形象、动画片《熊出没》的熊大',
+        colorPalette: '暖黄色、浅棕色、粉橙色、动画片《熊出没》熊大',
+        atmosphere: '沉着冷静、可靠稳重、自然和谐、动画片《熊出没》熊大',
+        scene: '温馨小屋、森林、温暖的家、动画片《熊出没》熊大',
+        emotion: '沉稳、可靠、理性、守护、憨厚可爱、温暖、动画片《熊出没》熊大',
+        artStyle: '森林系漫画风格，卡通形象，可爱稳重、动画片《熊出没》熊大'
       },
       'boonie_bear_xionger': {
-        characterDescription: '熊二，动画片《熊出没》中的角色，是一只憨厚可爱的棕熊',
-        baseStyle: '憨厚可爱的温暖风格',
-        colorPalette: '暖黄色、浅棕色、粉橙色',
-        atmosphere: '温暖可爱、憨厚朴实、充满爱心',
-        scene: '温馨小屋、花园、温暖的家',
-        emotion: '憨厚、可爱、温暖、安慰',
-        artStyle: '温暖可爱的卡通风格'
+        characterDescription: '熊二，动画片《熊出没》中的角色，卡通形象，可爱温暖',
+        baseStyle: '憨厚可爱的温暖风格，动画片《熊出没》中的卡通形象、熊二',
+        colorPalette: '暖黄色、浅棕色、粉橙色、动画片《熊出没》、熊二',
+        atmosphere: '温暖可爱、憨厚朴实、充满爱心、动画片《熊出没》、熊二',
+        scene: '温馨小屋、花园、温暖的家、动画片《熊出没》中的场景、熊二',
+        emotion: '憨厚、可爱、温暖、安慰、动画片《熊出没》、熊二',
+        artStyle: '温暖可爱的卡通风格，动画片《熊出没》风格熊二'
       }
     }
     

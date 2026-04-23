@@ -1,163 +1,69 @@
-const apiConfig = require('../config/api')
-
 class ApiService {
   constructor() {
-    this.baseUrl = apiConfig.baseUrl
-    this.apiKey = apiConfig.apiKey
-    this.model = apiConfig.model
+    // 前端不再直接调用外部 API，所有请求通过云函数
   }
 
-  // 通用请求方法
-  async request(endpoint, options = {}, customBaseUrl = null) {
+  // 聊天API - 通过云函数调用
+  async chat(messages, options = {}) {
     try {
-      const baseUrl = customBaseUrl || this.baseUrl
-      const url = `${baseUrl}${endpoint}`
-      console.log('请求URL:', url)
-      console.log('请求参数:', options)
+      console.log('准备调用聊天云函数，消息:', messages)
 
-      const defaultOptions = {
-        header: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.apiKey}`
-        },
-        timeout: 120000, // 设置120秒超时
-        enableHttp2: true, // 启用HTTP/2
-        enableQuic: true // 启用QUIC
-      }
-
-      const finalOptions = {
-        ...defaultOptions,
-        ...options,
-        header: {
-          ...defaultOptions.header,
-          ...(options.header || {})//你好
-        }
-      }
-
-      console.log('最终请求配置:', finalOptions)
-
-      const response = await new Promise((resolve, reject) => {
-        wx.request({
-          url,
-          ...finalOptions,
-          success: (res) => {
-            console.log('请求成功，响应:', res)
-            resolve(res)
-          },
-          fail: (err) => {
-            console.error('请求失败:', err)
-            reject(err)
-          }
-        })
-      })
-
-      console.log('API响应:', response)
-
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        return response.data
-      } else {
-        const errorMsg = `API请求失败: 状态码 ${response.statusCode}, 响应数据: ${JSON.stringify(response.data)}`
-        console.error(errorMsg)
-        throw new Error(errorMsg)
-      }
-    } catch (error) {
-      console.error('API请求错误:', error)
-      if (error.errMsg) {
-        console.error('微信请求错误:', error.errMsg)
-      }
-      throw new Error(`API请求失败: ${error.message || error.errMsg || '未知错误'}`)
-    }
-  }
-
-  // 聊天API
-  async chat(messages) {
-    try {
-      console.log('准备调用聊天API，消息:', messages)
-      
-      const result = await this.request(apiConfig.endpoints.chat, {
-        method: 'POST',
+      const result = await wx.cloud.callFunction({
+        name: 'callAI',
         data: {
-          model: this.model,
+          action: 'chat',
           messages: messages,
-          temperature: 0.7,
-          max_tokens: 2000,
-          stream: false
+          system: options.system,
+          model: options.model
         }
       })
 
-      console.log('聊天API响应:', result)
-      return result
+      console.log('聊天云函数响应:', result)
+
+      if (result.result && result.result.error) {
+        throw new Error(result.result.message || '云函数返回错误')
+      }
+
+      return result.result
     } catch (error) {
-      console.error('聊天API调用失败:', error)
+      console.error('聊天云函数调用失败:', error)
       throw error
     }
   }
 
-  // 用户相关API
-  async getUserInfo() {
-    try {
-      console.log('准备调用用户信息API')
-      const result = await this.request(apiConfig.endpoints.user)
-      console.log('用户信息API响应:', result)
-      return result
-    } catch (error) {
-      console.error('用户信息API调用失败:', error)
-      throw error
-    }
-  }
-
-  // 图像生成相关方法 - 豆包API
+  // 图像生成API - 通过云函数调用
   async generateImage(prompt, options = {}) {
     try {
-      const requestData = {
-        model: apiConfig.imageApi.model,
-        prompt: prompt,
-        sequential_image_generation: "disabled",
-        response_format: "url",
-        size: options.size || "2K",
-        stream: false,
-        watermark: options.watermark !== false
-      }
+      console.log('准备调用图像生成云函数，prompt:', prompt)
 
-      // 如果有参考图像，添加到请求中
-      if (options.referenceImage) {
-        requestData.image = options.referenceImage
-      }
-
-      const response = await this.request(
-        apiConfig.endpoints.textToImage,
-        {
-          method: 'POST',
-          data: requestData,
-          header: {
-            'Authorization': `Bearer ${apiConfig.imageApi.apiKey}`,
-            'Content-Type': 'application/json'
+      const result = await wx.cloud.callFunction({
+        name: 'callAI',
+        data: {
+          action: 'generateImage',
+          prompt: prompt,
+          options: {
+            size: options.size,
+            watermark: options.watermark,
+            referenceImage: options.referenceImage
           }
-        },
-        apiConfig.imageApi.baseUrl
-      )
-
-      if (response.data && response.data.length > 0 && response.data[0].url) {
-        return {
-          success: true,
-          imageUrl: response.data[0].url,
-          message: '图像生成成功'
         }
+      })
+
+      console.log('图像生成云函数响应:', result)
+
+      if (result.result && result.result.error) {
+        throw new Error(result.result.message || '云函数返回错误')
       }
-      
-      throw new Error('图像生成失败，未获取到图像URL')
+
+      return result.result
     } catch (error) {
-      console.error('图像生成失败:', error)
+      console.error('图像生成云函数调用失败:', error)
       return {
         success: false,
         error: error.message || '图像生成失败'
       }
     }
   }
-  
-
-
-  // 添加更多API方法...
 }
 
 // 导出单例

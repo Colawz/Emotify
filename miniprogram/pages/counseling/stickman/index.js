@@ -8,6 +8,7 @@ Page({
     ctx: null,
     canvasWidth: 0,
     canvasHeight: 0,
+    animationUseTimeout: false,
     stickman: {
       x: 0,
       y: 0,
@@ -41,12 +42,20 @@ Page({
     query.select('#gameCanvas')
       .fields({ node: true, size: true })
       .exec((res) => {
-        const canvas = res[0].node;
+        const info = res && res[0];
+        if (!info || !info.node) {
+          console.warn('Canvas 2D 节点不可用，初始化失败');
+          wx.showToast({ title: 'Canvas 初始化失败', icon: 'none' });
+          this.setData({ canvas: null, ctx: null });
+          return;
+        }
+
+        const canvas = info.node;
         const ctx = canvas.getContext('2d');
         
         const dpr = wx.getSystemInfoSync().pixelRatio;
-        const width = res[0].width;
-        const height = res[0].height;
+        const width = info.width;
+        const height = info.height;
         
         canvas.width = width * dpr;
         canvas.height = height * dpr;
@@ -60,6 +69,13 @@ Page({
           'stickman.x': width / 2,
           'stickman.y': height / 2
         });
+
+        // 尝试进行首次绘制，便于快速验证是否显示
+        try {
+          this.drawGame();
+        } catch (e) {
+          console.warn('首次绘制失败:', e);
+        }
       });
   },
 
@@ -82,9 +98,13 @@ Page({
     this.drawGame();
     this.updateEffects();
     
-    this.data.animationId = this.data.canvas.requestAnimationFrame(() => {
+    const canvas = this.data.canvas;
+    const useRaf = canvas && typeof canvas.requestAnimationFrame === 'function';
+    const raf = useRaf ? canvas.requestAnimationFrame.bind(canvas) : (fn) => setTimeout(fn, 16);
+    this.data.animationId = raf(() => {
       this.gameLoop();
     });
+    this.setData({ animationUseTimeout: !useRaf });
   },
 
   // 更新火柴人状态
@@ -107,6 +127,7 @@ Page({
   // 绘制游戏场景
   drawGame() {
     const { ctx, canvasWidth, canvasHeight, stickman } = this.data;
+    if (!ctx) return;
     
     // 清空画布
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -446,7 +467,12 @@ Page({
   onUnload() {
     // 清理动画
     if (this.data.animationId) {
-      this.data.canvas.cancelAnimationFrame(this.data.animationId);
+      const canvas = this.data.canvas;
+      if (canvas && typeof canvas.cancelAnimationFrame === 'function' && !this.data.animationUseTimeout) {
+        canvas.cancelAnimationFrame(this.data.animationId);
+      } else {
+        clearTimeout(this.data.animationId);
+      }
     }
   }
 });

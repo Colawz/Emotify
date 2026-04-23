@@ -1,0 +1,51 @@
+# 依赖目录
+node_modules/
+miniprogram_npm/
+
+# 日志文件
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# macOS 系统文件
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 编辑器配置
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 微信小程序
+# 私有配置文件（包含个人开发者工具设置）
+project.private.config.json
+
+# 本地环境变量（包含敏感密钥，切勿提交）
+.env
+.env.local
+.env.*.local
+
+# 构建产物
+dist/
+build/
+
+# 临时文件
+*.tmp
+*.temp
+.cache/
+
+# 云函数依赖（如果云函数各自独立安装依赖）
+cloudfunctions/**/node_modules/
+cloudfunctions/**/package-lock.json
+cloudfunctions/**/yarn.lock
+cloudfunctions/**/pnpm-lock.yaml
+
+# 其他
+Thumbs.db

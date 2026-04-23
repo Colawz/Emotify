@@ -18,24 +18,24 @@ Page({
         description: '专业的人类心理咨询师，为你提供温暖与专业的支持。'
       },
       {
+        id: 'boonie_bear_xionger',
+        name: '熊二',
+        avatar: '/assets/Counselor_Headshot/bear2.png',
+        description: '俺虽然有点笨，但俺最会安慰人啦！'
+      },
+      {
         id: 'lazy_goat',
         name: '懒羊羊',
         avatar: '/assets/Counselor_Headshot/lan.jpg',
         description: '虽然我平时很懒，但听你倾诉，我总是有时间的。'
       },
-      
       {
         id: 'boonie_bear_xiongda',
         name: '熊大',
         avatar: '/assets/Counselor_Headshot/bear1.png',
         description: '作为森林的守护者，我沉着冷静，可以帮你理清思绪。'
       },
-      {
-        id: 'boonie_bear_xionger',
-        name: '熊二',
-        avatar: '/assets/Counselor_Headshot/bear2.png',
-        description: '俺虽然有点笨，但俺最会安慰人啦！'
-      }
+      
     ]
   },
 
